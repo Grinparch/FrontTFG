@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Login</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="hs">
+
+  <div class="hs-container hs-bg-white">
+    <form [formGroup]="loginForm" (ngSubmit)="createUser()" *ngIf="this.loginForm" method="post">
+      <ion-list>
+        <ion-grid>
+          <ion-row>
+            <ion-col size-md="6" size-xs="12">
+              <ion-item fill="solid" mode="md" class="hs-textfield">
+                <ion-label position="floating">Usuario</ion-label>
+                <ion-input formControlName="username" type="text"></ion-input>
+                <ion-text slot="error">
+                  <ng-container *ngIf="loginForm.get('username').touched">
+                    Error Usuario
+                  </ng-container>
+                </ion-text>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size-md="3" size-xs="12">
+              <ion-item fill="solid" mode="md" class="hs-textfield">
+                <ion-label position="floating">Contraseña</ion-label>
+                <ion-input formControlName="clave" type="password"></ion-input>
+                <ion-text slot="error">
+                  <ng-container *ngIf="loginForm.get('clave').touched">
+                    Clave Error
+                  </ng-container>
+                </ion-text>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+        <ion-grid>
+          <ion-row class="ion-justify-content-center">
+            <ion-col size-md="12" size-xs="12" class="ion-text-center">
+              <ion-button type="submit">LOGIN</ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-list>
+    </form>
+  </div>
+</ion-content>

@@ -52,7 +52,7 @@
             <ion-col size-md="3" size-xs="12">
               <ion-item fill="solid" mode="md" class="hs-textfield">
                 <ion-label position="floating">Contraseña</ion-label>
-                <ion-input formControlName="clave" type="text"></ion-input>
+                <ion-input formControlName="clave" type="password"></ion-input>
                 <ion-text slot="error">
                   <ng-container *ngIf="createUserForm.get('clave').touched">
                     Clave Error
@@ -72,5 +72,10 @@
         </ion-grid>
       </ion-list>
     </form>
+    <ion-text slot="error">
+      <ng-container *ngIf="usuarioYaExistente==true">
+        Usuario ya existente, Utilice uno nuevo
+      </ng-container>
+    </ion-text>
   </div>
 </ion-content>

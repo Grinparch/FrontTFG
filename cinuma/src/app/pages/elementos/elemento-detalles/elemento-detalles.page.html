@@ -1,0 +1,147 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{elemento.titulo}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-item>
+    <ion-label class="ion-text-wrap">
+      <ion-grid class="ion-no-padding">
+        <ion-row>
+          <ion-col *ngIf="elemento.tipo == 0" class="ion-text-end"><ion-badge color="primary">SERIE</ion-badge></ion-col>
+          <ion-col *ngIf="elemento.tipo == 1" class="ion-text-end"><ion-badge color="primary">PELICULA</ion-badge></ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col *ngIf="elemento.tipo == 0" class="ion-text-end"><ion-text>{{elemento.capitulos | date:'dd/MM/yyyy HH:mm:ss'}}</ion-text></ion-col>
+          <ion-col *ngIf="elemento.tipo == 0" class="ion-text-end"><ion-text>{{elemento.estreno | date:'dd/MM/yyyy HH:mm:ss'}}</ion-text></ion-col>
+          <ion-col *ngIf="elemento.tipo == 1" class="ion-text-end"><ion-text>{{elemento.estrenoTaquilla | date:'dd/MM/yyyy HH:mm:ss'}}</ion-text></ion-col>
+        </ion-row>
+        <ion-row *ngFor="let genero of elemento.genero">
+          <ion-col class="ion-text-end"><ion-text>{{genero}}</ion-text></ion-col>
+        </ion-row>
+        <ion-row *ngFor="let actor of elemento.actores">
+          <ion-col class="ion-text-end"><ion-text>{{actor}}</ion-text></ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-button (click)="eliminarElemento()">
+      Eliminar Elemento
+    </ion-button>
+  </ion-item>
+  <ion-item>
+    <ion-button (click)="activarEdicionElemento()">
+      Modo Edicion
+    </ion-button>
+  </ion-item>
+  <form [formGroup]="editarElementoForm" (ngSubmit)="editarElemento()" *ngIf="this.editarElementoForm
+        && this.edicion == true" method="post">
+    <ion-list>
+      <ion-grid>
+        <ion-row>
+          <ion-col size-md="6" size-xs="12">
+            <ion-item fill="solid" mode="md" class="hs-textfield">
+              <ion-label position="floating">Titulo</ion-label>
+              <ion-input formControlName="titulo" type="text"></ion-input>
+              <ion-text slot="error">
+                <ng-container *ngIf="editarElementoForm.get('titulo').touched">
+                  Error Titulo
+                </ng-container>
+              </ion-text>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size-md="9" size-xs="12">
+            <ion-item fill="solid" mode="md" class="hs-textfield">
+              <ion-label position="floating">Duracion</ion-label>
+              <ion-input formControlName="duracion" type="number"></ion-input>
+              <ion-text slot="error">
+                <ng-container *ngIf="editarElementoForm.get('duracion').touched">
+                  Error Duracion
+                </ng-container>
+              </ion-text>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size-md="3" size-xs="12">
+            <ion-item fill="solid" mode="md" class="hs-textfield">
+              <ion-label position="floating">Idioma</ion-label>
+              <ion-input formControlName="idioma" type="text"></ion-input>
+              <ion-text slot="error">
+                <ng-container *ngIf="editarElementoForm.get('idioma').touched">
+                  Error Idioma
+                </ng-container>
+              </ion-text>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size-md="3" size-xs="12">
+            <ion-item fill="solid" mode="md" class="hs-textfield">
+              <ion-label position="floating">Director</ion-label>
+              <ion-input formControlName="director" type="text"></ion-input>
+              <ion-text slot="error">
+                <ng-container *ngIf="editarElementoForm.get('director').touched">
+                  Error Director
+                </ng-container>
+              </ion-text>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size-md="3" size-xs="12" *ngIf="elemento.tipo == 0">
+            <ion-item fill="solid" mode="md" class="hs-textfield">
+              <ion-label position="floating">Capitulos</ion-label>
+              <ion-input formControlName="capitulos" type="text"></ion-input>
+              <ion-text slot="error">
+                <ng-container *ngIf="editarElementoForm.get('capitulos').touched">
+                  Error Capitulos
+                </ng-container>
+              </ion-text>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <div>
+        <ion-col size-md="3" size-xs="8"*ngIf="actoresAgregados.length>0">
+          <ion-item fill="solid" mode="md"  *ngFor="let actor of actoresAgregados">
+            <p>{{actor}}   </p>
+          </ion-item>
+        </ion-col>
+        <ion-col size-md="3" size-xs="12">
+          <ion-item fill="solid" mode="md" class="hs-textfield">
+            <ion-label position="floating">Agregar Actor</ion-label>
+            <ion-input formControlName="actores" type="text"></ion-input>
+            <ion-button (click)="agregarActorALista()">Agregar Actor</ion-button>
+          </ion-item>
+        </ion-col>
+      </div>
+
+      <div>
+        <ion-col size-md="3" size-xs="12"*ngIf="generosAgregados.length>0">
+          <ion-item fill="solid" mode="md"  *ngFor="let genero of generosAgregados">
+            <p>{{genero}}   </p>
+          </ion-item>
+        </ion-col>
+        <ion-col size-md="3" size-xs="12">
+          <ion-item fill="solid" mode="md" class="hs-textfield">
+            <ion-label position="floating">Agregar Genero</ion-label>
+            <ion-input formControlName="genero" type="text"></ion-input>
+            <ion-button (click)="agregarGeneroALista()">Agregar Genero</ion-button>
+          </ion-item>
+        </ion-col>
+      </div>
+      <ion-grid>
+        <ion-row class="ion-justify-content-center">
+          <ion-col size-md="12" size-xs="12" class="ion-text-center">
+            <ion-button type="submit">EDITAR</ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-list>
+  </form>
+</ion-content>

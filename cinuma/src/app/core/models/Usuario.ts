@@ -1,11 +1,12 @@
 import {Autenticacion} from "./Autenticacion";
-import {Perfil} from "./Perfil";
+import mongoose from "mongoose";
 
 export class Usuario {
   userId: string;
   email: string;
   username: string;
   phone?: string;
+  rol: number; //0 -Administrador  1-Moderador   2-Usuario Comun
   autenticacion: Autenticacion;
-  perfil: Perfil;
+  perfil: string;
 }

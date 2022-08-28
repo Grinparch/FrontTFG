@@ -7,8 +7,10 @@ import {Autenticacion} from "../models/Autenticacion";
   providedIn: 'root'
 })
 export class AutenticacionService {
+  autenticacion: Autenticacion;
   // paths
   addAuthPath = "http://localhost:8081/autenticacion/add";
+  loginPath = "http://localhost:8081/autenticacion/login";
 
   constructor(private http: HttpClient) { }
 
@@ -21,7 +23,7 @@ export class AutenticacionService {
         "usuario": newAuth.usuario,
         "clave": newAuth.clave},
       { headers }).pipe().subscribe(auth => {
-      console.log(auth);
+      this.autenticacion = auth;
     });
   }
 
@@ -31,5 +33,33 @@ export class AutenticacionService {
       { headers }).subscribe(data => {
       console.log(data);
     });
+  }
+
+  async login(auth: Autenticacion){
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json'})
+    this.http.post<any>(this.loginPath,
+      {"autenticacionId": auth.autenticacionId,
+        "usuario": auth.usuario,
+        "clave": auth.clave},
+      { headers }).subscribe(data => {
+        console.log("data");
+        console.log(data);
+      this.saveData(data);
+    });
+  }
+
+  saveData(user:Usuario) {
+    sessionStorage.setItem('usuario', user.username);
+    sessionStorage.setItem('rol', user.rol.toString());
+    sessionStorage.setItem('perfilId', user.perfil);
+    sessionStorage.setItem('email', user.email);
+    sessionStorage.setItem('phone', user.phone);
+    sessionStorage.setItem('userId', user.userId);
+  }
+  getUsername() {
+    return sessionStorage.getItem('username');
+  }
+  getRol() {
+    return sessionStorage.getItem('rol');
   }
 }

@@ -1,40 +1,72 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
 import {Usuario} from "../models/Usuario";
+import {catchError} from "rxjs/operators";
+import {Observable, of, throwError} from "rxjs";
+import * as http from "http";
+import {NavController} from "@ionic/angular";
+import {Router, RouterLink} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
+  usuario: Usuario;
   // paths
-  addUserPath = "http://localhost:8081/usuarios/add";
+  addUserPath = "http://localhost:8081/usuarios/addUsuarioComun";
+  getUserPath = "http://localhost:8081/usuarios/byUsername/";
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+              private navCtrl: NavController,
+              private router: Router) { }
 
-  async addUser(newUser: Usuario) {
+  async addUser(newUser: Usuario){
     console.log("en add User");
     console.log(JSON.stringify(newUser));
     const headers = new HttpHeaders({ 'Content-Type': 'application/json'})
-    return this.http.post<Usuario>(this.addUserPath,
+    this.http.post<Usuario>(this.addUserPath,
       {"userId": newUser.userId,
         "email": newUser.email,
         "username": newUser.username,
         "phone": newUser.phone,
         "autenticacion": newUser.autenticacion,
         "perfil": newUser.perfil},
-      { headers }).pipe().subscribe(user => {
-      console.log(user);
-    });
+      { headers }).pipe().subscribe((usuario) => {
+        console.log("usuario");
+        console.log(usuario);
+        this.usuario=usuario;
+        this.router.navigate(['/user-login']);
+       },(error) => {                              //Error callback
+        if (error instanceof HttpErrorResponse) {
+          if (error.error instanceof ErrorEvent) {
+            console.error("Error Event");
+          } else {
+            console.log(`error status : ${error.status} ${error.statusText}`);
+            switch (error.status) {
+              case 400:      //Usuario ya existente
+                this.router.navigate(['/user-register'], { queryParams: { error: 'usuarioExistente' } });
+                break;
+            }
+          }
+        } else {
+          console.error("some thing else happened");
+        }
+        return throwError(error);
+      });
+    return "Error";
   }
 
   async getUser() {
-    const headers = new HttpHeaders({ 'Authorization': 'Bearer my-token', 'My-Custom-Header': 'foobar',
-      'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
-      'Access-Control-Allow-Headers':'X-Requested-With, content-type, Authorization, Host'})
+    const headers = new HttpHeaders({'Content-Type': 'application/json'})
     this.http.get<any>("http://localhost:8081/usuarios/",
       { headers }).subscribe(data => {
-      console.log(data);
+        this.usuario = data;
+      return data;
     });
+  }
+  getUsuarioEspecifico(username: string) {
+    const headers = new HttpHeaders({'Content-Type': 'application/json'})
+    return this.http.get<Usuario>(this.getUserPath+username,
+      { headers }) as Observable<Usuario>;
   }
 }

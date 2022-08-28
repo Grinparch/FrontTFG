@@ -1,0 +1,160 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Crear Serie/Pelicula</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="hs">
+
+  <div class="hs-container hs-bg-white">
+    <form [formGroup]="crearElementoForm" (ngSubmit)="crearElemento()" *ngIf="this.crearElementoForm" method="post">
+      <ion-list>
+        <ion-grid>
+          <ion-row>
+            <ion-col size-md="6" size-xs="12">
+              <ion-item fill="solid" mode="md" class="hs-textfield">
+                <ion-label position="floating">Titulo</ion-label>
+                <ion-input formControlName="titulo" type="text"></ion-input>
+                <ion-text slot="error">
+                  <ng-container *ngIf="crearElementoForm.get('titulo').touched">
+                    Error Titulo
+                  </ng-container>
+                </ion-text>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size-md="9" size-xs="12">
+              <ion-item fill="solid" mode="md" class="hs-textfield">
+                <ion-label position="floating">Duracion</ion-label>
+                <ion-input formControlName="duracion" type="number"></ion-input>
+                <ion-text slot="error">
+                  <ng-container *ngIf="crearElementoForm.get('duracion').touched">
+                    Error Duracion
+                  </ng-container>
+                </ion-text>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size-md="3" size-xs="12">
+              <ion-item fill="solid" mode="md" class="hs-textfield">
+                <ion-label position="floating">Idioma</ion-label>
+                <ion-input formControlName="idioma" type="text"></ion-input>
+                <ion-text slot="error">
+                  <ng-container *ngIf="crearElementoForm.get('idioma').touched">
+                    Error Idioma
+                  </ng-container>
+                </ion-text>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size-md="3" size-xs="12">
+              <ion-item fill="solid" mode="md" class="hs-textfield">
+                <ion-label position="floating">Director</ion-label>
+                <ion-input formControlName="director" type="text"></ion-input>
+                <ion-text slot="error">
+                  <ng-container *ngIf="crearElementoForm.get('director').touched">
+                    Error Director
+                  </ng-container>
+                </ion-text>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size-md="3" size-xs="12">
+              <ion-radio-group formControlName="tipo">
+                <ion-item fill="solid" mode="md" class="hs-textfield">
+                  <ion-label position="floating">Tipo</ion-label>
+                  <ion-item>
+                    <ion-label>Pelicula</ion-label>
+                    <ion-radio slot="start" value=1></ion-radio>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label>Serie</ion-label>
+                    <ion-radio slot="start" value=0></ion-radio>
+                  </ion-item>
+                  <ion-text slot="error">
+                    <ng-container *ngIf="crearElementoForm.get('tipo').touched">
+                      Error Tipo
+                    </ng-container>
+                  </ion-text>
+                </ion-item>
+              </ion-radio-group>
+            </ion-col>
+            <ion-col size-md="3" size-xs="12" *ngIf="crearElementoForm.controls.tipo.value == 0">
+              <ion-item fill="solid" mode="md" class="hs-textfield">
+                <ion-label position="floating">Capitulos</ion-label>
+                <ion-input formControlName="capitulos" type="text"></ion-input>
+                <ion-text slot="error">
+                  <ng-container *ngIf="crearElementoForm.get('capitulos').touched">
+                    Error Capitulos
+                  </ng-container>
+                </ion-text>
+              </ion-item>
+            </ion-col>
+            <ion-col size-md="6" size-xs="12" *ngIf="crearElementoForm.controls.tipo.value == 0">
+              <ion-item fill="solid" mode="md" class="hs-textfield">
+                <ion-label position="floating">Estreno</ion-label>
+                <ion-datetime formControlName="estreno" ></ion-datetime>
+                <ion-text slot="error">
+                  <ng-container *ngIf="crearElementoForm.get('estreno').touched">
+                    Error Estreno
+                  </ng-container>
+                </ion-text>
+              </ion-item>
+            </ion-col>
+            <ion-col size-md="6" size-xs="12" *ngIf="crearElementoForm.controls.tipo.value == 1">
+              <ion-item fill="solid" mode="md" class="hs-textfield">
+                <ion-label position="floating">Estreno en Taquilla</ion-label>
+                <ion-datetime formControlName="estrenoTaquilla" ></ion-datetime>
+                <ion-text slot="error">
+                  <ng-container *ngIf="crearElementoForm.get('estrenoTaquilla').touched">
+                    Error Estreno Taquilla
+                  </ng-container>
+                </ion-text>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+        <div>
+          <ion-col size-md="3" size-xs="8"*ngIf="actoresAgregados.length>0">
+            <ion-item fill="solid" mode="md"  *ngFor="let actor of actoresAgregados">
+              <p>{{actor}}   </p>
+            </ion-item>
+          </ion-col>
+          <ion-col size-md="3" size-xs="12">
+            <ion-item fill="solid" mode="md" class="hs-textfield">
+              <ion-label position="floating">Agregar Actor</ion-label>
+              <ion-input formControlName="actores" type="text"></ion-input>
+              <ion-button (click)="agregarActorALista()">Agregar Actor</ion-button>
+            </ion-item>
+          </ion-col>
+        </div>
+
+        <div>
+          <ion-col size-md="3" size-xs="12"*ngIf="generosAgregados.length>0">
+            <ion-item fill="solid" mode="md"  *ngFor="let genero of generosAgregados">
+              <p>{{genero}}   </p>
+            </ion-item>
+          </ion-col>
+          <ion-col size-md="3" size-xs="12">
+            <ion-item fill="solid" mode="md" class="hs-textfield">
+              <ion-label position="floating">Agregar Genero</ion-label>
+              <ion-input formControlName="genero" type="text"></ion-input>
+              <ion-button (click)="agregarGeneroALista()">Agregar Genero</ion-button>
+            </ion-item>
+          </ion-col>
+        </div>
+        <ion-grid>
+          <ion-row class="ion-justify-content-center">
+            <ion-col size-md="12" size-xs="12" class="ion-text-center">
+              <ion-button type="submit">CREAR</ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-list>
+    </form>
+  </div>
+</ion-content>

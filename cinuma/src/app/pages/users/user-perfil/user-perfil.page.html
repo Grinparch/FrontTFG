@@ -1,0 +1,158 @@
+<ion-header>
+  <ion-toolbar >
+    <ion-title>
+      Perfil
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" *ngIf="usuario !== undefined && usuario !== null && perfil != undefined && perfil != null">
+
+  <div class="hs-container">
+    <ng-container>
+      <div class="profile">
+
+        <div *ngIf="usuario.rol !== undefined">
+          <span *ngIf="usuario.rol === 0">
+            Administrador
+          </span>
+          <span *ngIf="usuario.rol === 1">
+            Moderador
+          </span>
+          <span *ngIf="usuario.rol === 2">
+            Usuario
+          </span>
+        </div>
+
+        <h4>
+          <strong>{{usuario.username}}</strong>
+        </h4>
+        <p>{{usuario.email}}</p>
+        <p *ngIf="usuario.phone != null || usuario.phone != undefined">{{usuario.phone}}</p>
+
+      </div>
+
+      <ng-container *ngIf="!editMode ">
+        <h3 class="ion-padding-horizontal">Más datos</h3>
+
+        <ion-grid class="hs-bg-white ion-no-padding">
+          <ion-row>
+            <ion-col size-md="4">
+              <ion-item lines="none" *ngIf="perfil.vistoUltimamente != null || perfil.vistoUltimamente != undefined">
+                <ion-label>
+                  <strong>Último Visto</strong>
+                  {{perfil.vistoUltimamente}}
+                </ion-label>
+              </ion-item>
+            </ion-col>
+            <ion-col size-md="4">
+              <ion-item lines="none" *ngIf="perfil.generoPreferido != null || perfil.generoPreferido != undefined">
+                <ion-label>
+                  <strong>Genero Preferido</strong>
+                  {{perfil.generoPreferido}}
+                </ion-label>
+              </ion-item>
+            </ion-col>
+            <ion-col size-md="4">
+              <ion-item lines="none" *ngIf="perfil.puntuacionPromedio != null || perfil.puntuacionPromedio != undefined">
+                <ion-label>
+                  <strong>Puntuación Promedio</strong>
+                  {{perfil.puntuacionPromedio}}
+                </ion-label>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size-md="4">
+              <ion-label>
+                <strong>Actores Preferidos</strong>
+              </ion-label>
+              <ion-item lines="none" *ngIf="perfil.actoresPreferidos != null || perfil.actoresPreferidos != undefined">
+                <ion-label *ngFor="let actor of perfil.actoresPreferidos" >
+                  <p *ngIf="actor != ' ' && actor != null ">
+                    {{actor}}
+                  </p>
+                </ion-label>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size-md="4" >
+              <ion-label>
+                <strong>Vinculos Asociados</strong>
+              </ion-label>
+              <ion-item lines="none" *ngIf="perfil.vinculosAsociados != null || perfil.vinculosAsociados!= undefined" >
+                <ion-label *ngFor="let vinculo of perfil.vinculosAsociados" >
+                  <p *ngIf="vinculo != ' ' && vinculo != null ">
+                    {{vinculo}}
+                  </p>
+                </ion-label>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size-md="4">
+              <ion-item lines="none" *ngIf="perfil.disponibleChat != null || perfil.disponibleChat != undefined">
+                <ion-label>
+                  <strong>Disponible en Chat</strong>
+                  {{perfil.disponibleChat}}
+                </ion-label>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ng-container>
+
+
+      <!-- FORM -->
+      <form [formGroup]="editarPerfilForm"
+            (ngSubmit)="updateUser()"
+            *ngIf="this.editarPerfilForm"
+            method="post">
+        <ion-list>
+          <ion-grid>
+            <ion-row>
+              <ion-col size-md="6" size-xs="12">
+                <ion-item fill="solid" mode="md" class="hs-textfield">
+                  <ion-label position="floating">Actores Preferidos</ion-label>
+                  <ion-input formControlName="actoresPreferidos"
+                             type="text"></ion-input>
+                  <ion-text slot="error">
+                    Actores Preferidos Incorrecto
+                  </ion-text>
+                </ion-item>
+              </ion-col>
+              <ion-col size-md="6" size-xs="12">
+                <ion-item fill="solid" mode="md" class="hs-textfield">
+                  <ion-label position="floating">Vinculos Asociados</ion-label>
+                  <ion-input formControlName="vinculosAsociados"
+                             type="text"></ion-input>
+                  <ion-text slot="error">
+                    Vinculos Asociados Error
+                  </ion-text>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size-md="9" size-xs="12">
+                <ion-item fill="solid" mode="md" class="hs-textfield">
+                  <ion-label position="floating">Disponible en Chat</ion-label>
+                  <ion-checkbox formControlName="disponibleChat" [value]="!editarPerfilForm.get('actoresPreferidos').value"></ion-checkbox>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+            <ion-row class="ion-justify-content-center">
+              <ion-col size-md="12" size-xs="12" class="ion-text-center">
+                <ion-button fill="outline" (click)="changeEditMode()">Edit</ion-button>
+                <ion-button type="submit">Editar</ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-list>
+      </form>
+
+
+
+    </ng-container>
+  </div>
+</ion-content>

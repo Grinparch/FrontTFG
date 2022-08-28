@@ -5,8 +5,8 @@ import {Usuario} from "./Usuario";
 export class Grupo {
   grupoId: mongoose.Types.ObjectId;
   nombre: string;
-  elementosPreferidos: Elemento[];
+  elementosPreferidos: string[];
   elementosSinAprobar: JSON;
-  miembros: Usuario[];
+  miembros: string[];
   descripcion: string;
 }

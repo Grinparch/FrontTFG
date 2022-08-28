@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 export class Elemento {
-  elementoId: mongoose.Types.ObjectId;
+  elementoId: string;
   titulo: string;
   calificacionPromedio: number;
   calificacionPersonal: number;
@@ -10,7 +10,6 @@ export class Elemento {
   idioma: string;
   director: string;
   actores: string[];
-  opinion: string;
   tipo: number;                          //0 es serie, 1 es pelicula
   capitulos?: number;
   estreno?: Date;

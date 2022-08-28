@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 export class Autenticacion {
-  autenticacionId: mongoose.Types.ObjectId;
+  autenticacionId: string;
   usuario: string;
   clave: string;
 }
