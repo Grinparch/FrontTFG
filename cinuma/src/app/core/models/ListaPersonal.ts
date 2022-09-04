@@ -1,7 +1,6 @@
-import mongoose from "mongoose";
-import {Elemento} from "./Elemento";
+import {ElementoEnlistado} from "./ElementoEnlistado";
 
 export class ListaPersonal {
   listaPersonalId: string;
-  elementosVistos: Elemento[];
+  elementosVistos: ElementoEnlistado[];
 }

@@ -11,6 +11,6 @@ export class Perfil {
   vinculosAsociados?: string[];
   disponibleChat: boolean;
   avatar?: string;
-  listaPersonal: ListaPersonal;
-  listasCreadas?: Lista;
+  listaPersonalId: string;
+  listasCreadas?: string[];
 }

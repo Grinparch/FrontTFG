@@ -13,6 +13,7 @@ export class ElementoService {
 
   // paths
   getAllElementosPath = "http://localhost:8081/elemento/";
+  getElementoEspecificoPath = "http://localhost:8081/elemento/";
   addPeliculaPath = "http://localhost:8081/elemento/addPelicula/";
   addSeriePath = "http://localhost:8081/elemento/addSerie/";
   deleteElementoPath = "http://localhost:8081/elemento/delete/";
@@ -27,13 +28,18 @@ export class ElementoService {
       { headers }) as Observable<Elemento[]>;
   }
 
+  getElementoEspecifico(elementoId: string){
+    const headers = new HttpHeaders({'Content-Type': 'application/json'})
+    return this.http.get<Elemento>(this.getElementoEspecificoPath+elementoId,
+      { headers }) as Observable<Elemento>;
+  }
+
   addPelicula(elemento: Elemento){
     const headers = new HttpHeaders({ 'Content-Type': 'application/json'})
     return this.http.post<Elemento>(this.addPeliculaPath,
       {"elementoId": elemento.elementoId,
         "titulo": elemento.titulo,
         "calificacionPromedio": elemento.calificacionPromedio,
-        "calificacionPersonal": elemento.calificacionPersonal,
         "duracion": elemento.duracion,
         "genero": elemento.genero,
         "idioma": elemento.idioma,
@@ -50,7 +56,6 @@ export class ElementoService {
       {"elementoId": elemento.elementoId,
         "titulo": elemento.titulo,
         "calificacionPromedio": elemento.calificacionPromedio,
-        "calificacionPersonal": elemento.calificacionPersonal,
         "duracion": elemento.duracion,
         "genero": elemento.genero,
         "idioma": elemento.idioma,
@@ -68,7 +73,6 @@ export class ElementoService {
       {"elementoId": elemento.elementoId,
         "titulo": elemento.titulo,
         "calificacionPromedio": elemento.calificacionPromedio,
-        "calificacionPersonal": elemento.calificacionPersonal,
         "duracion": elemento.duracion,
         "genero": elemento.genero,
         "idioma": elemento.idioma,
@@ -85,7 +89,6 @@ export class ElementoService {
       {"elementoId": elemento.elementoId,
         "titulo": elemento.titulo,
         "calificacionPromedio": elemento.calificacionPromedio,
-        "calificacionPersonal": elemento.calificacionPersonal,
         "duracion": elemento.duracion,
         "genero": elemento.genero,
         "idioma": elemento.idioma,

@@ -1,0 +1,80 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Agregar Serie/Pelicula</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="hs">
+  <div *ngIf="todosElementos != undefined">
+    <ion-list *ngFor="let elemento of todosElementos">
+      <div *ngIf="elemento != undefined">
+        <ion-card (click)="guardarElemento(elemento)">
+          <ion-item>
+            <ion-label class="ion-text-wrap">
+              <ion-grid class="ion-no-padding">
+                <ion-row>
+                  <ion-col size="9">{{elemento.titulo}}</ion-col>
+                  <ion-col *ngIf="elemento.tipo == 0" class="ion-text-end"><ion-badge color="primary">SERIE</ion-badge></ion-col>
+                  <ion-col *ngIf="elemento.tipo == 1" class="ion-text-end"><ion-badge color="primary">PELICULA</ion-badge></ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col *ngIf="elemento.tipo == 0" class="ion-text-end"><ion-text>{{elemento.capitulos}}</ion-text></ion-col>
+                  <ion-col *ngIf="elemento.tipo == 0" class="ion-text-end"><ion-text>{{elemento.estreno}}</ion-text></ion-col>
+                  <ion-col *ngIf="elemento.tipo == 1" class="ion-text-end"><ion-text>{{elemento.estrenoTaquilla}}</ion-text></ion-col>
+                </ion-row>
+                <ion-row *ngFor="let genero of elemento.genero">
+                  <ion-col class="ion-text-end"><ion-text>{{genero}}</ion-text></ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-label>
+          </ion-item>
+        </ion-card>
+      </div>
+    </ion-list>
+  </div>
+  <div class="hs-container hs-bg-white">
+    <form [formGroup]="agregarElementoForm" (ngSubmit)="agregarElemento()" *ngIf="this.agregarElementoForm" method="post">
+      <ion-list>
+        <ion-grid>
+
+          <ion-row>
+            <ion-col size-md="9" size-xs="12">
+              <ion-item fill="solid" mode="md" class="hs-textfield">
+                <ion-label position="floating">Opinion</ion-label>
+                <ion-input formControlName="opinion" type="text"></ion-input>
+                <ion-text slot="error">
+                  <ng-container *ngIf="agregarElementoForm.get('opinion').touched">
+                    Error Opinion
+                  </ng-container>
+                </ion-text>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size-md="3" size-xs="12">
+              <ion-item fill="solid" mode="md" class="hs-textfield">
+                <ion-label position="floating">Puntuacion</ion-label>
+                <ion-input formControlName="puntuacionPersonal" type="number"></ion-input>
+                <ion-text slot="error">
+                  <ng-container *ngIf="agregarElementoForm.get('puntuacionPersonal').touched">
+                    Error Puntuacion Personal
+                  </ng-container>
+                </ion-text>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+
+        </ion-grid>
+
+        <ion-grid>
+          <ion-row class="ion-justify-content-center">
+            <ion-col size-md="12" size-xs="12" class="ion-text-center">
+              <ion-button type="submit">CREAR</ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+      </ion-list>
+    </form>
+  </div>
+</ion-content>

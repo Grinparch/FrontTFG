@@ -1,0 +1,89 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{elementoEnlistado.titulo}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-item>
+    <ion-label class="ion-text-wrap">
+      <ion-grid class="ion-no-padding">
+        <ion-row>
+          <ion-col *ngIf="elementoEnlistado.tipo == 0" class="ion-text-end"><ion-badge color="primary">SERIE</ion-badge></ion-col>
+          <ion-col *ngIf="elementoEnlistado.tipo == 1" class="ion-text-end"><ion-badge color="primary">PELICULA</ion-badge></ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col *ngIf="elementoEnlistado.tipo == 0" class="ion-text-end"><ion-text>{{elementoEnlistado.capitulos | date:'dd/MM/yyyy HH:mm:ss'}}</ion-text></ion-col>
+          <ion-col *ngIf="elementoEnlistado.tipo == 0" class="ion-text-end"><ion-text>{{elementoEnlistado.estreno | date:'dd/MM/yyyy HH:mm:ss'}}</ion-text></ion-col>
+          <ion-col *ngIf="elementoEnlistado.tipo == 1" class="ion-text-end"><ion-text>{{elementoEnlistado.estrenoTaquilla | date:'dd/MM/yyyy HH:mm:ss'}}</ion-text></ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col *ngIf="elementoEnlistado.opinion != undefined" class="ion-text-end">
+            Opinion: {{elementoEnlistado.opinion}}
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col *ngIf="elementoEnlistado.puntuacionPersonal == undefined" class="ion-text-end">
+            Puntuacion Personal: {{elementoEnlistado.puntuacionPersonal}}
+          </ion-col>
+        </ion-row>
+        <ion-row *ngFor="let genero of elementoEnlistado.genero">
+          <ion-col class="ion-text-end"><ion-text>{{genero}}</ion-text></ion-col>
+        </ion-row>
+        <ion-row *ngFor="let actor of elementoEnlistado.actores">
+          <ion-col class="ion-text-end"><ion-text>{{actor}}</ion-text></ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-button (click)="eliminarElemento()">
+      Eliminar Elemento
+    </ion-button>
+  </ion-item>
+  <ion-item>
+    <ion-button (click)="activarEdicionElemento()">
+      Modo Edicion
+    </ion-button>
+  </ion-item>
+  <form [formGroup]="editarElementoForm" (ngSubmit)="editarElemento()" *ngIf="this.editarElementoForm
+        && this.edicion == true" method="post">
+    <ion-list>
+      <ion-grid>
+
+        <ion-row>
+          <ion-col size-md="9" size-xs="12">
+            <ion-item fill="solid" mode="md" class="hs-textfield">
+              <ion-label position="floating">Opinion</ion-label>
+              <ion-input formControlName="opinion" type="text"></ion-input>
+              <ion-text slot="error">
+                <ng-container *ngIf="editarElementoForm.get('opinion').touched">
+                  Error Opinion
+                </ng-container>
+              </ion-text>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size-md="3" size-xs="12">
+            <ion-item fill="solid" mode="md" class="hs-textfield">
+              <ion-label position="floating">Puntuacion</ion-label>
+              <ion-input formControlName="puntuacionPersonal" type="number"></ion-input>
+              <ion-text slot="error">
+                <ng-container *ngIf="editarElementoForm.get('puntuacionPersonal').touched">
+                  Error Puntuacion Personal
+                </ng-container>
+              </ion-text>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row class="ion-justify-content-center">
+          <ion-col size-md="12" size-xs="12" class="ion-text-center">
+            <ion-button type="submit">EDITAR</ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-list>
+  </form>
+</ion-content>
+

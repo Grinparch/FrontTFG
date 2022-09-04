@@ -16,8 +16,8 @@ const routes: Routes = [
     loadChildren: () => import('./pages/users/user-register/user-register.module').then( m => m.UserRegisterPageModule)
   },
   {
-    path: 'personal-list',
-    loadChildren: () => import('./pages/lists/personal-list/personal-list.module').then( m => m.PersonalListPageModule)
+    path: 'lista-personal',
+    loadChildren: () => import('./pages/lists/lista-personal/lista-personal.module').then(m => m.ListaPersonalPageModule)
   },
   {
     path: 'pagina-principal',
@@ -42,6 +42,38 @@ const routes: Routes = [
   {
     path: 'elemento-detalles',
     loadChildren: () => import('./pages/elementos/elemento-detalles/elemento-detalles.module').then( m => m.ElementoDetallesPageModule)
+  },
+  {
+    path: 'lista-personal-agregar',
+    loadChildren: () => import('./pages/lists/lista-personal-agregar/lista-personal-agregar.module').then( m => m.ListaPersonalAgregarPageModule)
+  },
+  {
+    path: 'lista-personal-elemento-detalles',
+    loadChildren: () => import('./pages/lists/lista-personal-elemento-detalles/lista-personal-elemento-detalles.module').then( m => m.ListaPersonalElementoDetallesPageModule)
+  },
+  {
+    path: 'lista-listado',
+    loadChildren: () => import('./pages/lists/lista-listado/lista-listado.module').then( m => m.ListaListadoPageModule)
+  },
+  {
+    path: 'lista-detalles',
+    loadChildren: () => import('./pages/lists/lista-detalles/lista-detalles.module').then( m => m.ListaDetallesPageModule)
+  },
+  {
+    path: 'lista-crear',
+    loadChildren: () => import('./pages/lists/lista-crear/lista-crear.module').then( m => m.ListaCrearPageModule)
+  },
+  {
+    path: 'grupo-listado',
+    loadChildren: () => import('./pages/grupos/grupo-listado/grupo-listado.module').then( m => m.GrupoListadoPageModule)
+  },
+  {
+    path: 'grupo-crear',
+    loadChildren: () => import('./pages/grupos/grupo-crear/grupo-crear.module').then( m => m.GrupoCrearPageModule)
+  },
+  {
+    path: 'grupo-detalles',
+    loadChildren: () => import('./pages/grupos/grupo-detalles/grupo-detalles.module').then( m => m.GrupoDetallesPageModule)
   }
 ];
 

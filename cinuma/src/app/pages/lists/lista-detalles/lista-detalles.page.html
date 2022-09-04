@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Detalles</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-item>
+    <ion-label *ngIf="lista != undefined" class="ion-text-wrap">
+      <ion-grid *ngIf="lista.elementos != undefined" class="ion-no-padding">
+        <ion-list *ngFor="let elemento of lista.elementos">
+          <ion-card (click)="elementoDetallesModal(elemento)">
+            <ion-row>
+              <ion-col class="ion-text-end"><ion-text>{{elemento.titulo}}</ion-text></ion-col>
+              <ion-col *ngIf="elemento.tipo == 0" class="ion-text-end"><ion-badge color="primary">SERIE</ion-badge></ion-col>
+              <ion-col *ngIf="elemento.tipo == 1" class="ion-text-end"><ion-badge color="primary">PELICULA</ion-badge></ion-col>
+              <ion-col *ngIf="elemento.tipo == 0" class="ion-text-end"><ion-badge color="primary">{{elemento.capitulos}}</ion-badge></ion-col>
+              <ion-col *ngIf="elemento.tipo == 1" class="ion-text-end"><ion-badge color="primary">{{elemento.duracion}}</ion-badge></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col ><ion-text>{{lista.creador}}</ion-text></ion-col>
+              <ion-col ><ion-text>{{lista.votos}}</ion-text></ion-col>
+            </ion-row>
+          </ion-card>
+          <ion-button (click)="quitarElementoDeLista(elemento)">
+            Quitar
+          </ion-button>
+        </ion-list>
+      </ion-grid>
+    </ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-button (click)="eliminarLista()">
+      Eliminar Lista
+    </ion-button>
+  </ion-item>
+  <ion-item>
+    <ion-button (click)="editarElemento()">
+      Editar
+    </ion-button>
+  </ion-item>
+</ion-content>
+

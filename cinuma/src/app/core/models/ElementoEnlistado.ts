@@ -1,7 +1,10 @@
-import mongoose from "mongoose";
-
-export class Elemento {
+export class ElementoEnlistado {
+  elementoEnlistadoId: string;
   elementoId: string;
+  listaPersonalId: string;
+  perfilId: string;
+  puntuacionPersonal?: number;
+  opinion?: string;
   titulo: string;
   calificacionPromedio: number;
   duracion: number;

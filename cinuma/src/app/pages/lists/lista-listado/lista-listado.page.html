@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Listas</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div *ngIf="this.listas != undefined">
+    <div *ngIf="this.listas.length>0">
+      <ion-list *ngFor="let lista of listas">
+        <ion-card (click)="irADetallesDeLista(lista)">
+          <ion-item>
+            <ion-label class="ion-text-wrap">
+              <ion-grid class="ion-no-padding">
+                <ion-row *ngFor="let elemento of lista.elementos">
+                  <ion-col class="ion-text-end"><ion-text>{{elemento.titulo}}</ion-text></ion-col>
+                  <ion-col *ngIf="elemento.tipo == 0" class="ion-text-end"><ion-badge color="primary">SERIE</ion-badge></ion-col>
+                  <ion-col *ngIf="elemento.tipo == 1" class="ion-text-end"><ion-badge color="primary">PELICULA</ion-badge></ion-col>
+                  <ion-col *ngIf="elemento.tipo == 0" class="ion-text-end"><ion-badge color="primary">{{elemento.capitulos}}</ion-badge></ion-col>
+                  <ion-col *ngIf="elemento.tipo == 1" class="ion-text-end"><ion-badge color="primary">{{elemento.duracion}}</ion-badge></ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col ><ion-text>{{lista.creador}}</ion-text></ion-col>
+                  <ion-col ><ion-text>{{lista.votos}}</ion-text></ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-label>
+          </ion-item>
+        </ion-card>
+      </ion-list>
+    </div>
+  </div>
+
+  <ion-item>
+    <ion-button (click)="crearNuevaListaModal()">
+      Crear Nueva Lista
+    </ion-button>
+  </ion-item>
+</ion-content>

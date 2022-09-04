@@ -33,6 +33,8 @@ export class ElementoDetallesPage implements OnInit {
   }
 
   ionViewWillEnter(){
+    console.log("elemento");
+    console.log(this.elemento);
     this.buildForm();
     this.actoresAgregados = this.elemento.actores;
     this.generosAgregados = this.elemento.genero;
@@ -108,7 +110,6 @@ export class ElementoDetallesPage implements OnInit {
         elementoId: this.elemento.elementoId,
         titulo: this.editarElementoForm.value.titulo,
         calificacionPromedio: 0,
-        calificacionPersonal: 0,
         duracion: this.editarElementoForm.value.duracion,
         genero: this.generosAgregados,
         idioma: this.editarElementoForm.value.idioma,
@@ -127,7 +128,6 @@ export class ElementoDetallesPage implements OnInit {
         elementoId: this.elemento.elementoId,
         titulo: this.editarElementoForm.value.titulo,
         calificacionPromedio: 0,
-        calificacionPersonal: 0,
         duracion: this.editarElementoForm.value.duracion,
         genero: this.generosAgregados,
         idioma: this.editarElementoForm.value.idioma,

@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Autenticacion} from "../models/Autenticacion";
 import {ListaPersonal} from "../models/ListaPersonal";
+import {Perfil} from "../models/Perfil";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +12,7 @@ export class ListaPersonalService {
   listaPersonal: ListaPersonal;
 // paths
   addAuthPath = "http://localhost:8081/listaPersonal/add";
+  listaPersonalGetPath = "http://localhost:8081/listaPersonal/";
 
   constructor(private http: HttpClient) { }
 
@@ -25,11 +28,9 @@ export class ListaPersonalService {
     });
   }
 
-  async getListaPersonal() {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json'})
-    this.http.get<any>("http://localhost:8081/listaPersonal/",
-      { headers }).subscribe(data => {
-      console.log(data);
-    });
+  getListaPersonal(listaPersonalId: string) {
+    const headers = new HttpHeaders({'Content-Type': 'application/json'})
+    return this.http.get<ListaPersonal>(this.listaPersonalGetPath+listaPersonalId,
+      { headers }) as Observable<ListaPersonal>;
   }
 }

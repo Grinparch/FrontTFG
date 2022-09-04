@@ -41,7 +41,7 @@ export class PerfilService {
         "vinculosAsociados": perfil.vinculosAsociados,
         "disponibleChat": perfil.disponibleChat,
         "avatar": perfil.avatar,
-        "listaPersonal": perfil.listaPersonal,
+        "listaPersonalId": perfil.listaPersonalId,
         "listasCreadas": perfil.listasCreadas},
       { headers }) as Observable<Perfil>;
   }
