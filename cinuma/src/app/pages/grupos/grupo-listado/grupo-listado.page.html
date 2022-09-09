@@ -1,9 +1,33 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>grupo-listado</ion-title>
+    <ion-title>Grupos</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content [fullscreen]="true">
+  <div *ngIf="this.grupos != undefined">
+    <div *ngIf="this.grupos.length>0">
+      <ion-list *ngFor="let grupo of grupos">
+        <ion-card (click)="irADetallesDeGrupo(grupo)">
+          <ion-item>
+            <ion-label class="ion-text-wrap">
+              <ion-grid class="ion-no-padding">
+                <ion-row>
+                  <ion-col ><ion-text>{{grupo.nombre}}</ion-text></ion-col>
+                  <ion-col ><ion-text>{{grupo.descripcion}}</ion-text></ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-label>
+          </ion-item>
+        </ion-card>
+      </ion-list>
+    </div>
+  </div>
 
+  <ion-item>
+    <ion-button (click)="crearNuevoGrupoModal()">
+      Crear Nuevo Grupo
+    </ion-button>
+  </ion-item>
 </ion-content>
+

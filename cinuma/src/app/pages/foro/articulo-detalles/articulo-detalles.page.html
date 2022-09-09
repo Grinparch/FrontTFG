@@ -1,0 +1,77 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title *ngIf="articulo != undefined">{{articulo.titulo}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="hs">
+  <ng-container *ngIf="articulo != undefined">
+    <ion-grid class="hs-bg-white ion-no-padding">
+      <ion-row>
+        <ion-col ><ion-label><strong>TITULO:</strong></ion-label><ion-text>{{articulo.titulo}}</ion-text></ion-col>
+        <ion-col ><ion-label><strong>TEMA:</strong></ion-label><ion-text>{{articulo.tema}}</ion-text></ion-col>
+        <ion-col ><ion-label><strong>TITULO ASOCIADO:</strong></ion-label><ion-text>{{articulo.tituloAsociado}}</ion-text></ion-col>
+      </ion-row>
+      <ion-label><strong>GENEROS:</strong></ion-label>
+      <ion-row *ngFor="let genero of articulo.generosAsociados">
+        <ion-col ><ion-text>{{genero}}</ion-text></ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col ><ion-label></ion-label><ion-text>{{articulo.contenido}}</ion-text></ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col ><ion-label><strong>AUTOR:</strong></ion-label><ion-text>{{articulo.autor}}</ion-text></ion-col>
+        <ion-col ><ion-label><strong>FECHA:</strong></ion-label><ion-text>{{articulo.fechaCreacion}}</ion-text></ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-grid class="hs-bg-white ion-no-padding" *ngIf="comentarios != undefined">
+      <ion-label>
+        <strong>Comentarios</strong>
+      </ion-label>
+      <ion-item lines="none" *ngFor="let comentario of comentarios">
+        <ion-row>
+          <ion-card>
+            <ion-col>
+              <strong>AUTOR:</strong>
+              {{comentario.autor}}
+            </ion-col>
+            <ion-col>
+              <p>{{comentario.contenido}}</p>
+            </ion-col>
+            <ion-col>
+              <strong>FECHA:</strong>
+              <ion-text>{{comentario.fechaCreacion}}</ion-text>
+            </ion-col>
+          </ion-card>
+        </ion-row>
+      </ion-item>
+    </ion-grid>
+  </ng-container>
+  <div>
+    <ion-list>
+        <ion-list>
+          <ion-grid>
+            <ion-row>
+              <ion-col >
+                <ion-item fill="solid" mode="md" class="hs-textfield">
+                  <ion-label position="floating">Comentar</ion-label>
+                  <ion-input [(ngModel)]="contenidoComentarioNuevo"
+                             type="text"></ion-input>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-list>
+        <ion-row class="ion-justify-content-center">
+          <ion-col size-md="12" size-xs="12" class="ion-text-center">
+            <ion-button (click)="agregarComentario()">COMENTAR</ion-button>
+          </ion-col>
+        </ion-row>
+    </ion-list>
+  </div>
+  <ion-item>
+    <ion-button (click)="eliminarArticulo()" >
+      Eliminar Articulo
+    </ion-button>
+  </ion-item>
+</ion-content>

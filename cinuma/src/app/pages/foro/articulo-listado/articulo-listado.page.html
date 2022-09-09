@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Foro</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div *ngIf="this.articulos != undefined">
+    <div *ngIf="this.articulos.length>0">
+      <ion-list *ngFor="let articulo of articulos">
+        <ion-card (click)="irADetallesDeArticulo(articulo)">
+          <ion-item>
+            <ion-label class="ion-text-wrap">
+              <ion-grid class="ion-no-padding">
+                <ion-row>
+                  <ion-col ><ion-label><strong>TITULO:</strong></ion-label><ion-text>{{articulo.titulo}}</ion-text></ion-col>
+                  <ion-col ><ion-label><strong>TEMA:</strong></ion-label><ion-text>{{articulo.tema}}</ion-text></ion-col>
+                  <ion-col ><ion-label><strong>TITULO ASOCIADO:</strong></ion-label><ion-text>{{articulo.tituloAsociado}}</ion-text></ion-col>
+                </ion-row>
+                <ion-label><strong>GENEROS:</strong></ion-label>
+                <ion-row *ngFor="let genero of articulo.generosAsociados">
+                  <ion-col ><ion-text>{{genero}}</ion-text></ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-label>
+          </ion-item>
+        </ion-card>
+      </ion-list>
+    </div>
+  </div>
+
+  <ion-item>
+    <ion-button (click)="crearNuevoArticuloModal()">
+      Crear Nuevo Articulo
+    </ion-button>
+  </ion-item>
+</ion-content>

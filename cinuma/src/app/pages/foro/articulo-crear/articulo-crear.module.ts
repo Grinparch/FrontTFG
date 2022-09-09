@@ -4,18 +4,18 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { GrupoDetallesPageRoutingModule } from './grupo-detalles-routing.module';
+import { ArticuloCrearPageRoutingModule } from './articulo-crear-routing.module';
 
-import { GrupoDetallesPage } from './grupo-detalles.page';
+import { ArticuloCrearPage } from './articulo-crear.page';
 
 @NgModule({
     imports: [
         CommonModule,
         FormsModule,
         IonicModule,
-        GrupoDetallesPageRoutingModule,
+        ArticuloCrearPageRoutingModule,
         ReactiveFormsModule
     ],
-  declarations: [GrupoDetallesPage]
+  declarations: [ArticuloCrearPage]
 })
-export class GrupoDetallesPageModule {}
+export class ArticuloCrearPageModule {}

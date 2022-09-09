@@ -1,0 +1,70 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Mensajes</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div *ngIf="this.mensajes != undefined">
+    <div *ngIf="this.mensajes.length>0">
+      <ion-list *ngFor="let mensaje of mensajes">
+        <ion-card>
+          <ion-item>
+            <ion-label class="ion-text-wrap">
+              <ion-grid class="ion-no-padding">
+                <ion-row>
+                  <ion-col ><ion-label><strong>DE:</strong></ion-label><ion-text>{{mensaje.autor}}</ion-text></ion-col>
+                  <ion-col ><p>{{mensaje.contenido}}</p></ion-col>
+                  <ion-col ><ion-label><strong>FECHA:</strong></ion-label><ion-text>{{mensaje.fechaDeCreacion}}</ion-text></ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-button (click)="eliminarMensaje(mensaje.mensajeId)">
+              ELIMINAR
+            </ion-button>
+          </ion-item>
+        </ion-card>
+      </ion-list>
+    </div>
+  </div>
+  <form [formGroup]="crearMensajeForm"
+        (ngSubmit)="crearMensaje()"
+        *ngIf="this.crearMensajeForm"
+        method="post">
+    <ion-list>
+      <ion-grid>
+        <ion-row>
+          <ion-col size-md="6" size-xs="12">
+            <ion-item fill="solid" mode="md" class="hs-textfield">
+              <ion-label position="floating">Mensaje</ion-label>
+              <ion-input formControlName="contenido"
+                         type="text"></ion-input>
+              <ion-text slot="error">
+                Contenido Error
+              </ion-text>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size-md="6" size-xs="12">
+            <ion-item fill="solid" mode="md" class="hs-textfield">
+              <ion-label position="floating">¿A Quien se lo envias?</ion-label>
+              <ion-input formControlName="receptor"
+                         type="text"></ion-input>
+              <ion-text slot="error">
+                Receptor Error
+              </ion-text>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-list>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size-md="12" size-xs="12" class="ion-text-center">
+        <ion-button type="submit">ENVIAR MENSAJE</ion-button>
+      </ion-col>
+    </ion-row>
+  </form>
+</ion-content>

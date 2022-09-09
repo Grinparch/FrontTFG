@@ -49,7 +49,7 @@ export class AutenticacionService {
   }
 
   saveData(user:Usuario) {
-    sessionStorage.setItem('usuario', user.username);
+    sessionStorage.setItem('username', user.username);
     sessionStorage.setItem('rol', user.rol.toString());
     sessionStorage.setItem('perfilId', user.perfil);
     sessionStorage.setItem('email', user.email);

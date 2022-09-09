@@ -3,10 +3,11 @@ import {Elemento} from "./Elemento";
 import {Usuario} from "./Usuario";
 
 export class Grupo {
-  grupoId: mongoose.Types.ObjectId;
+  grupoId: string;
   nombre: string;
   elementosPreferidos: string[];
-  elementosSinAprobar: JSON;
+  elementosSinAprobar?: JSON;
   miembros: string[];
   descripcion: string;
+  lider: string;
 }

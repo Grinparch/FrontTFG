@@ -4,18 +4,18 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { GrupoDetallesPageRoutingModule } from './grupo-detalles-routing.module';
+import { MensajeListadoPageRoutingModule } from './mensaje-listado-routing.module';
 
-import { GrupoDetallesPage } from './grupo-detalles.page';
+import { MensajeListadoPage } from './mensaje-listado.page';
 
 @NgModule({
     imports: [
         CommonModule,
         FormsModule,
         IonicModule,
-        GrupoDetallesPageRoutingModule,
+        MensajeListadoPageRoutingModule,
         ReactiveFormsModule
     ],
-  declarations: [GrupoDetallesPage]
+  declarations: [MensajeListadoPage]
 })
-export class GrupoDetallesPageModule {}
+export class MensajeListadoPageModule {}

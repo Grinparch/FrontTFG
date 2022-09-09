@@ -6,6 +6,7 @@ import {Observable, of, throwError} from "rxjs";
 import * as http from "http";
 import {NavController} from "@ionic/angular";
 import {Router, RouterLink} from "@angular/router";
+import {Elemento} from "../models/Elemento";
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,7 @@ export class UserService {
   // paths
   addUserPath = "http://localhost:8081/usuarios/addUsuarioComun";
   getUserPath = "http://localhost:8081/usuarios/byUsername/";
+  getAllUsersGrupoPath = "http://localhost:8081/usuarios/listaUsuarios/";
 
   constructor(private http: HttpClient,
               private navCtrl: NavController,
@@ -68,5 +70,15 @@ export class UserService {
     const headers = new HttpHeaders({'Content-Type': 'application/json'})
     return this.http.get<Usuario>(this.getUserPath+username,
       { headers }) as Observable<Usuario>;
+  }
+
+  //Se utiliza post por que la llamada de Get no permite pasar un body
+  getAllUsuariosGrupo(usuarios: String[]) {
+    console.log("usuarios");
+    console.log({"idUsuarios": usuarios});
+    const headers = new HttpHeaders({'Content-Type': 'application/json'})
+    return this.http.post<Usuario[]>(this.getAllUsersGrupoPath,
+      {"idUsuarios": usuarios},
+      { headers }) as Observable<Usuario[]>;
   }
 }

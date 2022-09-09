@@ -58,13 +58,13 @@ export class ListaCrearPage implements OnInit {
         perfilId: this.getPerfil(),
         elementos: this.elementosAgregados,
         votos: 0,
-        creador: this.getUsuario()
+        creador: this.getUsername()
       };
       this.listaService.addLista(nuevaLista);
   }
 
-  getUsuario() {
-    return sessionStorage.usuario;
+  getUsername() {
+    return sessionStorage.username;
   }
 
   getPerfil() {

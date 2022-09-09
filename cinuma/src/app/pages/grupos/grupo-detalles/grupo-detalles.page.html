@@ -1,9 +1,168 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>grupo-detalles</ion-title>
+    <ion-title>Crear Grupo</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="hs">
+  <ng-container *ngIf="grupo != undefined">
+    <h3 class="ion-padding-horizontal">Más datos</h3>
 
+    <ion-grid class="hs-bg-white ion-no-padding">
+      <ion-row>
+        <ion-col size-md="4">
+          <ion-item lines="none" *ngIf="grupo.nombre != null && grupo.nombre != undefined">
+            <ion-label>
+              <strong>Nombre</strong>
+              {{grupo.nombre}}
+            </ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row >
+        <ion-col size-md="8">
+          <ion-item lines="none" *ngIf="grupo.descripcion != null && grupo.descripcion != undefined">
+            <ion-label>
+              <strong>Descripcion</strong>
+              {{grupo.descripcion}}
+            </ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-md="12" size-xs="12" class="ion-text-center">
+          <ion-label>
+            <strong>Peliculas Y Series Preferidas</strong>
+          </ion-label>
+          <ion-item lines="none" *ngIf="elementosAgregados != null && elementosAgregados != undefined">
+            <ion-label *ngFor="let elemento of elementosAgregados" >
+              <ion-card (click)="elementoDetallesModal(elemento)">
+                <ion-label class="ion-text-wrap">
+                  <ion-grid class="ion-no-padding">
+                    <ion-row >
+                      <ion-col >
+                        <ion-row>{{elemento.titulo}}</ion-row>
+                        <ion-row *ngIf="elemento.tipo == 0" class="ion-text-end"><ion-badge color="primary">SERIE</ion-badge></ion-row>
+                        <ion-row *ngIf="elemento.tipo == 1" class="ion-text-end"><ion-badge color="primary">PELICULA</ion-badge></ion-row>
+                      </ion-col>
+                      <ion-col>
+                        <ion-row *ngIf="elemento.tipo == 0" class="ion-text-end"><ion-text>{{elemento.capitulos}}</ion-text></ion-row>
+                        <ion-row *ngIf="elemento.tipo == 0" class="ion-text-end"><ion-text>{{elemento.estreno}}</ion-text></ion-row>
+                        <ion-row *ngIf="elemento.tipo == 1" class="ion-text-end"><ion-text>{{elemento.estrenoTaquilla}}</ion-text></ion-row>
+                      </ion-col>
+                      <ion-col *ngFor="let genero of elemento.genero">
+                        <ion-row class="ion-text-end"><ion-text>{{genero}}</ion-text></ion-row>
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
+                </ion-label>
+              </ion-card>
+            </ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-md="4">
+          <ion-label>
+            <strong>Miembros</strong>
+          </ion-label>
+          <ion-item lines="none" *ngIf="miembros != null && miembros != undefined">
+            <ion-label *ngFor="let miembro of miembros">
+              <ion-card >
+                <ion-item>
+                  <ion-label class="ion-text-wrap">
+                    <ion-grid class="ion-no-padding">
+                      <ion-row>
+                        <ion-col size="9">
+                          {{miembro.username}}
+                          <ion-badge color="primary" *ngIf="miembro.userId == grupo.lider">
+                            Lider
+                          </ion-badge>
+                        </ion-col>
+                      </ion-row>
+                    </ion-grid>
+                  </ion-label>
+                </ion-item>
+              </ion-card>
+            </ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ng-container>
+  <ion-item *ngIf="lider">
+    <ion-button (click)="activarEdicionElemento()">
+      Modo Edicion
+    </ion-button>
+  </ion-item>
+  <div *ngIf="edicion == true && lider">
+    <ion-list>
+      <form [formGroup]="crearGrupoForm"
+            (ngSubmit)="editarGrupo()"
+            *ngIf="this.crearGrupoForm"
+            method="post">
+        <ion-list>
+          <ion-grid>
+            <ion-row>
+              <ion-col >
+                <ion-item fill="solid" mode="md" class="hs-textfield">
+                  <ion-label position="floating">Descripcion de Grupo</ion-label>
+                  <ion-input formControlName="descripcion"
+                             type="text"></ion-input>
+                  <ion-text slot="error">
+                    Descripcion de Grupo Error
+                  </ion-text>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-list>
+        <ion-row class="ion-justify-content-center">
+          <ion-col size-md="12" size-xs="12" class="ion-text-center">
+            <ion-button type="submit">EDITAR</ion-button>
+          </ion-col>
+        </ion-row>
+      </form>
+    </ion-list>
+  </div>
+  <div *ngIf="elementosTodos != undefined && edicion == true && lider">
+    <ion-label>
+      <strong>Agregar Serie/Pelicula</strong>
+    </ion-label>
+    <ion-list *ngFor="let elemento of elementosTodos">
+      <div *ngIf="!seEncuentra(elemento)">
+        <ion-card (click)="agregarElemento(elemento)">
+          <ion-item>
+            <ion-label class="ion-text-wrap">
+              <ion-grid class="ion-no-padding">
+                <ion-row>
+                  <ion-col size="9">{{elemento.titulo}}</ion-col>
+                  <ion-col *ngIf="elemento.tipo == 0" class="ion-text-end"><ion-badge color="primary">SERIE</ion-badge></ion-col>
+                  <ion-col *ngIf="elemento.tipo == 1" class="ion-text-end"><ion-badge color="primary">PELICULA</ion-badge></ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col *ngIf="elemento.tipo == 0" class="ion-text-end"><ion-text>{{elemento.capitulos}}</ion-text></ion-col>
+                  <ion-col *ngIf="elemento.tipo == 0" class="ion-text-end"><ion-text>{{elemento.estreno}}</ion-text></ion-col>
+                  <ion-col *ngIf="elemento.tipo == 1" class="ion-text-end"><ion-text>{{elemento.estrenoTaquilla}}</ion-text></ion-col>
+                </ion-row>
+                <ion-row *ngFor="let genero of elemento.genero">
+                  <ion-col class="ion-text-end"><ion-text>{{genero}}</ion-text></ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-label>
+          </ion-item>
+        </ion-card>
+      </div>
+    </ion-list>
+  </div>
+  <ion-item *ngIf="this.grupo != undefined && !esMiembro()">
+    <ion-button (click)="unirseAGrupo()">
+      Unirse a Grupo
+    </ion-button>
+  </ion-item>
+  <ion-item *ngIf="lider">
+    <ion-button (click)="eliminarGrupo()" >
+      Eliminar Grupo
+    </ion-button>
+  </ion-item>
 </ion-content>

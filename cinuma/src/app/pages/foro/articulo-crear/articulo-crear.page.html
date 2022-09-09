@@ -1,0 +1,88 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Crear Articulo</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="hs">
+  <div>
+    <ion-list>
+      <form [formGroup]="crearArticuloForm"
+            (ngSubmit)="crearArticulo()"
+            *ngIf="this.crearArticuloForm"
+            method="post">
+        <ion-list>
+          <ion-grid>
+            <ion-row>
+              <ion-col size-md="6" size-xs="12">
+                <ion-item fill="solid" mode="md" class="hs-textfield">
+                  <ion-label position="floating">Titulo</ion-label>
+                  <ion-input formControlName="titulo"
+                             type="text"></ion-input>
+                  <ion-text slot="error">
+                    Titulo Incorrecto
+                  </ion-text>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size-md="6" size-xs="12">
+                <ion-item fill="solid" mode="md" class="hs-textfield">
+                  <ion-label position="floating">Contenido</ion-label>
+                  <ion-input formControlName="contenido"
+                             type="text"></ion-input>
+                  <ion-text slot="error">
+                    Contenido Error
+                  </ion-text>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size-md="6" size-xs="12">
+                <ion-item fill="solid" mode="md" class="hs-textfield">
+                  <ion-label position="floating">Tema</ion-label>
+                  <ion-input formControlName="tema"
+                             type="text"></ion-input>
+                  <ion-text slot="error">
+                    Tema Error
+                  </ion-text>
+                </ion-item>
+              </ion-col>
+              <ion-col size-md="6" size-xs="12">
+                <ion-item fill="solid" mode="md" class="hs-textfield">
+                  <ion-label position="floating">Titulo Asociado</ion-label>
+                  <ion-input formControlName="tituloAsociado"
+                             type="text"></ion-input>
+                  <ion-text slot="error">
+                    Titulo Asociado Error
+                  </ion-text>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <div>
+                <ion-col size-md="3" size-xs="12" *ngIf="generosAgregados.length>0">
+                  <ion-item fill="solid" mode="md"  *ngFor="let genero of generosAgregados">
+                    <p>{{genero}}   </p>
+                  </ion-item>
+                </ion-col>
+                <ion-col size-md="3" size-xs="12">
+                  <ion-item fill="solid" mode="md" class="hs-textfield">
+                    <ion-label position="floating">Agregar Genero</ion-label>
+                    <ion-input formControlName="genero" type="text"></ion-input>
+                    <ion-button (click)="agregarGeneroALista()">Agregar Genero</ion-button>
+                  </ion-item>
+                </ion-col>
+              </div>
+            </ion-row>
+          </ion-grid>
+        </ion-list>
+        <ion-row class="ion-justify-content-center">
+          <ion-col size-md="12" size-xs="12" class="ion-text-center">
+            <ion-button type="submit">CREAR</ion-button>
+          </ion-col>
+        </ion-row>
+      </form>
+    </ion-list>
+  </div>
+</ion-content>

@@ -74,6 +74,26 @@ const routes: Routes = [
   {
     path: 'grupo-detalles',
     loadChildren: () => import('./pages/grupos/grupo-detalles/grupo-detalles.module').then( m => m.GrupoDetallesPageModule)
+  },
+  {
+    path: 'articulo-listado',
+    loadChildren: () => import('./pages/foro/articulo-listado/articulo-listado.module').then( m => m.ArticuloListadoPageModule)
+  },
+  {
+    path: 'articulo-detalles',
+    loadChildren: () => import('./pages/foro/articulo-detalles/articulo-detalles.module').then( m => m.ArticuloDetallesPageModule)
+  },
+  {
+    path: 'mensaje-listado',
+    loadChildren: () => import('./pages/mensajes/mensaje-listado/mensaje-listado.module').then( m => m.MensajeListadoPageModule)
+  },
+  {
+    path: 'articulo-crear',
+    loadChildren: () => import('./pages/foro/articulo-crear/articulo-crear.module').then( m => m.ArticuloCrearPageModule)
+  },
+  {
+    path: 'mensaje-crear',
+    loadChildren: () => import('./pages/mensajes/mensaje-crear/mensaje-crear.module').then( m => m.MensajeCrearPageModule)
   }
 ];
 

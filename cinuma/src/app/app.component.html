@@ -16,20 +16,11 @@
       </ion-header>
 
       <ion-content>
-        <ion-list id="inbox-list">
-          <ion-list-header>Inbox</ion-list-header>
-          <ion-note>hi@ionicframework.com</ion-note>
+        <ion-list id="menu-list">
+          <ion-list-header>Menu</ion-list-header>
 
           <ion-item-group>
-            <ion-item *ngIf="this.usuario != undefined || this.usuario != null"
-                      [routerLink]="['/lista-personal']"
-                      button="true" detail="false"
-                      routerLinkActive="active-link">
-              <ion-label>
-                Personal List
-              </ion-label>
-            </ion-item>
-            <ion-item *ngIf="this.usuario == undefined || this.usuario == null"
+            <ion-item
                       [routerLink]="['/user-register']"
                       button="true" detail="false"
                       routerLinkActive="active-link">
@@ -37,7 +28,7 @@
                 Registro
               </ion-label>
             </ion-item>
-            <ion-item *ngIf="this.usuario == undefined || this.usuario == null"
+            <ion-item
                       [routerLink]="['/user-login']"
                       button="true" detail="false"
                       routerLinkActive="active-link">
@@ -52,7 +43,7 @@
                 Principal
               </ion-label>
             </ion-item>
-            <ion-item *ngIf="this.usuario != undefined || this.usuario != null"
+            <ion-item
                       [routerLink]="['/user-perfil']"
                       button="true" detail="false"
                       routerLinkActive="active-link">
@@ -64,7 +55,7 @@
                       button="true" detail="false"
                       routerLinkActive="active-link">
               <ion-label>
-                Lista de Series/Peliculas
+                Series/Peliculas
               </ion-label>
             </ion-item>
             <ion-item [routerLink]="['/lista-personal']"
@@ -79,6 +70,27 @@
                       routerLinkActive="active-link">
               <ion-label>
                 Listas
+              </ion-label>
+            </ion-item>
+            <ion-item [routerLink]="['/grupo-listado']"
+                      button="true" detail="false"
+                      routerLinkActive="active-link">
+              <ion-label>
+                Grupos
+              </ion-label>
+            </ion-item>
+            <ion-item [routerLink]="['/articulo-listado']"
+                      button="true" detail="false"
+                      routerLinkActive="active-link">
+              <ion-label>
+                Foro
+              </ion-label>
+            </ion-item>
+            <ion-item [routerLink]="['/mensaje-listado']"
+                      button="true" detail="false"
+                      routerLinkActive="active-link">
+              <ion-label>
+                Mensajes
               </ion-label>
             </ion-item>
           </ion-item-group>

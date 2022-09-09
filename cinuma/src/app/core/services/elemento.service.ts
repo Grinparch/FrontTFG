@@ -19,12 +19,21 @@ export class ElementoService {
   deleteElementoPath = "http://localhost:8081/elemento/delete/";
   editarPeliculaPath = "http://localhost:8081/elemento/editarPelicula/";
   editarSeriePath = "http://localhost:8081/elemento/editarSerie/";
+  getAllElementosGrupoPath = "http://localhost:8081/elemento/listaElementos";
 
   constructor(private http: HttpClient) { }
 
   getAllElementos() {
     const headers = new HttpHeaders({'Content-Type': 'application/json'})
     return this.http.get<Elemento[]>(this.getAllElementosPath,
+      { headers }) as Observable<Elemento[]>;
+  }
+
+  //Se utiliza post por que la llamada de Get no permite pasar un body
+  getAllElementosGrupo(elementos: String[]) {
+    const headers = new HttpHeaders({'Content-Type': 'application/json'})
+    return this.http.post<Elemento[]>(this.getAllElementosGrupoPath,
+      {"idElementos": elementos},
       { headers }) as Observable<Elemento[]>;
   }
 
