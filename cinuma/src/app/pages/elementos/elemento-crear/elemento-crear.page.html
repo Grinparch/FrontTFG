@@ -96,7 +96,7 @@
             <ion-col size-md="6" size-xs="12" *ngIf="crearElementoForm.controls.tipo.value == 0">
               <ion-item fill="solid" mode="md" class="hs-textfield">
                 <ion-label position="floating">Estreno</ion-label>
-                <ion-datetime formControlName="estreno" ></ion-datetime>
+                <ion-datetime formControlName="estreno" presentation="date" ></ion-datetime>
                 <ion-text slot="error">
                   <ng-container *ngIf="crearElementoForm.get('estreno').touched">
                     Error Estreno
@@ -107,7 +107,7 @@
             <ion-col size-md="6" size-xs="12" *ngIf="crearElementoForm.controls.tipo.value == 1">
               <ion-item fill="solid" mode="md" class="hs-textfield">
                 <ion-label position="floating">Estreno en Taquilla</ion-label>
-                <ion-datetime formControlName="estrenoTaquilla" ></ion-datetime>
+                <ion-datetime formControlName="estrenoTaquilla" presentation="date" ></ion-datetime>
                 <ion-text slot="error">
                   <ng-container *ngIf="crearElementoForm.get('estrenoTaquilla').touched">
                     Error Estreno Taquilla
@@ -119,34 +119,44 @@
         </ion-grid>
 
         <div>
-          <ion-col size-md="3" size-xs="8"*ngIf="actoresAgregados.length>0">
-            <ion-item fill="solid" mode="md"  *ngFor="let actor of actoresAgregados">
-              <p>{{actor}}   </p>
+          <ion-col size-md="3" size-xs="12"*ngIf="generosAgregados.length>0">
+            <ion-item fill="solid" mode="md"  *ngFor="let genero of generosAgregados">
+              <ion-card>{{genero}}</ion-card>
+              <ion-icon name="close-circle-outline" (click)="removerGeneroDeLista(genero)"></ion-icon>
             </ion-item>
           </ion-col>
-          <ion-col size-md="3" size-xs="12">
-            <ion-item fill="solid" mode="md" class="hs-textfield">
-              <ion-label position="floating">Agregar Actor</ion-label>
-              <ion-input formControlName="actores" type="text"></ion-input>
-              <ion-button (click)="agregarActorALista()">Agregar Actor</ion-button>
-            </ion-item>
-          </ion-col>
+          <div *ngFor="let genero of generos" >
+            <ion-card (click)="agregarGeneroALista(genero)">
+              <ion-item >
+                <ion-label class="ion-text-wrap">
+                  <ion-grid class="ion-no-padding">
+                    <ion-col>{{genero}}</ion-col>
+                  </ion-grid>
+                </ion-label>
+              </ion-item>
+            </ion-card>
+          </div>
         </div>
 
         <div>
-          <ion-col size-md="3" size-xs="12"*ngIf="generosAgregados.length>0">
-            <ion-item fill="solid" mode="md"  *ngFor="let genero of generosAgregados">
-              <p>{{genero}}   </p>
-            </ion-item>
+          <ion-col size-md="12" size-xs="12"*ngIf="actoresAgregados.length>0">
+            <ion-row fill="solid" mode="md"  *ngFor="let actor of actoresAgregados">
+              <ion-card>{{actor}}</ion-card>
+              <ion-icon name="close-circle-outline" (click)="removerActorDeLista(actor)"></ion-icon>
+            </ion-row>
           </ion-col>
-          <ion-col size-md="3" size-xs="12">
             <ion-item fill="solid" mode="md" class="hs-textfield">
-              <ion-label position="floating">Agregar Genero</ion-label>
-              <ion-input formControlName="genero" type="text"></ion-input>
-              <ion-button (click)="agregarGeneroALista()">Agregar Genero</ion-button>
+              <ion-label position="floating">Actor</ion-label>
+              <ion-input formControlName="actores" type="text"></ion-input>
+              <ion-text slot="error">
+                <ng-container *ngIf="crearElementoForm.get('actores').touched">
+                  Error Actores
+                </ng-container>
+              </ion-text>
             </ion-item>
-          </ion-col>
+          <ion-button (click)="agregarActorALista()">Agregar Actor</ion-button>
         </div>
+
         <ion-grid>
           <ion-row class="ion-justify-content-center">
             <ion-col size-md="12" size-xs="12" class="ion-text-center">

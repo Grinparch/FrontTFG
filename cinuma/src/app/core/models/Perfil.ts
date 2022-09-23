@@ -4,6 +4,7 @@ import {Lista} from "./Lista";
 
 export class Perfil {
   perfilId: string;
+  usuarioId: string;
   vistoUltimamente?: string;
   generoPreferido?: string;
   puntuacionPromedio?: number;

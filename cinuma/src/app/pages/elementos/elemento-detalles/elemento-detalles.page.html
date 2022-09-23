@@ -13,9 +13,9 @@
           <ion-col *ngIf="elemento.tipo == 1" class="ion-text-end"><ion-badge color="primary">PELICULA</ion-badge></ion-col>
         </ion-row>
         <ion-row>
-          <ion-col *ngIf="elemento.tipo == 0" class="ion-text-end"><ion-text>{{elemento.capitulos | date:'dd/MM/yyyy HH:mm:ss'}}</ion-text></ion-col>
-          <ion-col *ngIf="elemento.tipo == 0" class="ion-text-end"><ion-text>{{elemento.estreno | date:'dd/MM/yyyy HH:mm:ss'}}</ion-text></ion-col>
-          <ion-col *ngIf="elemento.tipo == 1" class="ion-text-end"><ion-text>{{elemento.estrenoTaquilla | date:'dd/MM/yyyy HH:mm:ss'}}</ion-text></ion-col>
+          <ion-col *ngIf="elemento.tipo == 0" class="ion-text-end"><ion-text>{{elemento.capitulos}}</ion-text></ion-col>
+          <ion-col *ngIf="elemento.tipo == 0" class="ion-text-end"><ion-text>{{elemento.estreno | date:'dd/MM/yyyy'}}</ion-text></ion-col>
+          <ion-col *ngIf="elemento.tipo == 1" class="ion-text-end"><ion-text>{{elemento.estrenoTaquilla | date:'dd/MM/yyyy'}}</ion-text></ion-col>
         </ion-row>
         <ion-row *ngFor="let genero of elemento.genero">
           <ion-col class="ion-text-end"><ion-text>{{genero}}</ion-text></ion-col>
@@ -26,12 +26,12 @@
       </ion-grid>
     </ion-label>
   </ion-item>
-  <ion-item>
+  <ion-item *ngIf="username !=null && username !=undefined && getRol()!=2">
     <ion-button (click)="eliminarElemento()">
       Eliminar Elemento
     </ion-button>
   </ion-item>
-  <ion-item>
+  <ion-item *ngIf="username !=null && username !=undefined && getRol()!=2">
     <ion-button (click)="activarEdicionElemento()">
       Modo Edicion
     </ion-button>
@@ -127,13 +127,17 @@
             <p>{{genero}}   </p>
           </ion-item>
         </ion-col>
-        <ion-col size-md="3" size-xs="12">
-          <ion-item fill="solid" mode="md" class="hs-textfield">
-            <ion-label position="floating">Agregar Genero</ion-label>
-            <ion-input formControlName="genero" type="text"></ion-input>
-            <ion-button (click)="agregarGeneroALista()">Agregar Genero</ion-button>
-          </ion-item>
-        </ion-col>
+        <div *ngFor="let genero of generos" >
+          <ion-card (click)="agregarGeneroALista(genero)">
+            <ion-item >
+              <ion-label class="ion-text-wrap">
+                <ion-grid class="ion-no-padding">
+                  <ion-col>{{genero}}</ion-col>
+                </ion-grid>
+              </ion-label>
+            </ion-item>
+          </ion-card>
+        </div>
       </div>
       <ion-grid>
         <ion-row class="ion-justify-content-center">

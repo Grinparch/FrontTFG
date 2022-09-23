@@ -11,6 +11,7 @@ export class GrupoService {
 // paths
   getAllGruposPath = "http://localhost:8081/grupo/";
   getGrupoEspecificoPath = "http://localhost:8081/grupo/";
+  getGrupoRecomendadoPath = "http://localhost:8081/grupo/recomendados/";
   crearGrupoPath = "http://localhost:8081/grupo/add/";
   editarGrupoPath = "http://localhost:8081/grupo/editarGrupo/";
   unirseAGrupoPath = "http://localhost:8081/grupo/unirseAGrupo/";
@@ -51,6 +52,12 @@ export class GrupoService {
   getGrupoEspecifico(grupoId: string) {
     const headers = new HttpHeaders({'Content-Type': 'application/json'})
     return this.http.get<Grupo>(this.getGrupoEspecificoPath+grupoId,
+      { headers }) as Observable<Grupo>;
+  }
+
+  getGrupoRecomendado(perfilId: string) {
+    const headers = new HttpHeaders({'Content-Type': 'application/json'})
+    return this.http.get<Grupo>(this.getGrupoRecomendadoPath+perfilId,
       { headers }) as Observable<Grupo>;
   }
 

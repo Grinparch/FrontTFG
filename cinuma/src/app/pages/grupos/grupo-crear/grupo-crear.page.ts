@@ -35,6 +35,7 @@ export class GrupoCrearPage implements OnInit {
     private navCtrl: NavController,
     public userService: UserService,
     public grupoService: GrupoService,
+    private router: Router,
     private elementRef: ElementRef
   ) { }
 
@@ -47,6 +48,11 @@ export class GrupoCrearPage implements OnInit {
   }
 
   ionViewWillEnter(){
+    if(this.getUsername() != undefined){
+
+    }else{
+      this.router.navigate(['/user-login']);
+    }
   }
 
   ionViewDidLeave(){

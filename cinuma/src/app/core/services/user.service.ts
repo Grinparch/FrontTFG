@@ -7,6 +7,7 @@ import * as http from "http";
 import {NavController} from "@ionic/angular";
 import {Router, RouterLink} from "@angular/router";
 import {Elemento} from "../models/Elemento";
+import {Lista} from "../models/Lista";
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +16,12 @@ export class UserService {
   usuario: Usuario;
   // paths
   addUserPath = "http://localhost:8081/usuarios/addUsuarioComun";
+  addUsuarioAvanzadoPath = "http://localhost:8081/usuarios/addUsuarioAvanzado";
   getUserPath = "http://localhost:8081/usuarios/byUsername/";
+  getUsuariosRecomendadosPath = "http://localhost:8081/usuarios/recomendados/";
+  getAllUsersPath = "http://localhost:8081/usuarios/";
   getAllUsersGrupoPath = "http://localhost:8081/usuarios/listaUsuarios/";
+  eliminarUsuarioPath = "http://localhost:8081/usuarios/delete/";
 
   constructor(private http: HttpClient,
               private navCtrl: NavController,
@@ -58,14 +63,51 @@ export class UserService {
     return "Error";
   }
 
-  async getUser() {
-    const headers = new HttpHeaders({'Content-Type': 'application/json'})
-    this.http.get<any>("http://localhost:8081/usuarios/",
-      { headers }).subscribe(data => {
-        this.usuario = data;
-      return data;
+  async addUsuarioAvanzado(newUser: Usuario){
+    console.log("en add User");
+    console.log(JSON.stringify(newUser));
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json'})
+    this.http.post<Usuario>(this.addUsuarioAvanzadoPath,
+      {"userId": newUser.userId,
+        "email": newUser.email,
+        "username": newUser.username,
+        "phone": newUser.phone,
+        "rol": newUser.rol,
+        "autenticacion": newUser.autenticacion,
+        "perfil": newUser.perfil},
+      { headers }).pipe().subscribe((usuario) => {
+      console.log("usuario");
+      console.log(usuario);
+    },(error) => {                              //Error callback
+      if (error instanceof HttpErrorResponse) {
+        if (error.error instanceof ErrorEvent) {
+          console.error("Error Event");
+        } else {
+          console.log(`error status : ${error.status} ${error.statusText}`);
+          switch (error.status) {
+            case 400:      //Usuario ya existente
+              this.router.navigate(['/user-admin-crear-avanzado'], { queryParams: { error: 'usuarioExistente' } });
+              break;
+          }
+        }
+      }
+      return throwError(error);
     });
+    return "Error";
   }
+
+  getAllUsers() {
+    const headers = new HttpHeaders({'Content-Type': 'application/json'})
+    return this.http.get<Usuario[]>(this.getAllUsersPath,
+      { headers }) as Observable<Usuario[]>;
+  }
+
+  getUsuariosRecomendados(perfilId: string) {
+    const headers = new HttpHeaders({'Content-Type': 'application/json'})
+    return this.http.get<String[]>(this.getUsuariosRecomendadosPath+perfilId,
+      { headers }) as Observable<String[]>;
+  }
+
   getUsuarioEspecifico(username: string) {
     const headers = new HttpHeaders({'Content-Type': 'application/json'})
     return this.http.get<Usuario>(this.getUserPath+username,
@@ -80,5 +122,11 @@ export class UserService {
     return this.http.post<Usuario[]>(this.getAllUsersGrupoPath,
       {"idUsuarios": usuarios},
       { headers }) as Observable<Usuario[]>;
+  }
+
+  eliminarUsuario(username: string){
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json'})
+    return this.http.delete(this.eliminarUsuarioPath+username,
+      { headers }).pipe().subscribe();
   }
 }

@@ -21,6 +21,7 @@ export class ListaCrearPage implements OnInit {
   @Input() elementos: Elemento[];
 
   elementosAgregados: Elemento[] = [];
+  rol: number;
 
 
   constructor(
@@ -35,6 +36,16 @@ export class ListaCrearPage implements OnInit {
   }
 
   ionViewWillEnter(){
+    if(this.getUsername() != undefined){
+      this.rol = Number(this.getRol());
+      if(this.rol == 1 || this.rol == 0){
+
+      }else{
+        this.router.navigate(['/user-login']);
+      }
+    }else{
+      this.router.navigate(['/user-login']);
+    }
   }
 
   ionViewDidEnter(){
@@ -69,5 +80,9 @@ export class ListaCrearPage implements OnInit {
 
   getPerfil() {
     return sessionStorage.getItem('perfilId');
+  }
+
+  getRol() {
+    return sessionStorage.getItem('rol');
   }
 }

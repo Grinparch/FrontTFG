@@ -13,9 +13,9 @@
           <ion-col *ngIf="elementoEnlistado.tipo == 1" class="ion-text-end"><ion-badge color="primary">PELICULA</ion-badge></ion-col>
         </ion-row>
         <ion-row>
-          <ion-col *ngIf="elementoEnlistado.tipo == 0" class="ion-text-end"><ion-text>{{elementoEnlistado.capitulos | date:'dd/MM/yyyy HH:mm:ss'}}</ion-text></ion-col>
-          <ion-col *ngIf="elementoEnlistado.tipo == 0" class="ion-text-end"><ion-text>{{elementoEnlistado.estreno | date:'dd/MM/yyyy HH:mm:ss'}}</ion-text></ion-col>
-          <ion-col *ngIf="elementoEnlistado.tipo == 1" class="ion-text-end"><ion-text>{{elementoEnlistado.estrenoTaquilla | date:'dd/MM/yyyy HH:mm:ss'}}</ion-text></ion-col>
+          <ion-col *ngIf="elementoEnlistado.tipo == 0" class="ion-text-end"><ion-text>{{elementoEnlistado.capitulos}}</ion-text></ion-col>
+          <ion-col *ngIf="elementoEnlistado.tipo == 0" class="ion-text-end"><ion-text>{{elementoEnlistado.estreno | date:'dd/MM/yyyy'}}</ion-text></ion-col>
+          <ion-col *ngIf="elementoEnlistado.tipo == 1" class="ion-text-end"><ion-text>{{elementoEnlistado.estrenoTaquilla | date:'dd/MM/yyyy'}}</ion-text></ion-col>
         </ion-row>
         <ion-row>
           <ion-col *ngIf="elementoEnlistado.opinion != undefined" class="ion-text-end">

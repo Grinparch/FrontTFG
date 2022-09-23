@@ -11,6 +11,7 @@ import {Mensaje} from "../../../core/models/Mensaje";
 import {MensajeService} from "../../../core/services/mensaje.service";
 import {Grupo} from "../../../core/models/Grupo";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {UserService} from "../../../core/services/user.service";
 
 @Component({
   selector: 'app-mensaje-listado',
@@ -19,6 +20,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 })
 export class MensajeListadoPage implements OnInit {
   mensajes: Mensaje[];
+  recomendados: String[] = [];
 
   crearMensajeForm: FormGroup = new FormGroup({
     contenido: new FormControl('', [Validators.required, Validators.minLength(2)]),
@@ -27,6 +29,7 @@ export class MensajeListadoPage implements OnInit {
 
   constructor(public  elementoService: ElementoService,
               public  mensajeService: MensajeService,
+              public  userService: UserService,
               public  articuloService: ArticuloService,
               private modalController: ModalController,
               private elementRef: ElementRef,
@@ -36,7 +39,16 @@ export class MensajeListadoPage implements OnInit {
   }
 
   ionViewWillEnter(){
-    this.loadMensajes();
+    if(this.getUsername() != undefined){
+      this.loadMensajes();
+      this.userService.getUsuariosRecomendados(this.getPerfilId()).subscribe(usernames=>{
+        this.recomendados = usernames;
+      });
+    }else{
+      this.router.navigate(['/user-login']);
+    }
+
+
   }
 
   private loadMensajes(){
@@ -77,5 +89,9 @@ export class MensajeListadoPage implements OnInit {
 
   eliminarMensaje(mensajeId: string) {
     this.mensajeService.eliminarMensaje(mensajeId);
+  }
+
+  getPerfilId() {
+    return sessionStorage.getItem('perfilId');
   }
 }

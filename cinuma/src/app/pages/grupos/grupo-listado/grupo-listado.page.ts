@@ -20,6 +20,7 @@ import {GrupoCrearPage} from "../grupo-crear/grupo-crear.page";
 export class GrupoListadoPage implements OnInit {
   perfil: Perfil;
   grupos: Grupo[];
+  recomendado: Grupo;
 
   private listaModal: HTMLIonModalElement;
 
@@ -33,11 +34,27 @@ export class GrupoListadoPage implements OnInit {
   }
 
   ionViewWillEnter(){
-    this.loadGrupos();
+
+    if(this.getUsername() != undefined){
+      this.grupoService.getGrupoRecomendado(this.getPerfilId()).subscribe(grupo=>{
+        this.recomendado = grupo;
+        this.loadGrupos(grupo);
+      })
+    }else{
+      this.router.navigate(['/user-login']);
+    }
+
   }
 
-  private loadGrupos(){
+  private loadGrupos(grupoR:Grupo){
     this.grupoService.getAllGrupos().subscribe(grupos => {
+      let indice = 0;
+      grupos.forEach(grupo=>{
+        if(grupo.grupoId==grupoR.grupoId){
+          grupos.splice(indice,1)
+        }
+        indice++;
+      })
       this.grupos = grupos;
       console.log("grupos todos");
       console.log(this.grupos);
@@ -73,4 +90,7 @@ export class GrupoListadoPage implements OnInit {
 
   }
 
+  getPerfilId() {
+    return sessionStorage.getItem('perfilId');
+  }
 }

@@ -36,11 +36,17 @@ export class ListaPersonalElementoDetallesPage implements OnInit {
   }
 
   ionViewWillEnter(){
-    console.log("elemento");
-    console.log(this.elementoEnlistado);
-    this.buildForm();
-    this.actoresAgregados = this.elementoEnlistado.actores;
-    this.generosAgregados = this.elementoEnlistado.genero;
+
+    if(this.getUsername() != undefined){
+      console.log("elemento");
+      console.log(this.elementoEnlistado);
+      this.buildForm();
+      this.actoresAgregados = this.elementoEnlistado.actores;
+      this.generosAgregados = this.elementoEnlistado.genero;
+    }else{
+      this.router.navigate(['/user-login']);
+    }
+
   }
 
   ionViewDidEnter(){
@@ -105,8 +111,7 @@ export class ListaPersonalElementoDetallesPage implements OnInit {
         listaPersonalId: this.elementoEnlistado.listaPersonalId,
         perfilId: perfilId,
         titulo: this.elementoEnlistado.titulo,
-        calificacionPromedio: this.elementoEnlistado.calificacionPromedio,
-        duracion: this.elementoEnlistado.calificacionPromedio,
+        duracion: this.elementoEnlistado.duracion,
         genero: this.elementoEnlistado.genero,
         idioma: this.elementoEnlistado.idioma,
         director: this.elementoEnlistado.director,
@@ -128,8 +133,7 @@ export class ListaPersonalElementoDetallesPage implements OnInit {
         listaPersonalId: this.elementoEnlistado.listaPersonalId,
         perfilId: perfilId,
         titulo: this.elementoEnlistado.titulo,
-        calificacionPromedio: this.elementoEnlistado.calificacionPromedio,
-        duracion: this.elementoEnlistado.calificacionPromedio,
+        duracion: this.elementoEnlistado.duracion,
         genero: this.elementoEnlistado.genero,
         idioma: this.elementoEnlistado.idioma,
         director: this.elementoEnlistado.director,

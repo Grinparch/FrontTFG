@@ -6,7 +6,6 @@ export class ElementoEnlistado {
   puntuacionPersonal?: number;
   opinion?: string;
   titulo: string;
-  calificacionPromedio: number;
   duracion: number;
   genero: string[];
   idioma: string;

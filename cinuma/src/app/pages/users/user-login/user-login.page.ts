@@ -5,6 +5,7 @@ import {UserService} from "../../../core/services/user.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Autenticacion} from "../../../core/models/Autenticacion";
 import {AutenticacionService} from "../../../core/services/autenticacion.service";
+import {MenuController} from "@ionic/angular";
 
 @Component({
   selector: 'app-user-login',
@@ -21,7 +22,8 @@ export class UserLoginPage implements OnInit {
     private userService: UserService,
     private autenticacionService: AutenticacionService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    public menuCtrl: MenuController
   ) {}
 
   ngOnInit() {
@@ -33,9 +35,10 @@ export class UserLoginPage implements OnInit {
   }
 
   ionViewDidEnter(){
+
     console.log("session storage before login");
-    console.log(sessionStorage.usuario);
-    if(sessionStorage.usuario == undefined){
+    console.log(this.getUsername());
+    if(this.getUsername() == undefined){
       this.usuarioYaExistente = false;
       this.route.queryParams
         .subscribe(params => {
@@ -54,7 +57,7 @@ export class UserLoginPage implements OnInit {
   ionViewDidLeave(){
   }
 
-  async createUser() {
+  async login() {
     if (!this.loginForm.valid){
       console.log('Form has errors. Please provide all the required values!');
     }
@@ -74,11 +77,9 @@ export class UserLoginPage implements OnInit {
     const auth: Autenticacion= {
       autenticacionId: null,
       usuario: this.loginForm.value.username,
-      clave: this.loginForm.value.clave,
+      clave: this.loginForm.value.clave
     };
-    this.autenticacionService.login(auth).then(()=>{
-
-    });
+    this.autenticacionService.login(auth);
   }
 
   saveData(username:string,rol:number) {

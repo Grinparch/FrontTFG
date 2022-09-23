@@ -31,7 +31,7 @@
     </div>
   </div>
 
-  <ion-item>
+  <ion-item *ngIf="this.username!= null && this.username!= undefined">
     <ion-button (click)="crearNuevaListaModal()">
       Crear Nueva Lista
     </ion-button>

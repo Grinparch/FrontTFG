@@ -1,10 +1,11 @@
 import {Component, ElementRef, Input, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {NavController, PopoverController} from "@ionic/angular";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {UserService} from "../../../core/services/user.service";
 import {Articulo} from "../../../core/models/Articulo";
 import { ArticuloService } from 'src/app/core/services/articulo.service';
+import {Generos} from "../../../core/models/Generos";
 
 @Component({
   selector: 'app-articulo-crear',
@@ -13,6 +14,7 @@ import { ArticuloService } from 'src/app/core/services/articulo.service';
 })
 export class ArticuloCrearPage implements OnInit {
   generosAgregados: string[] = [];
+  generos: Array<string> = Object.keys(Generos).filter(key => isNaN(+key));
 
   crearArticuloForm: FormGroup;
 
@@ -22,6 +24,7 @@ export class ArticuloCrearPage implements OnInit {
     private navCtrl: NavController,
     public userService: UserService,
     public articuloService: ArticuloService,
+    private router: Router,
     private elementRef: ElementRef
   ) { }
 
@@ -34,7 +37,13 @@ export class ArticuloCrearPage implements OnInit {
   }
 
   ionViewWillEnter(){
-    this.buildForm();
+
+    if(this.getUsername() != undefined){
+      this.buildForm();
+    }else{
+      this.router.navigate(['/user-login']);
+    }
+
   }
 
   ionViewDidLeave(){
@@ -81,8 +90,7 @@ export class ArticuloCrearPage implements OnInit {
     return sessionStorage.getItem('userId');
   }
 
-  agregarGeneroALista(){
-    const genero = this.crearArticuloForm.value.genero;
+  agregarGeneroALista(genero: string){
     if(genero!=''){
       this.generosAgregados.push(genero);
       this.crearArticuloForm.controls.genero.setValue('');

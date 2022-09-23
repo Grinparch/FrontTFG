@@ -8,10 +8,6 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'folder/:id',
-    loadChildren: () => import('./folder/folder.module').then( m => m.FolderPageModule)
-  },
-  {
     path: 'user-register',
     loadChildren: () => import('./pages/users/user-register/user-register.module').then( m => m.UserRegisterPageModule)
   },
@@ -92,8 +88,12 @@ const routes: Routes = [
     loadChildren: () => import('./pages/foro/articulo-crear/articulo-crear.module').then( m => m.ArticuloCrearPageModule)
   },
   {
-    path: 'mensaje-crear',
-    loadChildren: () => import('./pages/mensajes/mensaje-crear/mensaje-crear.module').then( m => m.MensajeCrearPageModule)
+    path: 'user-admin-listado-usuarios',
+    loadChildren: () => import('./pages/users/user-admin-listado-usuarios/user-admin-listado-usuarios.module').then( m => m.UserAdminListadoUsuariosPageModule)
+  },
+  {
+    path: 'user-admin-crear-avanzado',
+    loadChildren: () => import('./pages/users/user-admin-crear-avanzado/user-admin-crear-avanzado.module').then( m => m.UserAdminCrearAvanzadoPageModule)
   }
 ];
 

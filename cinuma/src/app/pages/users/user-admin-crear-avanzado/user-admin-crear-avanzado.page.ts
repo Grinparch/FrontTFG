@@ -1,21 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Usuario} from "../../../core/models/Usuario";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {UserService} from "../../../core/services/user.service";
+import {ActivatedRoute, Router} from "@angular/router";
 import {Autenticacion} from "../../../core/models/Autenticacion";
-import {Perfil} from "../../../core/models/Perfil";
-import {ListaPersonal} from "../../../core/models/ListaPersonal";
-import {Elemento} from "../../../core/models/Elemento";
-import {AutenticacionService} from "../../../core/services/autenticacion.service";
-import {ListaPersonalService} from "../../../core/services/lista-personal.service";
-import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
-  selector: 'app-user-register',
-  templateUrl: './user-register.page.html',
-  styleUrls: ['./user-register.page.scss'],
+  selector: 'app-user-admin-crear-avanzado',
+  templateUrl: './user-admin-crear-avanzado.page.html',
+  styleUrls: ['./user-admin-crear-avanzado.page.scss'],
 })
-export class UserRegisterPage implements OnInit {
+export class UserAdminCrearAvanzadoPage implements OnInit {
   user: Usuario;
   createUserForm: FormGroup;
   usuarioYaExistente: boolean;
@@ -31,8 +26,8 @@ export class UserRegisterPage implements OnInit {
     this.usuarioYaExistente = false;
     this.route.queryParams
       .subscribe(params => {
-        console.log("params");
-        console.log(params);
+          console.log("params");
+          console.log(params);
           if(params.error!=undefined){
             this.usuarioYaExistente = true;
           }
@@ -41,13 +36,17 @@ export class UserRegisterPage implements OnInit {
   }
 
   ionViewWillEnter(){
-    if(this.getUsername() == undefined){
-      this.buildForm();
+    if(this.getUsername() != undefined){
+      if(Number(this.getRol()) == 0){
+        this.buildForm();
+      }else{
+        this.router.navigate(['/pagina-principal']);
+      }
     }else{
       this.router.navigate(['/pagina-principal']);
     }
 
-    
+
   }
 
   ionViewDidEnter(){
@@ -70,6 +69,7 @@ export class UserRegisterPage implements OnInit {
       username: new FormControl('', [Validators.required, Validators.minLength(2)]),
       email: new FormControl('', [Validators.required, Validators.email]),
       clave: new FormControl('', [Validators.required, Validators.minLength(2)]),
+      rol: new FormControl('', [Validators.required, Validators.max(1), Validators.min(0)]),
       phone: new FormControl('', ), // Validators.pattern('^\\+[1-9]\\d{1,14}$')
     });
   }
@@ -86,24 +86,12 @@ export class UserRegisterPage implements OnInit {
       email: this.createUserForm.value.email,
       username: this.createUserForm.value.username,
       phone: this.createUserForm.value.phone,
-      rol: null,
+      rol: this.createUserForm.value.rol,
       autenticacion: newAuth,
       perfil: null,
     };
     console.log("antes de add user");
-    this.userService.addUser(newUser).then(()=>{
-
-    }).finally(()=>{
-      const usuarioRespuesta = this.userService.usuario;
-      /*
-      console.log("usuarioRespuesta.username");
-      console.log(usuarioRespuesta.username);
-      console.log("usuarioRespuesta.rol");
-      console.log(usuarioRespuesta.rol);
-      this.saveData(usuarioRespuesta.username, usuarioRespuesta.rol);
-      console.log(this.getUsername());
-      */
-    })
+    this.userService.addUsuarioAvanzado(newUser);
   }
 
   saveData(username:string,rol:number) {

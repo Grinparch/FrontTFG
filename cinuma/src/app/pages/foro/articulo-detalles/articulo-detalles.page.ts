@@ -3,7 +3,7 @@ import {Elemento} from "../../../core/models/Elemento";
 import {Usuario} from "../../../core/models/Usuario";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {ModalController, NavController, PopoverController} from "@ionic/angular";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {UserService} from "../../../core/services/user.service";
 import {ElementoService} from "../../../core/services/elemento.service";
 import {ElementoDetallesPage} from "../../elementos/elemento-detalles/elemento-detalles.page";
@@ -20,6 +20,7 @@ export class ArticuloDetallesPage implements OnInit {
   comentarios: Comentario[] = [];
   articulo: Articulo;
   contenidoComentarioNuevo: string;
+  rol: number;
 
   constructor(
     private popoverController: PopoverController,
@@ -28,28 +29,35 @@ export class ArticuloDetallesPage implements OnInit {
     public userService: UserService,
     public articuloService: ArticuloService,
     private elementRef: ElementRef,
-    private modalController: ModalController
+    private router: Router
   ) { }
 
   ngOnInit() {
   }
 
   ionViewWillEnter() {
-    this.route.queryParams
-      .subscribe(params => {
-          console.log("params");
-          console.log(params);
-          if (params.articuloId != undefined) {
-            this.articuloId = params.articuloId;
-            this.articuloService.getArticuloEspecifico(params.articuloId ).subscribe((articulo) => {
-              this.articulo = articulo;
-              this.articuloService.getAllComentariosDeArticulo(articulo.articuloId).subscribe( (comentarios) =>{
-                this.comentarios = comentarios;
-              })
-            });
+
+    if(this.getUsername() != undefined){
+      this.route.queryParams
+        .subscribe(params => {
+            console.log("params");
+            console.log(params);
+            if (params.articuloId != undefined) {
+              this.articuloId = params.articuloId;
+              this.articuloService.getArticuloEspecifico(params.articuloId ).subscribe((articulo) => {
+                this.articulo = articulo;
+                this.articuloService.getAllComentariosDeArticulo(articulo.articuloId).subscribe( (comentarios) =>{
+                  this.comentarios = comentarios;
+                })
+              });
+            }
           }
-        }
-      );
+        );
+      this.rol=Number(this.getRol());
+    }else{
+      this.router.navigate(['/user-login']);
+    }
+
   }
 
 
@@ -76,6 +84,10 @@ export class ArticuloDetallesPage implements OnInit {
 
   getUserId():string {
     return sessionStorage.getItem('userId');
+  }
+
+  getRol() {
+    return sessionStorage.getItem('rol');
   }
 
   eliminarArticulo(){

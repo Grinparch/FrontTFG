@@ -5,6 +5,32 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
+  <ion-item>
+    <ion-label>
+      <ion-text>Le recomendamos el siguiente grupo:</ion-text>
+    </ion-label>
+  </ion-item>
+  <div *ngIf="this.recomendado != undefined">
+    <ion-list>
+      <ion-card (click)="irADetallesDeGrupo(recomendado)">
+        <ion-item>
+          <ion-label class="ion-text-wrap">
+            <ion-grid class="ion-no-padding">
+              <ion-row>
+                <ion-col ><ion-text>{{recomendado.nombre}}</ion-text></ion-col>
+                <ion-col ><ion-text>{{recomendado.descripcion}}</ion-text></ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-label>
+        </ion-item>
+      </ion-card>
+    </ion-list>
+  </div>
+  <ion-item>
+    <ion-label>
+      <ion-text>Grupos:</ion-text>
+    </ion-label>
+  </ion-item>
   <div *ngIf="this.grupos != undefined">
     <div *ngIf="this.grupos.length>0">
       <ion-list *ngFor="let grupo of grupos">

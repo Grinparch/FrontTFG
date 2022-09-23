@@ -11,41 +11,58 @@
   <div class="hs-container">
     <ng-container>
       <div class="profile">
-
+        <ion-row>
+          <h3 class="ion-padding-horizontal">Datos de Usuario</h3>
+        </ion-row>
         <div *ngIf="usuario.rol !== undefined">
-          <span *ngIf="usuario.rol === 0">
-            Administrador
-          </span>
-          <span *ngIf="usuario.rol === 1">
-            Moderador
-          </span>
-          <span *ngIf="usuario.rol === 2">
-            Usuario
-          </span>
+          <ion-label>
+            <strong>Rol: </strong>
+            <span *ngIf="usuario.rol === 0">
+              Administrador
+            </span>
+            <span *ngIf="usuario.rol === 1">
+              Moderador
+            </span>
+            <span *ngIf="usuario.rol === 2">
+              Usuario
+            </span>
+          </ion-label>
         </div>
-
-        <h4>
-          <strong>{{usuario.username}}</strong>
-        </h4>
-        <p>{{usuario.email}}</p>
-        <p *ngIf="usuario.phone != null || usuario.phone != undefined">{{usuario.phone}}</p>
+        <ion-row>
+          <ion-label>
+            <strong>Username: </strong>
+            <span>{{usuario.username}}  </span>
+          </ion-label>
+        </ion-row>
+        <ion-row>
+          <ion-label>
+            <strong>Correo: </strong>
+            <span>{{usuario.email}}</span>
+          </ion-label>
+        </ion-row>
+        <ion-row>
+          <ion-label *ngIf="usuario.phone != null || usuario.phone != undefined">
+            <strong>Telefono: </strong>
+            <span>{{usuario.phone}}</span>
+          </ion-label>
+        </ion-row>
 
       </div>
 
-      <ng-container *ngIf="!editMode ">
-        <h3 class="ion-padding-horizontal">Más datos</h3>
+      <ng-container >
+        <h3 class="ion-padding-horizontal">Datos de Perfil</h3>
 
         <ion-grid class="hs-bg-white ion-no-padding">
           <ion-row>
-            <ion-col size-md="4">
-              <ion-item lines="none" *ngIf="perfil.vistoUltimamente != null || perfil.vistoUltimamente != undefined">
+            <ion-col size-md="6" *ngIf="perfil.vistoUltimamente != null || perfil.vistoUltimamente != undefined">
+              <ion-item lines="none" >
                 <ion-label>
                   <strong>Último Visto</strong>
                   {{perfil.vistoUltimamente}}
                 </ion-label>
               </ion-item>
             </ion-col>
-            <ion-col size-md="4">
+            <ion-col size-md="8">
               <ion-item lines="none" *ngIf="perfil.generoPreferido != null || perfil.generoPreferido != undefined">
                 <ion-label>
                   <strong>Genero Preferido</strong>
@@ -62,8 +79,8 @@
               </ion-item>
             </ion-col>
           </ion-row>
-          <ion-row>
-            <ion-col size-md="4">
+          <ion-row *ngIf="perfil.actoresPreferidos != null || perfil.actoresPreferidos!= undefined">
+            <ion-col size-md="4" *ngIf="perfil.actoresPreferidos.length>0">
               <ion-label>
                 <strong>Actores Preferidos</strong>
               </ion-label>
@@ -76,16 +93,16 @@
               </ion-item>
             </ion-col>
           </ion-row>
-          <ion-row>
-            <ion-col size-md="4" >
+          <ion-row *ngIf="perfil.vinculosAsociados != null || perfil.vinculosAsociados!= undefined">
+            <ion-col size-md="4" *ngIf="perfil.vinculosAsociados.length>0">
               <ion-label>
                 <strong>Vinculos Asociados</strong>
               </ion-label>
-              <ion-item lines="none" *ngIf="perfil.vinculosAsociados != null || perfil.vinculosAsociados!= undefined" >
+              <ion-item lines="none"  >
                 <ion-label *ngFor="let vinculo of perfil.vinculosAsociados" >
-                  <p *ngIf="vinculo != ' ' && vinculo != null ">
+                  <a href="{{vinculo}}" *ngIf="vinculo != ' ' && vinculo != null ">
                     {{vinculo}}
-                  </p>
+                  </a>
                 </ion-label>
               </ion-item>
             </ion-col>
@@ -105,7 +122,7 @@
 
       <form [formGroup]="editarPerfilForm"
             (ngSubmit)="updateUser()"
-            *ngIf="this.editarPerfilForm"
+            *ngIf="this.editarPerfilForm && editMode "
             method="post">
         <ion-list>
           <ion-grid>
@@ -139,18 +156,45 @@
                 </ion-item>
               </ion-col>
             </ion-row>
-            <ion-row class="ion-justify-content-center">
-              <ion-col size-md="12" size-xs="12" class="ion-text-center">
-                <ion-button fill="outline" (click)="changeEditMode()">Edit</ion-button>
-                <ion-button type="submit">Editar</ion-button>
-              </ion-col>
-            </ion-row>
           </ion-grid>
         </ion-list>
       </form>
 
+      <ion-row class="ion-justify-content-center">
+        <ion-col size-md="12" size-xs="12" class="ion-text-center">
+          <ion-button fill="outline" (click)="changeEditMode()">Edit</ion-button>
+          <ion-button type="submit" *ngIf="editMode" (click)="updateUser()">Editar</ion-button>
+        </ion-col>
+      </ion-row>
+
+      <div *ngIf="editMode">
+        <div *ngFor="let genero of generos" >
+          <ion-card (click)="guardarGenero(genero)">
+            <ion-item >
+              <ion-label class="ion-text-wrap">
+                <ion-grid class="ion-no-padding">
+                  <ion-col>{{genero}}</ion-col>
+                </ion-grid>
+              </ion-label>
+            </ion-item>
+          </ion-card>
+        </div>
+        <ion-row class="ion-justify-content-center">
+          <ion-col size-md="12" size-xs="12" class="ion-text-center">
+            <ion-button fill="outline" (click)="changeGenero()">Cambiar Genero Preferido</ion-button>
+          </ion-col>
+        </ion-row>
+      </div>
+      <ion-item class="ion-justify-content-center">
+        <ion-col size-md="12" size-xs="12" class="ion-text-center">
+          <ion-button *ngIf="editMode" (click)="borrarCuenta()">Borrar Cuenta</ion-button>
+        </ion-col>
+      </ion-item>
+
+
 
 
     </ng-container>
+
   </div>
 </ion-content>

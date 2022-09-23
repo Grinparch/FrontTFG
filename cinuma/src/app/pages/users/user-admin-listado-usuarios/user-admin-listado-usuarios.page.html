@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Listado De Usuarios</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div *ngIf="this.usuarios != undefined">
+    <div *ngIf="this.usuarios.length>0">
+      <ion-list *ngFor="let usuario of usuarios">
+        <ion-card>
+          <ion-item>
+            <ion-label class="ion-text-wrap">
+              <ion-grid class="ion-no-padding">
+                <ion-row >
+                  <ion-col class="ion-text-end"><ion-text>{{usuario.username}}</ion-text></ion-col>
+                  <ion-col *ngIf="usuario.rol == 0" class="ion-text-end"><ion-badge color="primary">ADMINISTRADOR</ion-badge></ion-col>
+                  <ion-col *ngIf="usuario.rol == 1" class="ion-text-end"><ion-badge color="primary">MODERADOR</ion-badge></ion-col>
+                  <ion-col *ngIf="usuario.rol == 2" class="ion-text-end"><ion-badge color="primary">USUARIO COMUN</ion-badge></ion-col>
+                  <ion-col class="ion-text-end"><ion-badge color="primary">{{usuario.email}}</ion-badge></ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col ><ion-text>{{usuario.phone}}</ion-text></ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-button (click)="eliminarUsuario(usuario.username)">
+                    Eliminar
+                  </ion-button>
+                </ion-row>
+              </ion-grid>
+            </ion-label>
+          </ion-item>
+        </ion-card>
+      </ion-list>
+    </div>
+  </div>
+
+  <ion-item>
+    <ion-button (click)="irACrearUsuarioAvanzado()">
+      Crear Nuevo Usuario Avanzado
+    </ion-button>
+  </ion-item>
+</ion-content>

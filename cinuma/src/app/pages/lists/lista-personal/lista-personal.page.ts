@@ -13,6 +13,7 @@ import {
 } from "../lista-personal-elemento-detalles/lista-personal-elemento-detalles.page";
 import {ListaPersonal} from "../../../core/models/ListaPersonal";
 import {ListaPersonalService} from "../../../core/services/lista-personal.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-lista-personal',
@@ -29,13 +30,20 @@ export class ListaPersonalPage implements OnInit {
               public  elementoService: ElementoService,
               public  perfilService: PerfilService,
               public  listaPersonalService: ListaPersonalService,
+              private router: Router,
               private modalController: ModalController,) { }
 
   ngOnInit() {
   }
 
   ionViewWillEnter(){
-    this.loadPerfil();
+
+    if(this.getUsername() != undefined){
+      this.loadPerfil();
+    }else{
+      this.router.navigate(['/user-login']);
+    }
+
   }
 
   private loadPerfil(){

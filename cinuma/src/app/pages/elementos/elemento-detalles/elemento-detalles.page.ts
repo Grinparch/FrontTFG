@@ -5,6 +5,8 @@ import {ElementoService} from "../../../core/services/elemento.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {ModalController} from "@ionic/angular";
+import {AutenticacionService} from "../../../core/services/autenticacion.service";
+import {Generos} from "../../../core/models/Generos";
 
 @Component({
   selector: 'app-elemento-detalles',
@@ -15,10 +17,12 @@ export class ElementoDetallesPage implements OnInit {
 //Input
   @Input() elemento: Elemento;
 
+  generos: Array<string> = Object.keys(Generos).filter(key => isNaN(+key));
   editarElementoForm: FormGroup;
   generosAgregados: string[] = [];
   actoresAgregados: string[] = [];
   edicion: boolean = false;
+  username: string;
 
 
   constructor(
@@ -26,7 +30,8 @@ export class ElementoDetallesPage implements OnInit {
     private elementoService: ElementoService,
     private route: ActivatedRoute,
     private router: Router,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private autenticacionService: AutenticacionService,
   ) {}
 
   ngOnInit() {
@@ -38,6 +43,7 @@ export class ElementoDetallesPage implements OnInit {
     this.buildForm();
     this.actoresAgregados = this.elemento.actores;
     this.generosAgregados = this.elemento.genero;
+    this.username = this.getUsername();
   }
 
   ionViewDidEnter(){
@@ -57,10 +63,8 @@ export class ElementoDetallesPage implements OnInit {
     this.edicion= !this.edicion;
   }
 
-  agregarGeneroALista(){
-    const genero = this.editarElementoForm.value.genero;
+  agregarGeneroALista(genero:string){
     this.generosAgregados.push(genero);
-    this.editarElementoForm.controls.genero.setValue('');
     console.log(this.generosAgregados);
   }
 
@@ -146,18 +150,18 @@ export class ElementoDetallesPage implements OnInit {
 
 
   }
+
+  getRol() {
+    return Number(sessionStorage.getItem('rol'));
+  }
+
+  getUsername() {
+    return sessionStorage.getItem('username');
+  }
 /*
   stringAsDate(date:string){
     return new Date(date);
   }
 */
-  getUsername() {
-    return sessionStorage.getItem('username');
-  }
-
-  getRol() {
-    return sessionStorage.getItem('rol');
-  }
-
 
 }

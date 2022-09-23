@@ -33,7 +33,13 @@ export class ArticuloListadoPage implements OnInit {
   }
 
   ionViewWillEnter(){
-    this.loadArticulos();
+
+    if(this.getUsername() != undefined){
+      this.loadArticulos();
+    }else{
+      this.router.navigate(['/user-login']);
+    }
+
   }
 
   private loadArticulos(){

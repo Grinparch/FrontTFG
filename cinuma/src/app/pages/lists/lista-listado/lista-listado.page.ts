@@ -9,6 +9,7 @@ import {ListaPersonalAgregarPage} from "../lista-personal-agregar/lista-personal
 import {ModalController} from "@ionic/angular";
 import {Elemento} from "../../../core/models/Elemento";
 import {ListaCrearPage} from "../lista-crear/lista-crear.page";
+import {AutenticacionService} from "../../../core/services/autenticacion.service";
 
 @Component({
   selector: 'app-lista-listado',
@@ -18,6 +19,7 @@ import {ListaCrearPage} from "../lista-crear/lista-crear.page";
 export class ListaListadoPage implements OnInit {
   perfil: Perfil;
   listas: Lista[];
+  username: string;
 
   private listaModal: HTMLIonModalElement;
 
@@ -25,6 +27,7 @@ export class ListaListadoPage implements OnInit {
               public  perfilService: PerfilService,
               public  listaService: ListaService,
               private modalController: ModalController,
+              private autenticacionService: AutenticacionService,
               private router: Router) { }
 
   ngOnInit() {
@@ -32,6 +35,8 @@ export class ListaListadoPage implements OnInit {
 
   ionViewWillEnter(){
     this.loadListas();
+    if(this.getUsername()!=undefined && this.getUsername()!=null)
+      this.username = this.getUsername();
   }
 
   private loadListas(){
@@ -40,14 +45,6 @@ export class ListaListadoPage implements OnInit {
       console.log("listas todas");
       console.log(this.listas);
     });
-  }
-
-  getUsername() {
-    return sessionStorage.getItem('username');
-  }
-
-  getPerfil() {
-    return sessionStorage.getItem('perfilId');
   }
 
   irADetallesDeLista(lista: Lista){
@@ -69,6 +66,14 @@ export class ListaListadoPage implements OnInit {
       this.crearNuevaLista(elementos).then(() => this.listaModal.present());
     });
 
+  }
+
+  getRol() {
+    return sessionStorage.getItem('rol');
+  }
+
+  getUsername() {
+    return sessionStorage.getItem('username');
   }
 
 }

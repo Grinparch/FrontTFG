@@ -66,13 +66,19 @@
                     <p>{{genero}}   </p>
                   </ion-item>
                 </ion-col>
-                <ion-col size-md="3" size-xs="12">
-                  <ion-item fill="solid" mode="md" class="hs-textfield">
-                    <ion-label position="floating">Agregar Genero</ion-label>
-                    <ion-input formControlName="genero" type="text"></ion-input>
-                    <ion-button (click)="agregarGeneroALista()">Agregar Genero</ion-button>
-                  </ion-item>
-                </ion-col>
+
+                  <div *ngFor="let genero of generos" >
+                    <ion-card (click)="agregarGeneroALista(genero)">
+                      <ion-item >
+                        <ion-label class="ion-text-wrap">
+                          <ion-grid class="ion-no-padding">
+                            <ion-col>{{genero}}</ion-col>
+                          </ion-grid>
+                        </ion-label>
+                      </ion-item>
+                    </ion-card>
+                  </div>
+
               </div>
             </ion-row>
           </ion-grid>

@@ -8,5 +8,5 @@ export class Usuario {
   phone?: string;
   rol: number; //0 -Administrador  1-Moderador   2-Usuario Comun
   autenticacion: Autenticacion;
-  perfil: string;
+  perfil?: string;
 }

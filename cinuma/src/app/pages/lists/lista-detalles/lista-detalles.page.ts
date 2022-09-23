@@ -10,6 +10,7 @@ import {ListaService} from "../../../core/services/lista.service";
 import {Lista} from "../../../core/models/Lista";
 import {Elemento} from "../../../core/models/Elemento";
 import {ElementoDetallesPage} from "../../elementos/elemento-detalles/elemento-detalles.page";
+import {AutenticacionService} from "../../../core/services/autenticacion.service";
 
 @Component({
   selector: 'app-lista-detalles',
@@ -23,6 +24,7 @@ export class ListaDetallesPage implements OnInit {
   elementosModificados: Elemento[] = [];
   elementosTodos: Elemento[];
   edicion: boolean = false;
+  username: string;
 
   private elementoModal: HTMLIonModalElement;
 
@@ -30,7 +32,8 @@ export class ListaDetallesPage implements OnInit {
     private listaService: ListaService,
     private elementoService: ElementoService,
     private route: ActivatedRoute,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private autenticacionService: AutenticacionService,
   ) {
   }
 
@@ -58,6 +61,8 @@ export class ListaDetallesPage implements OnInit {
           }
         }
       );
+    if(this.getUsername()!=null && this.getUsername()!= undefined)
+      this.username=this.getUsername();
   }
 
   ionViewDidEnter() {
@@ -100,17 +105,6 @@ export class ListaDetallesPage implements OnInit {
       this.listaService.editarLista(nuevaLista);
   }
 
-  getUsername() {
-    return sessionStorage.getItem('username');
-  }
-
-  getRol() {
-    return sessionStorage.getItem('rol');
-  }
-
-  getPerfil() {
-    return sessionStorage.getItem('perfilId');
-  }
 
   async crearModalElemento(elemento: Elemento) {
     this.elementoModal = await this.modalController.create({
@@ -124,5 +118,12 @@ export class ListaDetallesPage implements OnInit {
 
   elementoDetallesModal(elemento: Elemento) {
     this.crearModalElemento(elemento).then(() => this.elementoModal.present());
+  }
+
+  getUsername() {
+    return sessionStorage.getItem('username');
+  }
+  getRol() {
+    return sessionStorage.getItem('rol');
   }
 }

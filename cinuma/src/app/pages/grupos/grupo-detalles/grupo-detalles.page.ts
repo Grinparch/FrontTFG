@@ -3,7 +3,7 @@ import {Grupo} from "../../../core/models/Grupo";
 import {Elemento} from "../../../core/models/Elemento";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {ModalController, NavController, PopoverController} from "@ionic/angular";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {UserService} from "../../../core/services/user.service";
 import {GrupoService} from "../../../core/services/grupo.service";
 import { ElementoService } from 'src/app/core/services/elemento.service';
@@ -24,6 +24,7 @@ export class GrupoDetallesPage implements OnInit {
   grupo: Grupo;
   edicion: boolean = false;
   lider = false;
+  rol:number;
 
   private elementoModal: HTMLIonModalElement;
 
@@ -39,6 +40,7 @@ export class GrupoDetallesPage implements OnInit {
     public elementoService: ElementoService,
     public grupoService: GrupoService,
     private elementRef: ElementRef,
+    private router: Router,
     private modalController: ModalController
   ) { }
 
@@ -46,32 +48,40 @@ export class GrupoDetallesPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    this.route.queryParams
-      .subscribe(params => {
-          console.log("params");
-          console.log(params);
-          if (params.grupoId != undefined) {
-            this.grupoId = params.grupoId;
-            this.grupoService.getGrupoEspecifico(params.grupoId).subscribe((grupo) => {
-              this.grupo = grupo;
-              this.crearGrupoForm.get('descripcion').setValue(grupo.descripcion);
-              if(this.getUserId()==grupo.lider){
-                this.lider=true;
-              }
-              this.userService.getAllUsuariosGrupo(grupo.miembros).subscribe( (usuarios) =>{
-                this.miembros = usuarios;
-              })
-              this.elementoService.getAllElementosGrupo(grupo.elementosPreferidos).subscribe( (elementosAgregados) =>{
-                this.elementosAgregados = elementosAgregados;
+    if(this.getUsername() != undefined){
+      this.rol=Number(this.getRol());
+      this.route.queryParams
+        .subscribe(params => {
+            console.log("params");
+            console.log(params);
+            if (params.grupoId != undefined) {
+              this.grupoId = params.grupoId;
+              this.grupoService.getGrupoEspecifico(params.grupoId).subscribe((grupo) => {
+                this.grupo = grupo;
+                this.crearGrupoForm.get('descripcion').setValue(grupo.descripcion);
+                if(this.getUserId()==grupo.lider){
+                  this.lider=true;
+                }
+                this.userService.getAllUsuariosGrupo(grupo.miembros).subscribe( (usuarios) =>{
+                  this.miembros = usuarios;
+                  console.log("miembros");
+                  console.log(usuarios);
+                })
+                this.elementoService.getAllElementosGrupo(grupo.elementosPreferidos).subscribe( (elementosAgregados) =>{
+                  this.elementosAgregados = elementosAgregados;
 
+                })
+              });
+              this.elementoService.getAllElementos().subscribe( (elementosTodos) =>{
+                this.elementosTodos = elementosTodos;
               })
-            });
-            this.elementoService.getAllElementos().subscribe( (elementosTodos) =>{
-              this.elementosTodos = elementosTodos;
-            })
+            }
           }
-        }
-      );
+        );
+    }else{
+      this.router.navigate(['/user-login']);
+    }
+
   }
 
 
@@ -148,6 +158,10 @@ export class GrupoDetallesPage implements OnInit {
 
   getUserId():string {
     return sessionStorage.getItem('userId');
+  }
+
+  getRol(){
+    return sessionStorage.getItem('rol');
   }
 
   activarEdicionElemento() {

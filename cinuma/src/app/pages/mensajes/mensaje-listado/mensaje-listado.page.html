@@ -67,4 +67,17 @@
       </ion-col>
     </ion-row>
   </form>
+  <ion-grid>
+    <div *ngIf="recomendados!=null && recomendados != undefined && recomendados.length>0">
+      <ion-item>
+        <ion-row>
+          <ion-label>Estos usuarios comparten intereses similares a ti:</ion-label>
+        </ion-row>
+      </ion-item>
+      <ion-row *ngFor="let username of recomendados">
+        <ion-item><p>{{username}}</p></ion-item>
+      </ion-row>
+    </div>
+  </ion-grid>
+
 </ion-content>

@@ -14,6 +14,7 @@ export class ElementoService {
   // paths
   getAllElementosPath = "http://localhost:8081/elemento/";
   getElementoEspecificoPath = "http://localhost:8081/elemento/";
+  getElementosRecomendadosPath = "http://localhost:8081/elemento/recomendados/";
   addPeliculaPath = "http://localhost:8081/elemento/addPelicula/";
   addSeriePath = "http://localhost:8081/elemento/addSerie/";
   deleteElementoPath = "http://localhost:8081/elemento/delete/";
@@ -41,6 +42,12 @@ export class ElementoService {
     const headers = new HttpHeaders({'Content-Type': 'application/json'})
     return this.http.get<Elemento>(this.getElementoEspecificoPath+elementoId,
       { headers }) as Observable<Elemento>;
+  }
+
+  getElementosRecomendados(perfilId: string){
+    const headers = new HttpHeaders({'Content-Type': 'application/json'})
+    return this.http.get<Elemento[]>(this.getElementosRecomendadosPath+perfilId,
+      { headers }) as Observable<Elemento[]>;
   }
 
   addPelicula(elemento: Elemento){

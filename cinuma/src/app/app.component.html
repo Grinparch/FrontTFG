@@ -1,34 +1,25 @@
 <ion-app>
   <ion-split-pane contentId="main-content">
-
-    <ion-menu side="end" contentId="main-content">
+    <ion-menu side="start" menuId="main-content" content="main-content" content-id="main-content">
       <ion-header>
-        <ion-toolbar mode="md">
-          <ion-buttons slot="end">
-            <ion-menu-toggle>
-              <ion-button>
-                <ion-icon slot="icon-only" name="close-outline"></ion-icon>
-              </ion-button>
-            </ion-menu-toggle>
-          </ion-buttons>
+        <ion-toolbar>
           <ion-title>CINUMA</ion-title>
         </ion-toolbar>
       </ion-header>
 
       <ion-content>
         <ion-list id="menu-list">
-          <ion-list-header>Menu</ion-list-header>
-
           <ion-item-group>
-            <ion-item
+            <ion-item *ngIf="this.usuario==undefined"
                       [routerLink]="['/user-register']"
                       button="true" detail="false"
-                      routerLinkActive="active-link">
+                      routerLinkActive="active-link"
+            (click)="consoleLog('register')">
               <ion-label>
                 Registro
               </ion-label>
             </ion-item>
-            <ion-item
+            <ion-item *ngIf="this.usuario==undefined"
                       [routerLink]="['/user-login']"
                       button="true" detail="false"
                       routerLinkActive="active-link">
@@ -43,7 +34,7 @@
                 Principal
               </ion-label>
             </ion-item>
-            <ion-item
+            <ion-item *ngIf="this.usuario!=undefined"
                       [routerLink]="['/user-perfil']"
                       button="true" detail="false"
                       routerLinkActive="active-link">
@@ -58,7 +49,8 @@
                 Series/Peliculas
               </ion-label>
             </ion-item>
-            <ion-item [routerLink]="['/lista-personal']"
+            <ion-item *ngIf="this.usuario!=undefined"
+                      [routerLink]="['/lista-personal']"
                       button="true" detail="false"
                       routerLinkActive="active-link">
               <ion-label>
@@ -72,25 +64,36 @@
                 Listas
               </ion-label>
             </ion-item>
-            <ion-item [routerLink]="['/grupo-listado']"
+            <ion-item *ngIf="this.usuario!=undefined"
+                      [routerLink]="['/grupo-listado']"
                       button="true" detail="false"
                       routerLinkActive="active-link">
               <ion-label>
                 Grupos
               </ion-label>
             </ion-item>
-            <ion-item [routerLink]="['/articulo-listado']"
+            <ion-item *ngIf="this.usuario!=undefined"
+                      [routerLink]="['/articulo-listado']"
                       button="true" detail="false"
                       routerLinkActive="active-link">
               <ion-label>
                 Foro
               </ion-label>
             </ion-item>
-            <ion-item [routerLink]="['/mensaje-listado']"
+            <ion-item *ngIf="this.usuario!=undefined"
+                      [routerLink]="['/mensaje-listado']"
                       button="true" detail="false"
                       routerLinkActive="active-link">
               <ion-label>
                 Mensajes
+              </ion-label>
+            </ion-item>
+            <ion-item *ngIf="this.usuario!=undefined && this.rol==0"
+                      [routerLink]="['/user-admin-listado-usuarios']"
+                      button="true" detail="false"
+                      routerLinkActive="active-link">
+              <ion-label>
+                Administracion
               </ion-label>
             </ion-item>
           </ion-item-group>

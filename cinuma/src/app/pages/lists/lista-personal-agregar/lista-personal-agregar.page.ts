@@ -37,9 +37,15 @@ export class ListaPersonalAgregarPage implements OnInit {
   }
 
   ionViewWillEnter(){
-    console.log("todos los elementos agregar lista");
-    console.log(this.todosElementos);
-    this.buildForm();
+
+    if(this.getUsername() != undefined){
+      console.log("todos los elementos agregar lista");
+      console.log(this.todosElementos);
+      this.buildForm();
+    }else{
+      this.router.navigate(['/user-login']);
+    }
+
   }
 
   ionViewDidEnter(){
@@ -74,8 +80,7 @@ export class ListaPersonalAgregarPage implements OnInit {
         listaPersonalId: this.listaPersonalId,
         perfilId: perfilId,
         titulo: this.elemento.titulo,
-        calificacionPromedio: this.elemento.calificacionPromedio,
-        duracion: this.elemento.calificacionPromedio,
+        duracion: this.elemento.duracion,
         genero: this.elemento.genero,
         idioma: this.elemento.idioma,
         director: this.elemento.director,
@@ -95,8 +100,7 @@ export class ListaPersonalAgregarPage implements OnInit {
         listaPersonalId: this.listaPersonalId,
         perfilId: perfilId,
         titulo: this.elemento.titulo,
-        calificacionPromedio: this.elemento.calificacionPromedio,
-        duracion: this.elemento.calificacionPromedio,
+        duracion: this.elemento.duracion,
         genero: this.elemento.genero,
         idioma: this.elemento.idioma,
         director: this.elemento.director,
@@ -122,5 +126,9 @@ export class ListaPersonalAgregarPage implements OnInit {
 
   getPerfil() {
     return sessionStorage.getItem('perfilId');
+  }
+
+  getUsername() {
+    return sessionStorage.getItem('username');
   }
 }

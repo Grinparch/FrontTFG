@@ -20,12 +20,12 @@
                   </ion-row>
                   <ion-row>
                     <ion-col *ngIf="elemento.tipo == 0" class="ion-text-end"><ion-text>{{elemento.capitulos}}</ion-text></ion-col>
-                    <ion-col *ngIf="elemento.tipo == 0" class="ion-text-end"><ion-text>{{elemento.estreno}}</ion-text></ion-col>
-                    <ion-col *ngIf="elemento.tipo == 1" class="ion-text-end"><ion-text>{{elemento.estrenoTaquilla}}</ion-text></ion-col>
+                    <ion-col *ngIf="elemento.tipo == 0" class="ion-text-end"><ion-text>{{elemento.estreno | date:'dd/MM/yyyy'}}</ion-text></ion-col>
+                    <ion-col *ngIf="elemento.tipo == 1" class="ion-text-end"><ion-text>{{elemento.estrenoTaquilla | date:'dd/MM/yyyy'}}</ion-text></ion-col>
                   </ion-row>
-                  <ion-row *ngFor="let genero of elemento.genero">
-                    <ion-col class="ion-text-end"><ion-text>{{genero}}</ion-text></ion-col>
-                  </ion-row>
+                  <ion-col *ngFor="let genero of elemento.genero">
+                    <ion-text>{{genero}}&nbsp;&nbsp;&nbsp;&nbsp;</ion-text>
+                  </ion-col>
                 </ion-grid>
               </ion-label>
             </ion-item>

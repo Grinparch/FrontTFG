@@ -1,18 +1,23 @@
 import { Injectable } from '@angular/core';
 import {Usuario} from "../models/Usuario";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
 import {Autenticacion} from "../models/Autenticacion";
+import {MenuController} from "@ionic/angular";
+import {BehaviorSubject} from "rxjs";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AutenticacionService {
   autenticacion: Autenticacion;
+  usuario: BehaviorSubject<string> = new BehaviorSubject<string>(null);
   // paths
   addAuthPath = "http://localhost:8081/autenticacion/add";
   loginPath = "http://localhost:8081/autenticacion/login";
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+              private router: Router) { }
 
   async addAutenticacion(newAuth: Autenticacion) {
     console.log("en add Auth");
@@ -35,17 +40,44 @@ export class AutenticacionService {
     });
   }
 
-  async login(auth: Autenticacion){
+  login(auth: Autenticacion){
     const headers = new HttpHeaders({ 'Content-Type': 'application/json'})
+    console.log("login data");
+    console.log(auth.autenticacionId);
     this.http.post<any>(this.loginPath,
       {"autenticacionId": auth.autenticacionId,
         "usuario": auth.usuario,
         "clave": auth.clave},
       { headers }).subscribe(data => {
-        console.log("data");
+        console.log("login data");
         console.log(data);
-      this.saveData(data);
+        if(data!=null && data!=undefined){
+          this.saveData(data);
+          this.usuario.next("logged");
+          this.router.navigate(['/pagina-principal']);
+        }
+
+    },(error) => {                              //Error callback
+      if (error instanceof HttpErrorResponse) {
+        if (error.error instanceof ErrorEvent) {
+          console.error("Error Event");
+        } else {
+          console.log(`error status : ${error.status} ${error.statusText}`);
+          switch (error.status) {
+            case 400:      //Usuario ya existente
+              this.router.navigate(['/user-login'], { queryParams: { error: 'usuarioExistente' } });
+              break;
+          }
+        }
+      }
     });
+  }
+
+  async logOut(){
+    this.usuario.next(null);
+    sessionStorage.clear();
+    await this.router.navigate(['/user-login'])
+    window.location.reload();
   }
 
   saveData(user:Usuario) {
@@ -61,5 +93,8 @@ export class AutenticacionService {
   }
   getRol() {
     return sessionStorage.getItem('rol');
+  }
+  getPerfilId() {
+    return sessionStorage.getItem('perfilId');
   }
 }

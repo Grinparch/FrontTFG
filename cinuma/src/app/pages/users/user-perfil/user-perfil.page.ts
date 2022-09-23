@@ -1,12 +1,14 @@
 import {Component, ElementRef, OnInit} from '@angular/core';
 import {Usuario} from "../../../core/models/Usuario";
-import {FormControl, FormGroup} from "@angular/forms";
-import {AlertController, ModalController, NavController, PopoverController} from '@ionic/angular';
-import {ActivatedRoute} from "@angular/router";
+import {Generos} from "../../../core/models/Generos";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {NavController, PopoverController} from '@ionic/angular';
+import {ActivatedRoute, Router} from "@angular/router";
 import {UserService} from "../../../core/services/user.service";
 import {Perfil} from "../../../core/models/Perfil";
 import { PerfilService } from 'src/app/core/services/perfil.service';
-import mongoose from "mongoose";
+import { AutenticacionService } from 'src/app/core/services/autenticacion.service';
+
 
 @Component({
   selector: 'app-user-perfil',
@@ -14,7 +16,8 @@ import mongoose from "mongoose";
   styleUrls: ['./user-perfil.page.scss'],
 })
 export class UserPerfilPage implements OnInit {
-
+  generos: Array<string> = Object.keys(Generos).filter(key => isNaN(+key));
+  generoSeleccionado: string;
   username: string;
   usuario: Usuario = new Usuario();
   perfil: Perfil;
@@ -22,8 +25,8 @@ export class UserPerfilPage implements OnInit {
   esMiPerfil = false;
 
   editarPerfilForm: FormGroup = new FormGroup({
-    actoresPreferidos: new FormControl('', []),
-    vinculosAsociados: new FormControl('', []),
+    actoresPreferidos: new FormControl('', [Validators.minLength(2)]),
+    vinculosAsociados: new FormControl('', [Validators.minLength(2)]),
     disponibleChat: new FormControl('', []),
     avatar: new FormControl('')
   });
@@ -33,7 +36,9 @@ export class UserPerfilPage implements OnInit {
     private route: ActivatedRoute,
     private navCtrl: NavController,
     public userService: UserService,
+    public autenticacionService: AutenticacionService,
     public perfilService: PerfilService,
+    private router: Router,
     private elementRef: ElementRef
   ) { }
 
@@ -46,14 +51,20 @@ export class UserPerfilPage implements OnInit {
   }
 
   ionViewWillEnter(){
-    console.log("before user data");
-    this.loadUserData();
-    this.usuario.perfil = sessionStorage.getItem('perfilId');
-    console.log("perfil session storage");
-    console.log(sessionStorage.getItem('perfilId'));
-    console.log("before perfil data");
-    this.loadPerfilData(this.usuario.perfil);
-    console.log("FINISH");
+
+    if(this.getUsername() != undefined){
+      console.log("before user data");
+      this.loadUserData();
+      this.usuario.perfil = sessionStorage.getItem('perfilId');
+      console.log("perfil session storage");
+      console.log(sessionStorage.getItem('perfilId'));
+      console.log("before perfil data");
+      this.loadPerfilData(this.usuario.perfil);
+      console.log("FINISH");
+    }else{
+      this.router.navigate(['/user-login']);
+    }
+
   }
 
   ionViewDidLeave(){
@@ -65,6 +76,7 @@ export class UserPerfilPage implements OnInit {
   }
 
   async updateUser() {
+    console.log("before checking validity");
     if (!this.editarPerfilForm.valid){
       const firstNgInvalid: HTMLElement = this.elementRef.nativeElement.querySelector('form .ng-invalid');
       this.editarPerfilForm.markAllAsTouched();
@@ -77,10 +89,19 @@ export class UserPerfilPage implements OnInit {
         this.perfil.actoresPreferidos = array;
       if(this.perfil.vinculosAsociados == undefined)
         this.perfil.vinculosAsociados = array;
-      this.perfil.actoresPreferidos.push(this.editarPerfilForm.get('actoresPreferidos').value);
-      this.perfil.vinculosAsociados.push(this.editarPerfilForm.get('vinculosAsociados').value);
+      if(this.editarPerfilForm.get('actoresPreferidos').value != null &&
+         this.editarPerfilForm.get('actoresPreferidos').value != undefined &&
+         this.editarPerfilForm.get('actoresPreferidos').value != '')
+        this.perfil.actoresPreferidos.push(this.editarPerfilForm.get('actoresPreferidos').value);
+
+      if(this.editarPerfilForm.get('vinculosAsociados').value != null &&
+        this.editarPerfilForm.get('vinculosAsociados').value != undefined &&
+        this.editarPerfilForm.get('vinculosAsociados').value != '')
+        this.perfil.vinculosAsociados.push(this.editarPerfilForm.get('vinculosAsociados').value);
+
       this.perfil.disponibleChat= this.editarPerfilForm.get('disponibleChat').value;
       this.perfil.avatar= this.editarPerfilForm.get('avatar').value;
+
 
       console.log(this.perfil);
       this.perfilService.updatePerfil(this.perfil).subscribe((perfil) => {
@@ -116,6 +137,20 @@ export class UserPerfilPage implements OnInit {
 
   }
 
+  changeGenero(){
+    if(this.generoSeleccionado != undefined || this.generoSeleccionado != null){
+      this.perfil.generoPreferido = this.generoSeleccionado;
+    }
+    console.log(this.perfil);
+    this.perfilService.updatePerfil(this.perfil).subscribe((perfil) => {
+      console.log("perfil");
+      console.log(perfil);
+      this.perfil=perfil;
+      //this.router.navigate(['/user-login']);
+      this.editMode = false;
+    });
+  }
+
   private loadPerfilData(perfilId: string){
     this.perfilService.getPerfilEspecifico(perfilId).subscribe(data => {
       console.log("data");
@@ -128,12 +163,23 @@ export class UserPerfilPage implements OnInit {
     });
   }
 
+  borrarCuenta(){
+    this.userService.eliminarUsuario(this.getUsername());
+    this.autenticacionService.logOut();
+  }
+
   getUsername() {
     return sessionStorage.getItem('username');
   }
 
   getPerfil() {
     return sessionStorage.getItem('perfilId');
+  }
+
+  guardarGenero(genero:string){
+    console.log("genero seleccionado");
+    console.log(genero);
+    this.generoSeleccionado = genero;
   }
 
 }
