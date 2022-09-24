@@ -103,6 +103,7 @@ export class ElementoCrearPage implements OnInit {
 
   async crearElemento() {
     if (!this.crearElementoForm.valid){
+      this.crearElementoForm.markAllAsTouched();
       console.log('Form has errors. Please provide all the required values!');
     }
     else {
@@ -118,7 +119,7 @@ export class ElementoCrearPage implements OnInit {
       idioma: new FormControl('', [Validators.required, Validators.minLength(2)]),
       director: new FormControl('', [Validators.required, Validators.minLength(2)]),
       actores: new FormControl('', [Validators.minLength(2)]),
-      tipo: new FormControl('', [Validators.required, Validators.max(1), Validators.min(0)]),
+      tipo: new FormControl(0, [Validators.required, Validators.max(1), Validators.min(0)]),
       capitulos: new FormControl('', [Validators.minLength(1)]),
       estreno: new FormControl('', [Validators.minLength(2)]),
       estrenoTaquilla: new FormControl('', [Validators.minLength(2)])

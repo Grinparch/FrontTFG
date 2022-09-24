@@ -5,6 +5,7 @@ import {Observable} from "rxjs";
 import {Lista} from "../models/Lista";
 import {ListaPersonal} from "../models/ListaPersonal";
 import {ElementoEnlistado} from "../models/ElementoEnlistado";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,8 @@ export class ListaService {
   editarListaPath = "http://localhost:8081/lista/editarLista/";
   eliminarListaPath = "http://localhost:8081/lista/delete/";
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+              private router: Router) { }
 
   async addLista(newL: Lista) {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json'})
@@ -38,7 +40,10 @@ export class ListaService {
         "elementos": newL.elementos,
         "votos": newL.votos,
         "creador": newL.creador},
-      { headers }).pipe().subscribe();
+      { headers }).pipe().subscribe(()=>{
+      this.router.navigate(['/lista-personal']);
+      window.location.reload();
+    });
   }
 
   getAllListas() {
@@ -56,6 +61,9 @@ export class ListaService {
   eliminarLista(listaId: string){
     const headers = new HttpHeaders({ 'Content-Type': 'application/json'})
     return this.http.delete(this.eliminarListaPath+listaId,
-      { headers }).pipe().subscribe();;
+      { headers }).pipe().subscribe(()=>{
+      this.router.navigate(['/lista-personal']);
+      window.location.reload();
+    });;
   }
 }

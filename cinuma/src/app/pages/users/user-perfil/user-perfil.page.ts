@@ -99,8 +99,6 @@ export class UserPerfilPage implements OnInit {
         this.editarPerfilForm.get('vinculosAsociados').value != '')
         this.perfil.vinculosAsociados.push(this.editarPerfilForm.get('vinculosAsociados').value);
 
-      this.perfil.disponibleChat= this.editarPerfilForm.get('disponibleChat').value;
-      this.perfil.avatar= this.editarPerfilForm.get('avatar').value;
 
 
       console.log(this.perfil);
@@ -156,16 +154,11 @@ export class UserPerfilPage implements OnInit {
       console.log("data");
       console.log(data);
       this.perfil = data;
-      this.editarPerfilForm.patchValue({
-        disponibleChat: this.perfil.disponibleChat,
-        avatar: this.perfil.avatar
-      });
     });
   }
 
   borrarCuenta(){
     this.userService.eliminarUsuario(this.getUsername());
-    this.autenticacionService.logOut();
   }
 
   getUsername() {
@@ -180,6 +173,19 @@ export class UserPerfilPage implements OnInit {
     console.log("genero seleccionado");
     console.log(genero);
     this.generoSeleccionado = genero;
+  }
+
+  removerActorDeLista(actor:string){
+    let index = 0;
+    if(this.perfil.actoresPreferidos.length>0){
+      this.perfil.actoresPreferidos.forEach(actorIteracion =>{
+        if(actorIteracion==actor){
+          this.perfil.actoresPreferidos.splice(index,1);
+        }
+        index++;
+      })
+    }
+    console.log(this.perfil.actoresPreferidos);
   }
 
 }

@@ -8,6 +8,7 @@ import {NavController} from "@ionic/angular";
 import {Router, RouterLink} from "@angular/router";
 import {Elemento} from "../models/Elemento";
 import {Lista} from "../models/Lista";
+import {AutenticacionService} from "./autenticacion.service";
 
 @Injectable({
   providedIn: 'root'
@@ -21,11 +22,13 @@ export class UserService {
   getUsuariosRecomendadosPath = "http://localhost:8081/usuarios/recomendados/";
   getAllUsersPath = "http://localhost:8081/usuarios/";
   getAllUsersGrupoPath = "http://localhost:8081/usuarios/listaUsuarios/";
+  getVerificacionUsernamePath = "http://localhost:8081/usuarios/verificacionUsername/";
   eliminarUsuarioPath = "http://localhost:8081/usuarios/delete/";
 
   constructor(private http: HttpClient,
               private navCtrl: NavController,
-              private router: Router) { }
+              private router: Router,
+              public autenticacionService: AutenticacionService) { }
 
   async addUser(newUser: Usuario){
     console.log("en add User");
@@ -43,23 +46,7 @@ export class UserService {
         console.log(usuario);
         this.usuario=usuario;
         this.router.navigate(['/user-login']);
-       },(error) => {                              //Error callback
-        if (error instanceof HttpErrorResponse) {
-          if (error.error instanceof ErrorEvent) {
-            console.error("Error Event");
-          } else {
-            console.log(`error status : ${error.status} ${error.statusText}`);
-            switch (error.status) {
-              case 400:      //Usuario ya existente
-                this.router.navigate(['/user-register'], { queryParams: { error: 'usuarioExistente' } });
-                break;
-            }
-          }
-        } else {
-          console.error("some thing else happened");
-        }
-        return throwError(error);
-      });
+       });
     return "Error";
   }
 
@@ -78,20 +65,7 @@ export class UserService {
       { headers }).pipe().subscribe((usuario) => {
       console.log("usuario");
       console.log(usuario);
-    },(error) => {                              //Error callback
-      if (error instanceof HttpErrorResponse) {
-        if (error.error instanceof ErrorEvent) {
-          console.error("Error Event");
-        } else {
-          console.log(`error status : ${error.status} ${error.statusText}`);
-          switch (error.status) {
-            case 400:      //Usuario ya existente
-              this.router.navigate(['/user-admin-crear-avanzado'], { queryParams: { error: 'usuarioExistente' } });
-              break;
-          }
-        }
-      }
-      return throwError(error);
+      this.router.navigate(['/user-admin-listado-usuarios']);
     });
     return "Error";
   }
@@ -114,6 +88,12 @@ export class UserService {
       { headers }) as Observable<Usuario>;
   }
 
+  getVerificacionUsername(username:string){
+    const headers = new HttpHeaders({'Content-Type': 'application/json'})
+    return this.http.get<boolean>(this.getVerificacionUsernamePath+username,
+      { headers }) as Observable<boolean>;
+  }
+
   //Se utiliza post por que la llamada de Get no permite pasar un body
   getAllUsuariosGrupo(usuarios: String[]) {
     console.log("usuarios");
@@ -127,6 +107,16 @@ export class UserService {
   eliminarUsuario(username: string){
     const headers = new HttpHeaders({ 'Content-Type': 'application/json'})
     return this.http.delete(this.eliminarUsuarioPath+username,
-      { headers }).pipe().subscribe();
+      { headers }).pipe().subscribe(()=>{
+      this.autenticacionService.logOut();
+    });
+  }
+
+  eliminarUsuarioPorAdmin(username: string){
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json'})
+    return this.http.delete(this.eliminarUsuarioPath+username,
+      { headers }).pipe().subscribe(()=>{
+      this.router.navigate(['/user-admin-listado-usuarios']).then(()=>window.location.reload())
+    });
   }
 }

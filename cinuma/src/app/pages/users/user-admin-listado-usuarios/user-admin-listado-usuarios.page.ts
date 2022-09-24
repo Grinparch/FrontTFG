@@ -56,7 +56,7 @@ export class UserAdminListadoUsuariosPage implements OnInit {
   }
 
   eliminarUsuario(username:string){
-    this.usuarioService.eliminarUsuario(username);
+    this.usuarioService.eliminarUsuarioPorAdmin(username);
   }
 
   getRol() {

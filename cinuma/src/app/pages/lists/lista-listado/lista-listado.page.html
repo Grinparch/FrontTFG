@@ -10,21 +10,20 @@
       <ion-list *ngFor="let lista of listas">
         <ion-card (click)="irADetallesDeLista(lista)">
           <ion-item>
-            <ion-label class="ion-text-wrap">
-              <ion-grid class="ion-no-padding">
-                <ion-row *ngFor="let elemento of lista.elementos">
-                  <ion-col class="ion-text-end"><ion-text>{{elemento.titulo}}</ion-text></ion-col>
-                  <ion-col *ngIf="elemento.tipo == 0" class="ion-text-end"><ion-badge color="primary">SERIE</ion-badge></ion-col>
-                  <ion-col *ngIf="elemento.tipo == 1" class="ion-text-end"><ion-badge color="primary">PELICULA</ion-badge></ion-col>
-                  <ion-col *ngIf="elemento.tipo == 0" class="ion-text-end"><ion-badge color="primary">{{elemento.capitulos}}</ion-badge></ion-col>
-                  <ion-col *ngIf="elemento.tipo == 1" class="ion-text-end"><ion-badge color="primary">{{elemento.duracion}}</ion-badge></ion-col>
+            <ion-grid class="ion-no-padding">
+              <div *ngFor="let elemento of lista.elementos">
+                <ion-row class="ion-text-start">
+                  <ion-col size="6">
+                    {{elemento.titulo}}
+                    <ion-badge color="primary" *ngIf="elemento.tipo == 0">SERIE</ion-badge>
+                    <ion-badge color="primary" *ngIf="elemento.tipo == 1">PELICULA</ion-badge><br>
+                  </ion-col>
                 </ion-row>
-                <ion-row>
-                  <ion-col ><ion-text>{{lista.creador}}</ion-text></ion-col>
-                  <ion-col ><ion-text>{{lista.votos}}</ion-text></ion-col>
-                </ion-row>
-              </ion-grid>
-            </ion-label>
+              </div>
+              <ion-row>
+                <ion-col ><ion-text><strong>Creador:</strong> {{lista.creador}}</ion-text></ion-col>
+              </ion-row>
+            </ion-grid>
           </ion-item>
         </ion-card>
       </ion-list>

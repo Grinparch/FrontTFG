@@ -12,15 +12,22 @@
           <ion-item>
             <ion-label class="ion-text-wrap">
               <ion-grid class="ion-no-padding">
-                <ion-row>
-                  <ion-col size="9">{{elemento.titulo}}</ion-col>
-                  <ion-col *ngIf="elemento.tipo == 0" class="ion-text-end"><ion-badge color="primary">SERIE</ion-badge></ion-col>
-                  <ion-col *ngIf="elemento.tipo == 1" class="ion-text-end"><ion-badge color="primary">PELICULA</ion-badge></ion-col>
+                <ion-row class="ion-text-start">
+                  <ion-col size="6">
+                    {{elemento.titulo}}
+                    <ion-badge color="primary" *ngIf="elemento.tipo == 0">SERIE</ion-badge>
+                    <ion-badge color="primary" *ngIf="elemento.tipo == 1">PELICULA</ion-badge>
+                  </ion-col>
                 </ion-row>
                 <ion-row>
-                  <ion-col *ngIf="elemento.tipo == 0" class="ion-text-end"><ion-text>{{elemento.capitulos}}</ion-text></ion-col>
-                  <ion-col *ngIf="elemento.tipo == 0" class="ion-text-end"><ion-text>{{elemento.estreno | date:'dd/MM/yyyy'}}</ion-text></ion-col>
-                  <ion-col *ngIf="elemento.tipo == 1" class="ion-text-end"><ion-text>{{elemento.estrenoTaquilla | date:'dd/MM/yyyy'}}</ion-text></ion-col>
+                  <ion-col size="3" *ngIf="elemento.tipo == 0" class="ion-text-start"><ion-text><ion-label>Capítulos: {{elemento.capitulos}}</ion-label></ion-text></ion-col>
+                  <ion-col size="6" class="ion-text-start">
+                    <ion-text *ngIf="elemento.tipo == 0 && elemento.estreno != undefined">Estreno: {{elemento.estreno | date:'dd/MM/yyyy'}}</ion-text>
+                    <ion-text *ngIf="elemento.tipo == 1 && elemento.estrenoTaquilla != undefined">Estreno en taquilla: {{elemento.estrenoTaquilla | date:'dd/MM/yyyy'}}</ion-text>
+                  </ion-col>
+                  <ion-col class="ion-text-end">
+                    <ion-label><strong>Generos</strong></ion-label>
+                  </ion-col>
                 </ion-row>
                 <ion-row *ngFor="let genero of elemento.genero">
                   <ion-col class="ion-text-end"><ion-text>{{genero}}</ion-text></ion-col>
@@ -67,9 +74,10 @@
         </ion-grid>
 
         <ion-grid>
-          <ion-row class="ion-justify-content-center">
+          <ion-row *ngIf="elemento!=undefined && elemento!=null" class="ion-justify-content-center">
+            <ion-col class="ion-text-end"><ion-text>{{elemento.titulo}}</ion-text></ion-col>
             <ion-col size-md="12" size-xs="12" class="ion-text-center">
-              <ion-button type="submit">CREAR</ion-button>
+              <ion-button type="submit">AGREGAR</ion-button>
             </ion-col>
           </ion-row>
         </ion-grid>

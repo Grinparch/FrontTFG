@@ -27,11 +27,12 @@
                 Login
               </ion-label>
             </ion-item>
-            <ion-item [routerLink]="['/pagina-principal']"
+            <ion-item *ngIf="this.usuario!=undefined"
+                      [routerLink]="['/pagina-principal']"
                       button="true" detail="false"
                       routerLinkActive="active-link">
               <ion-label>
-                Principal
+                Recomendaciones
               </ion-label>
             </ion-item>
             <ion-item *ngIf="this.usuario!=undefined"

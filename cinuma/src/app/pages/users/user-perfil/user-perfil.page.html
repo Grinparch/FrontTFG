@@ -11,6 +11,7 @@
   <div class="hs-container">
     <ng-container>
       <div class="profile">
+        <ion-list>
         <ion-row>
           <h3 class="ion-padding-horizontal">Datos de Usuario</h3>
         </ion-row>
@@ -46,77 +47,79 @@
             <span>{{usuario.phone}}</span>
           </ion-label>
         </ion-row>
-
+        </ion-list>
       </div>
 
-      <ng-container >
-        <h3 class="ion-padding-horizontal">Datos de Perfil</h3>
+      <ng-container>
 
         <ion-grid class="hs-bg-white ion-no-padding">
-          <ion-row>
-            <ion-col size-md="6" *ngIf="perfil.vistoUltimamente != null || perfil.vistoUltimamente != undefined">
-              <ion-item lines="none" >
+          <ion-list>
+            <ion-row>
+              <h3 class="ion-padding-horizontal">Datos de Perfil</h3>
+            </ion-row>
+            <ion-row>
+              <ion-col size-md="4" *ngIf="perfil.vistoUltimamente != null && perfil.vistoUltimamente != undefined">
+
+                  <ion-label>
+                    <strong>Último Visto</strong>
+                    {{perfil.vistoUltimamente}}
+                  </ion-label>
+
+              </ion-col>
+              <ion-col size-md="4" *ngIf="perfil.generoPreferido != null && perfil.generoPreferido != undefined">
+                  <ion-label>
+                    <strong>Genero Preferido: </strong>
+                    {{perfil.generoPreferido}}
+                  </ion-label>
+              </ion-col>
+              <ion-col size-md="4" *ngIf="perfil.puntuacionPromedio != null && perfil.puntuacionPromedio != undefined">
+                  <ion-label>
+                    <strong>Puntuación Promedio</strong>
+                    {{perfil.puntuacionPromedio}}
+                  </ion-label>
+              </ion-col>
+            </ion-row>
+
+            <div *ngIf="perfil.actoresPreferidos != null && perfil.actoresPreferidos!= undefined && perfil.actoresPreferidos.length>0">
+              <ion-row>
                 <ion-label>
-                  <strong>Último Visto</strong>
-                  {{perfil.vistoUltimamente}}
+                  <strong>Actores Preferidos</strong>
                 </ion-label>
-              </ion-item>
-            </ion-col>
-            <ion-col size-md="8">
-              <ion-item lines="none" *ngIf="perfil.generoPreferido != null || perfil.generoPreferido != undefined">
+              </ion-row>
+              <ion-row *ngFor="let actor of perfil.actoresPreferidos">
+                <ion-col size-md="12">
+                  <ion-item lines="none">
+                    <ion-label  >
+                      <p *ngIf="actor != ' ' && actor != null ">
+                        {{actor}}
+                        <ion-icon name="close-circle-outline" (click)="removerActorDeLista(actor)"></ion-icon>
+                      </p>
+
+                    </ion-label>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+            </div>
+
+            <div *ngIf="perfil.vinculosAsociados != null && perfil.vinculosAsociados!= undefined && perfil.vinculosAsociados.length>0">
+              <ion-row>
                 <ion-label>
-                  <strong>Genero Preferido</strong>
-                  {{perfil.generoPreferido}}
+                  <strong>Vinculos Asociados</strong>
                 </ion-label>
-              </ion-item>
-            </ion-col>
-            <ion-col size-md="4">
-              <ion-item lines="none" *ngIf="perfil.puntuacionPromedio != null || perfil.puntuacionPromedio != undefined">
-                <ion-label>
-                  <strong>Puntuación Promedio</strong>
-                  {{perfil.puntuacionPromedio}}
-                </ion-label>
-              </ion-item>
-            </ion-col>
-          </ion-row>
-          <ion-row *ngIf="perfil.actoresPreferidos != null || perfil.actoresPreferidos!= undefined">
-            <ion-col size-md="4" *ngIf="perfil.actoresPreferidos.length>0">
-              <ion-label>
-                <strong>Actores Preferidos</strong>
-              </ion-label>
-              <ion-item lines="none" *ngIf="perfil.actoresPreferidos != null || perfil.actoresPreferidos != undefined">
-                <ion-label *ngFor="let actor of perfil.actoresPreferidos" >
-                  <p *ngIf="actor != ' ' && actor != null ">
-                    {{actor}}
-                  </p>
-                </ion-label>
-              </ion-item>
-            </ion-col>
-          </ion-row>
-          <ion-row *ngIf="perfil.vinculosAsociados != null || perfil.vinculosAsociados!= undefined">
-            <ion-col size-md="4" *ngIf="perfil.vinculosAsociados.length>0">
-              <ion-label>
-                <strong>Vinculos Asociados</strong>
-              </ion-label>
-              <ion-item lines="none"  >
-                <ion-label *ngFor="let vinculo of perfil.vinculosAsociados" >
-                  <a href="{{vinculo}}" *ngIf="vinculo != ' ' && vinculo != null ">
-                    {{vinculo}}
-                  </a>
-                </ion-label>
-              </ion-item>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col size-md="4">
-              <ion-item lines="none" *ngIf="perfil.disponibleChat != null || perfil.disponibleChat != undefined">
-                <ion-label>
-                  <strong>Disponible en Chat</strong>
-                  {{perfil.disponibleChat}}
-                </ion-label>
-              </ion-item>
-            </ion-col>
-          </ion-row>
+              </ion-row>
+              <ion-row *ngFor="let vinculo of perfil.vinculosAsociados">
+                <ion-col size-md="4">
+                  <ion-item lines="none">
+                    <ion-label >
+                      <a href="{{vinculo}}" *ngIf="vinculo != ' ' && vinculo != null ">
+                        {{vinculo}}
+                      </a>
+                    </ion-label>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+            </div>
+          </ion-list>
         </ion-grid>
       </ng-container>
 
@@ -148,14 +151,6 @@
                 </ion-item>
               </ion-col>
             </ion-row>
-            <ion-row>
-              <ion-col size-md="9" size-xs="12">
-                <ion-item fill="solid" mode="md" class="hs-textfield">
-                  <ion-label position="floating">Disponible en Chat</ion-label>
-                  <ion-checkbox formControlName="disponibleChat" [value]="!editarPerfilForm.get('actoresPreferidos').value"></ion-checkbox>
-                </ion-item>
-              </ion-col>
-            </ion-row>
           </ion-grid>
         </ion-list>
       </form>
@@ -181,19 +176,18 @@
         </div>
         <ion-row class="ion-justify-content-center">
           <ion-col size-md="12" size-xs="12" class="ion-text-center">
+            <ion-text fill="outline" >{{generoSeleccionado}}</ion-text>
+          </ion-col>
+          <ion-col size-md="12" size-xs="12" class="ion-text-center">
             <ion-button fill="outline" (click)="changeGenero()">Cambiar Genero Preferido</ion-button>
           </ion-col>
         </ion-row>
       </div>
-      <ion-item class="ion-justify-content-center">
+      <ion-item class="ion-justify-content-center" *ngIf="editMode">
         <ion-col size-md="12" size-xs="12" class="ion-text-center">
-          <ion-button *ngIf="editMode" (click)="borrarCuenta()">Borrar Cuenta</ion-button>
+          <ion-button (click)="borrarCuenta()">Borrar Cuenta</ion-button>
         </ion-col>
       </ion-item>
-
-
-
-
     </ng-container>
 
   </div>

@@ -4,6 +4,7 @@ import {Articulo} from "../models/Articulo";
 import {Grupo} from "../models/Grupo";
 import {Observable} from "rxjs";
 import {Mensaje} from "../models/Mensaje";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,8 @@ export class MensajeService {
   unirseAGrupoPath = "http://localhost:8081/grupo/unirseAGrupo/";
   eliminarMensajePath = "http://localhost:8081/mensaje/delete/";
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+              private router: Router) { }
 
   async enviarMensaje(newM: Mensaje) {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json'})
@@ -30,7 +32,9 @@ export class MensajeService {
         "receptorId": newM.receptorId,
         "fechaDeCreacion": newM.fechaDeCreacion,
         "contenido":newM.contenido},
-      { headers }).pipe().subscribe();
+      { headers }).pipe().subscribe(()=>{
+      this.router.navigate(['/mensaje-listado']).then(()=>window.location.reload())
+    });
   }
 
   getAllMensajesDeUsuario(receptorId: string) {
@@ -42,6 +46,8 @@ export class MensajeService {
   eliminarMensaje(mensajeId: string){
     const headers = new HttpHeaders({ 'Content-Type': 'application/json'})
     return this.http.delete(this.eliminarMensajePath+mensajeId,
-      { headers }).pipe().subscribe();;
+      { headers }).pipe().subscribe(()=>{
+      this.router.navigate(['/mensaje-listado']).then(()=>window.location.reload())
+    });
   }
 }

@@ -61,8 +61,9 @@ export class ListaPersonalElementoDetallesPage implements OnInit {
     console.log("delete elementEnlistId");
     console.log(this.elementoEnlistado.elementoEnlistadoId);
     this.elementoEnlistadoService.eliminarElemento(this.elementoEnlistado.elementoEnlistadoId).subscribe(() => {
-      //this.modalController.dismiss();
-     // this.router.navigate(['/elemento-listado']);
+      this.router.navigate(['/lista-personal']);
+      window.location.reload();
+      this.modalController.dismiss();
     });
   }
 
@@ -124,7 +125,9 @@ export class ListaPersonalElementoDetallesPage implements OnInit {
       console.log("elemento");
       console.log(nuevoElementoEnlistado);
       this.elementoEnlistadoService.editarPelicula(nuevoElementoEnlistado).subscribe(() => {
-
+        this.router.navigate(['/lista-personal']);
+        window.location.reload();
+        this.modalController.dismiss();
       });
     } else{
       nuevoElementoEnlistado  = {
@@ -147,7 +150,9 @@ export class ListaPersonalElementoDetallesPage implements OnInit {
       console.log("elemento");
       console.log(nuevoElementoEnlistado);
       this.elementoEnlistadoService.editarSerie(nuevoElementoEnlistado).subscribe(() => {
-
+        this.router.navigate(['/lista-personal']);
+        window.location.reload();
+        this.modalController.dismiss();
       });
     }
 

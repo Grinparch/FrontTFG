@@ -59,6 +59,19 @@ export class ListaCrearPage implements OnInit {
     this.elementosAgregados.push(elemento);
   }
 
+  removerElementoDeLista(elementoId:string){
+    let index = 0;
+    if(this.elementosAgregados.length>0){
+      this.elementosAgregados.forEach(elementoAgregado =>{
+        if(elementoAgregado.elementoId==elementoId){
+          this.elementosAgregados.splice(index,1);
+        }
+        index++;
+      })
+    }
+    console.log(this.elementosAgregados);
+  }
+
 
 
   private async asignacionValorElemento() {
@@ -71,7 +84,10 @@ export class ListaCrearPage implements OnInit {
         votos: 0,
         creador: this.getUsername()
       };
-      this.listaService.addLista(nuevaLista);
+      this.listaService.addLista(nuevaLista).then(()=>{
+        this.router.navigate(['/lista-personal']);
+        window.location.reload();
+      });
   }
 
   getUsername() {

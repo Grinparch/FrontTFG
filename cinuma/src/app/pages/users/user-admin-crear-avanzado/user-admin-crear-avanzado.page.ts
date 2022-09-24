@@ -11,6 +11,7 @@ import {Autenticacion} from "../../../core/models/Autenticacion";
   styleUrls: ['./user-admin-crear-avanzado.page.scss'],
 })
 export class UserAdminCrearAvanzadoPage implements OnInit {
+  mensaje: string;
   user: Usuario;
   createUserForm: FormGroup;
   usuarioYaExistente: boolean;
@@ -91,7 +92,16 @@ export class UserAdminCrearAvanzadoPage implements OnInit {
       perfil: null,
     };
     console.log("antes de add user");
-    this.userService.addUsuarioAvanzado(newUser);
+    this.userService.getVerificacionUsername(newUser.username).subscribe((existe)=>{
+      console.log("existe")
+      console.log(existe)
+      if(existe)
+        this.mensaje = "Usuario Ya existente";
+      else{
+        this.userService.addUsuarioAvanzado(newUser);
+      }
+    });
+
   }
 
   saveData(username:string,rol:number) {

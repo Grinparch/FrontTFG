@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Lista} from "../models/Lista";
 import {Observable} from "rxjs";
 import {Grupo} from "../models/Grupo";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,8 @@ export class GrupoService {
   unirseAGrupoPath = "http://localhost:8081/grupo/unirseAGrupo/";
   eliminarGrupoPath = "http://localhost:8081/grupo/delete/";
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+              private router: Router) { }
 
   async crearGrupo(newG: Grupo) {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json'})
@@ -28,7 +30,10 @@ export class GrupoService {
         "elementosPreferidos": newG.elementosPreferidos,
         "nombre": newG.nombre,
         "descripcion": newG.descripcion},
-      { headers }).pipe().subscribe();
+      { headers }).pipe().subscribe(()=>{
+      this.router.navigate(['/grupo-listado']);
+      window.location.reload();
+    });
   }
 
   editarGrupo(newG: Grupo) {
@@ -40,7 +45,10 @@ export class GrupoService {
         "elementosPreferidos": newG.elementosPreferidos,
         "nombre": newG.nombre,
         "descripcion": newG.descripcion},
-      { headers }).pipe().subscribe();
+      { headers }).pipe().subscribe(()=>{
+      this.router.navigate(['/grupo-listado']);
+      window.location.reload();
+    });
   }
 
   getAllGrupos() {
@@ -64,13 +72,19 @@ export class GrupoService {
   eliminarGrupo(grupoId: string){
     const headers = new HttpHeaders({ 'Content-Type': 'application/json'})
     return this.http.delete(this.eliminarGrupoPath+grupoId,
-      { headers }).pipe().subscribe();;
+      { headers }).pipe().subscribe(()=>{
+      this.router.navigate(['/grupo-listado']);
+      window.location.reload();
+    });
   }
 
   unirseAGrupo(nuevoMiembroId: string[], grupoId: string){
     const headers = new HttpHeaders({ 'Content-Type': 'application/json'})
     return this.http.put(this.unirseAGrupoPath+grupoId,
       {"idUsuarios": nuevoMiembroId},
-      { headers }).pipe().subscribe();
+      { headers }).pipe().subscribe(()=>{
+      this.router.navigate(['/grupo-listado']);
+      window.location.reload();
+    });
   }
 }

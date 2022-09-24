@@ -17,7 +17,7 @@
                 <ion-input formControlName="username" type="text"></ion-input>
                 <ion-text slot="error">
                   <ng-container *ngIf="createUserForm.get('username').touched">
-                    Error Usuario
+                    Usuario muy corto
                   </ng-container>
                 </ion-text>
               </ion-item>
@@ -30,10 +30,7 @@
                 <ion-input formControlName="email" type="email"></ion-input>
                 <ion-text slot="error">
                   <ng-container *ngIf="createUserForm.get('email').touched && !createUserForm.get('email').hasError('duplicateEmail')">
-                    Error Mail
-                  </ng-container>
-                  <ng-container *ngIf="createUserForm.get('email').hasError('duplicateEmail')">
-                    Error Mail 2
+                    Correo Incorrecto
                   </ng-container>
                 </ion-text>
               </ion-item>
@@ -44,7 +41,7 @@
                 <ion-input formControlName="phone" type="tel" inputmode="tel"></ion-input>
                 <ion-text slot="error">
                   <ng-container *ngIf="createUserForm.get('phone').touched">
-                    Telefono Error
+                    Telefono muy largo
                   </ng-container>
                 </ion-text>
               </ion-item>
@@ -55,7 +52,7 @@
                 <ion-input formControlName="clave" type="password"></ion-input>
                 <ion-text slot="error">
                   <ng-container *ngIf="createUserForm.get('clave').touched">
-                    Clave Error
+                    Clave muy corta
                   </ng-container>
                 </ion-text>
               </ion-item>
@@ -94,10 +91,10 @@
         </ion-grid>
       </ion-list>
     </form>
-    <ion-text slot="error">
-      <ng-container *ngIf="usuarioYaExistente==true">
-        Usuario ya existente, Utilice uno nuevo
-      </ng-container>
+    <ion-text [ngStyle]="{'color' : '#FF0000'}" slot="error" *ngIf="mensaje!=null && mensaje !=undefined">
+      <ion-label [(ngModel)]="mensaje">
+        {{mensaje}}
+      </ion-label>
     </ion-text>
   </div>
 </ion-content>

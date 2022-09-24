@@ -6,14 +6,13 @@
 
 <ion-content class="hs">
   <ng-container *ngIf="grupo != undefined">
-    <h3 class="ion-padding-horizontal">Más datos</h3>
-
+    <ion-item>
     <ion-grid class="hs-bg-white ion-no-padding">
       <ion-row>
         <ion-col size-md="4">
           <ion-item lines="none" *ngIf="grupo.nombre != null && grupo.nombre != undefined">
             <ion-label>
-              <strong>Nombre</strong>
+              <strong>Nombre:</strong>
               {{grupo.nombre}}
             </ion-label>
           </ion-item>
@@ -23,7 +22,7 @@
         <ion-col size-md="8">
           <ion-item lines="none" *ngIf="grupo.descripcion != null && grupo.descripcion != undefined">
             <ion-label>
-              <strong>Descripcion</strong>
+              <strong>Descripción:</strong>
               {{grupo.descripcion}}
             </ion-label>
           </ion-item>
@@ -35,11 +34,11 @@
             <strong>Peliculas Y Series Preferidas</strong>
           </ion-label>
           <ion-item lines="none" *ngIf="elementosAgregados != null && elementosAgregados != undefined">
+            <ion-grid>
             <ion-label *ngFor="let elemento of elementosAgregados" >
               <ion-card (click)="elementoDetallesModal(elemento)">
                 <ion-label class="ion-text-wrap">
-                  <ion-grid class="ion-no-padding">
-                    <ion-row >
+                    <ion-row>
                       <ion-col >
                         <ion-row>{{elemento.titulo}}</ion-row>
                         <ion-row *ngIf="elemento.tipo == 0" class="ion-text-end"><ion-badge color="primary">SERIE</ion-badge></ion-row>
@@ -47,48 +46,36 @@
                       </ion-col>
                       <ion-col>
                         <ion-row *ngIf="elemento.tipo == 0" class="ion-text-end"><ion-text>{{elemento.capitulos}}</ion-text></ion-row>
-                        <ion-row *ngIf="elemento.tipo == 0" class="ion-text-end"><ion-text>{{elemento.estreno}}</ion-text></ion-row>
-                        <ion-row *ngIf="elemento.tipo == 1" class="ion-text-end"><ion-text>{{elemento.estrenoTaquilla}}</ion-text></ion-row>
                       </ion-col>
                       <ion-col *ngFor="let genero of elemento.genero">
                         <ion-row class="ion-text-end"><ion-text>{{genero}}</ion-text></ion-row>
                       </ion-col>
                     </ion-row>
-                  </ion-grid>
                 </ion-label>
               </ion-card>
             </ion-label>
+            </ion-grid>
           </ion-item>
         </ion-col>
       </ion-row>
       <ion-row>
-        <ion-col size-md="4">
-          <ion-item lines="none" *ngIf="miembros != null && miembros != undefined && miembros.length>0">
-            <ion-label>
-              <strong>Miembros</strong>
-            </ion-label>
-            <ion-label *ngFor="let miembro of miembros">
-              <ion-card *ngIf="miembro != null">
-                <ion-item>
-                  <ion-label class="ion-text-wrap">
-                    <ion-grid class="ion-no-padding">
-                      <ion-row>
-                        <ion-col size="9">
-                          {{miembro.username}}
-                          <ion-badge color="primary" *ngIf="miembro.userId == grupo.lider">
-                            Lider
-                          </ion-badge>
-                        </ion-col>
-                      </ion-row>
-                    </ion-grid>
-                  </ion-label>
-                </ion-item>
-              </ion-card>
-            </ion-label>
-          </ion-item>
-        </ion-col>
+        <ion-label>
+          <strong>Miembros</strong>
+        </ion-label>
       </ion-row>
+      <div lines="none" *ngIf="miembros != null && miembros != undefined && miembros.length>0">
+        <ion-row *ngFor="let miembro of miembros">
+          <ion-col size="9" *ngIf="miembro != null"size-md="4">
+            {{miembro.username}}
+            <ion-badge color="primary" *ngIf="miembro.userId == grupo.lider">
+              Lider
+            </ion-badge>
+          </ion-col>
+        </ion-row>
+      </div>
+
     </ion-grid>
+    </ion-item>
   </ng-container>
   <ion-item *ngIf="(this.grupo != undefined && lider) || (this.grupo != undefined && rol ==0)" >
     <ion-button (click)="activarEdicionElemento()">
@@ -96,6 +83,16 @@
     </ion-button>
   </ion-item>
   <div *ngIf="(edicion && lider) || (edicion && rol ==0)" >
+    <ion-item *ngIf="(this.grupo != undefined && lider) || (this.grupo != undefined && rol ==0)" >
+      <ion-list *ngFor="let elementoAAgregar of elementosAAgregar">
+        <ion-label>
+          {{elementoAAgregar.titulo}}
+          <ion-icon name="close-circle-outline" (click)="removerElementoDeLista(elementoAAgregar.elementoId)"></ion-icon>
+        </ion-label>
+
+      </ion-list>
+
+    </ion-item>
     <ion-list>
       <form [formGroup]="crearGrupoForm"
             (ngSubmit)="editarGrupo()"
@@ -155,7 +152,7 @@
       </div>
     </ion-list>
   </div>
-  <ion-item *ngIf="(this.grupo != undefined && !esMiembro() && rol==2)">
+  <ion-item *ngIf="(this.grupo != undefined && !esMiembro())">
     <ion-button (click)="unirseAGrupo()">
       Unirse a Grupo
     </ion-button>

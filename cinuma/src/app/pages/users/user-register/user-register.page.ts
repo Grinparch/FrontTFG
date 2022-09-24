@@ -9,6 +9,7 @@ import {Elemento} from "../../../core/models/Elemento";
 import {AutenticacionService} from "../../../core/services/autenticacion.service";
 import {ListaPersonalService} from "../../../core/services/lista-personal.service";
 import {ActivatedRoute, Router} from '@angular/router';
+import {ToastController} from "@ionic/angular";
 
 @Component({
   selector: 'app-user-register',
@@ -16,28 +17,21 @@ import {ActivatedRoute, Router} from '@angular/router';
   styleUrls: ['./user-register.page.scss'],
 })
 export class UserRegisterPage implements OnInit {
+  mensaje: string;
   user: Usuario;
   createUserForm: FormGroup;
-  usuarioYaExistente: boolean;
+  toast: HTMLIonToastElement;
 
 
   constructor(
     private userService: UserService,
+    private autenticacionService: AutenticacionService,
+    private toastController: ToastController,
     private route: ActivatedRoute,
     private router: Router
   ) {}
 
   ngOnInit() {
-    this.usuarioYaExistente = false;
-    this.route.queryParams
-      .subscribe(params => {
-        console.log("params");
-        console.log(params);
-          if(params.error!=undefined){
-            this.usuarioYaExistente = true;
-          }
-        }
-      );
   }
 
   ionViewWillEnter(){
@@ -46,8 +40,6 @@ export class UserRegisterPage implements OnInit {
     }else{
       this.router.navigate(['/pagina-principal']);
     }
-
-    
   }
 
   ionViewDidEnter(){
@@ -70,12 +62,14 @@ export class UserRegisterPage implements OnInit {
       username: new FormControl('', [Validators.required, Validators.minLength(2)]),
       email: new FormControl('', [Validators.required, Validators.email]),
       clave: new FormControl('', [Validators.required, Validators.minLength(2)]),
-      phone: new FormControl('', ), // Validators.pattern('^\\+[1-9]\\d{1,14}$')
+      phone: new FormControl('', Validators.maxLength(12) ),
     });
   }
 
   private async userValueAssignation() {
-    console.log("antes de new user");
+    console.log("message")
+    console.log(this.mensaje);
+
     const newAuth: Autenticacion = {
       autenticacionId: null,
       usuario: this.createUserForm.value.username,
@@ -91,19 +85,16 @@ export class UserRegisterPage implements OnInit {
       perfil: null,
     };
     console.log("antes de add user");
-    this.userService.addUser(newUser).then(()=>{
+    this.userService.getVerificacionUsername(newUser.username).subscribe((existe)=>{
+      console.log("existe")
+      console.log(existe)
+      if(existe)
+        this.mensaje = "Usuario Ya existente";
+      else{
+        this.userService.addUser(newUser);
+      }
+    });
 
-    }).finally(()=>{
-      const usuarioRespuesta = this.userService.usuario;
-      /*
-      console.log("usuarioRespuesta.username");
-      console.log(usuarioRespuesta.username);
-      console.log("usuarioRespuesta.rol");
-      console.log(usuarioRespuesta.rol);
-      this.saveData(usuarioRespuesta.username, usuarioRespuesta.rol);
-      console.log(this.getUsername());
-      */
-    })
   }
 
   saveData(username:string,rol:number) {

@@ -85,9 +85,30 @@ export class GrupoCrearPage implements OnInit {
     }
   }
 
+  removerElementoDeLista(elementoId:string){
+    let index = 0;
+    if(this.elementosAgregados.length>0){
+      this.elementosAgregados.forEach(elementoAgregado =>{
+        if(elementoAgregado.elementoId==elementoId){
+          this.elementosAgregados.splice(index,1);
+        }
+        index++;
+      })
+    }
+    console.log(this.elementosAgregados);
+  }
+
   async agregarElemento(elemento: Elemento) {
-    console.log("agregado a lista");
-    this.elementosAgregados.push(elemento);
+    let enLista = false;
+    this.elementosAgregados.forEach(elementoLista=>{
+      if(elementoLista.elementoId==elemento.elementoId){
+        enLista=true;
+      }
+    })
+    if(!enLista){
+      this.elementosAgregados.push(elemento);
+    }
+    console.log(this.elementosAgregados);
   }
 
   getUsername() {

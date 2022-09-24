@@ -91,7 +91,8 @@ export class ListaPersonalAgregarPage implements OnInit {
         puntuacionPersonal: this.agregarElementoForm.value.puntuacionPersonal
       };
       this.elementoEnlistadoService.addPelicula(nuevoElementoEnlistado).subscribe(() => {
-        //posible present toast
+        this.router.navigate(['/lista-personal']);
+        window.location.reload();
       });
     } else{
       nuevoElementoEnlistado  = {
@@ -112,7 +113,8 @@ export class ListaPersonalAgregarPage implements OnInit {
         puntuacionPersonal: this.agregarElementoForm.value.puntuacionPersonal
       };
       this.elementoEnlistadoService.addSerie(nuevoElementoEnlistado).subscribe(() => {
-        //posible present toast
+        this.router.navigate(['/lista-personal']);
+        window.location.reload();
       });
     }
 

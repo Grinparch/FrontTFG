@@ -144,11 +144,15 @@ export class GrupoDetallesPage implements OnInit {
   }
 
   async agregarElemento(elemento: Elemento) {
-    console.log("agregado a lista");
-    this.elementosAAgregar.push(elemento);
-    console.log("agregado");
-    console.log(elemento);
-    console.log("a esta lista");
+    let enLista = false;
+    this.elementosAAgregar.forEach(elementoLista=>{
+      if(elementoLista.elementoId==elemento.elementoId){
+        enLista=true;
+      }
+    })
+    if(!enLista){
+      this.elementosAAgregar.push(elemento);
+    }
     console.log(this.elementosAAgregar);
   }
 
@@ -172,6 +176,19 @@ export class GrupoDetallesPage implements OnInit {
     console.log(this.getUserId());
     const listaDeUnId: string[] = [this.getUserId()];
     this.grupoService.unirseAGrupo(listaDeUnId, this.grupoId);
+  }
+
+  removerElementoDeLista(elementoId:string){
+    let index = 0;
+    if(this.elementosAAgregar.length>0){
+      this.elementosAAgregar.forEach(elementoAgregado =>{
+        if(elementoAgregado.elementoId==elementoId){
+          this.elementosAAgregar.splice(index,1);
+        }
+        index++;
+      })
+    }
+    console.log(this.elementosAAgregar);
   }
 
   esMiembro():boolean{

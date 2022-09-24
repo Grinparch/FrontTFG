@@ -15,7 +15,7 @@
                 <ion-row>
                   <ion-col ><ion-label><strong>DE:</strong></ion-label><ion-text>{{mensaje.autor}}</ion-text></ion-col>
                   <ion-col ><p>{{mensaje.contenido}}</p></ion-col>
-                  <ion-col ><ion-label><strong>FECHA:</strong></ion-label><ion-text>{{mensaje.fechaDeCreacion}}</ion-text></ion-col>
+                  <ion-col ><ion-label><strong>FECHA:</strong></ion-label><ion-text>{{mensaje.fechaDeCreacion | date:'dd/MM/yyyy HH:mm:ss'}}</ion-text></ion-col>
                 </ion-row>
               </ion-grid>
             </ion-label>

@@ -34,6 +34,7 @@ export class ListaDetallesPage implements OnInit {
     private route: ActivatedRoute,
     private modalController: ModalController,
     private autenticacionService: AutenticacionService,
+    private router: Router
   ) {
   }
 
@@ -49,12 +50,8 @@ export class ListaDetallesPage implements OnInit {
             this.listaId = params.listaId;
             this.listaService.getListaEspecifica(params.listaId).subscribe((lista) => {
               this.lista = lista;
+              this.elementosModificados = lista.elementos;
               this.elementoService.getAllElementos().subscribe( (elementos) =>{
-                elementos.forEach((elemento,index) =>{
-                  if(lista.elementos.map(e => e.elementoId).indexOf(elemento.elementoId) != -1){
-                    elementos.splice(index,1);
-                  }
-                })
                 this.elementosTodos= elementos;
               })
             });
@@ -78,6 +75,20 @@ export class ListaDetallesPage implements OnInit {
 
   activarEdicionElemento() {
     this.edicion = !this.edicion;
+  }
+
+  async agregarElemento(elementoNuevo: Elemento) {
+    let esNuevo = true;
+    this.elementosModificados.forEach(elemento=>{
+      if(elemento.elementoId==elementoNuevo.elementoId){
+        esNuevo = false;
+      }
+    })
+    if(esNuevo){
+      this.elementosModificados.push(elementoNuevo);
+    }
+    console.log("agregado a lista");
+
   }
 
   quitarElementoDeLista(elementoAQuitar: Elemento){

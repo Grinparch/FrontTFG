@@ -10,8 +10,6 @@ export class Perfil {
   puntuacionPromedio?: number;
   actoresPreferidos?: string[];
   vinculosAsociados?: string[];
-  disponibleChat: boolean;
-  avatar?: string;
   listaPersonalId: string;
   listasCreadas?: string[];
 }

@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-item>
+  <ion-item *ngIf="this.recomendado != undefined">
     <ion-label>
       <ion-text>Le recomendamos el siguiente grupo:</ion-text>
     </ion-label>
@@ -17,8 +17,8 @@
           <ion-label class="ion-text-wrap">
             <ion-grid class="ion-no-padding">
               <ion-row>
-                <ion-col ><ion-text>{{recomendado.nombre}}</ion-text></ion-col>
-                <ion-col ><ion-text>{{recomendado.descripcion}}</ion-text></ion-col>
+                <ion-col ><ion-text><strong>Nombre del Grupo: </strong>{{recomendado.nombre}}</ion-text></ion-col>
+                <ion-col ><ion-text><strong>Descripción: </strong>{{recomendado.descripcion}}</ion-text></ion-col>
               </ion-row>
             </ion-grid>
           </ion-label>
@@ -39,8 +39,8 @@
             <ion-label class="ion-text-wrap">
               <ion-grid class="ion-no-padding">
                 <ion-row>
-                  <ion-col ><ion-text>{{grupo.nombre}}</ion-text></ion-col>
-                  <ion-col ><ion-text>{{grupo.descripcion}}</ion-text></ion-col>
+                  <ion-col ><ion-text><strong>Nombre del Grupo: </strong>{{grupo.nombre}}</ion-text></ion-col>
+                  <ion-col ><ion-text><strong>Descripción: </strong>{{grupo.descripcion}}</ion-text></ion-col>
                 </ion-row>
               </ion-grid>
             </ion-label>

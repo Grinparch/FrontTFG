@@ -90,14 +90,29 @@ export class ArticuloCrearPage implements OnInit {
     return sessionStorage.getItem('userId');
   }
 
-  agregarGeneroALista(genero: string){
-    if(genero!=''){
-      this.generosAgregados.push(genero);
-      this.crearArticuloForm.controls.genero.setValue('');
-      console.log(this.generosAgregados);
-    }else{
-      console.log("no se puede agregar vacio")
+  agregarGeneroALista(genero:string){
+    let yaExiste = false;
+    if(this.generosAgregados.length>0){
+      this.generosAgregados.forEach(generoIteracion =>{
+        if(generoIteracion==genero){
+          yaExiste=true;
+        }
+      })
     }
-
+    if(!yaExiste)
+      this.generosAgregados.push(genero);
+    console.log(this.generosAgregados);
+  }
+  removerGeneroDeLista(genero:string){
+    let index = 0;
+    if(this.generosAgregados.length>0){
+      this.generosAgregados.forEach(generoIteracion =>{
+        if(generoIteracion==genero){
+          this.generosAgregados.splice(index,1);
+        }
+        index++;
+      })
+    }
+    console.log(this.generosAgregados);
   }
 }

@@ -3,7 +3,7 @@ import {Usuario} from "../models/Usuario";
 import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
 import {Autenticacion} from "../models/Autenticacion";
 import {MenuController} from "@ionic/angular";
-import {BehaviorSubject} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 import {Router} from "@angular/router";
 
 @Injectable({
@@ -12,6 +12,7 @@ import {Router} from "@angular/router";
 export class AutenticacionService {
   autenticacion: Autenticacion;
   usuario: BehaviorSubject<string> = new BehaviorSubject<string>(null);
+  usuarioYaRegistrado: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   // paths
   addAuthPath = "http://localhost:8081/autenticacion/add";
   loginPath = "http://localhost:8081/autenticacion/login";
@@ -44,11 +45,16 @@ export class AutenticacionService {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json'})
     console.log("login data");
     console.log(auth.autenticacionId);
-    this.http.post<any>(this.loginPath,
+    return this.http.post<any>(this.loginPath,
       {"autenticacionId": auth.autenticacionId,
         "usuario": auth.usuario,
         "clave": auth.clave},
-      { headers }).subscribe(data => {
+      { headers }) as Observable<any>;
+
+
+
+      /*
+      .subscribe(data => {
         console.log("login data");
         console.log(data);
         if(data!=null && data!=undefined){
@@ -57,20 +63,8 @@ export class AutenticacionService {
           this.router.navigate(['/pagina-principal']);
         }
 
-    },(error) => {                              //Error callback
-      if (error instanceof HttpErrorResponse) {
-        if (error.error instanceof ErrorEvent) {
-          console.error("Error Event");
-        } else {
-          console.log(`error status : ${error.status} ${error.statusText}`);
-          switch (error.status) {
-            case 400:      //Usuario ya existente
-              this.router.navigate(['/user-login'], { queryParams: { error: 'usuarioExistente' } });
-              break;
-          }
-        }
-      }
     });
+    */
   }
 
   async logOut(){

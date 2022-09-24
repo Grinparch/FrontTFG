@@ -54,8 +54,8 @@ export class ElementoDetallesPage implements OnInit {
 
   async eliminarElemento(){
     this.elementoService.eliminarElemento(this.elemento.elementoId).subscribe(() => {
+      this.router.navigate(['/elemento-crear']);
       this.modalController.dismiss();
-      this.router.navigate(['/elemento-listado']);
     });
   }
 
@@ -64,7 +64,16 @@ export class ElementoDetallesPage implements OnInit {
   }
 
   agregarGeneroALista(genero:string){
-    this.generosAgregados.push(genero);
+    let yaExiste = false;
+    if(this.generosAgregados.length>0){
+      this.generosAgregados.forEach(generoIteracion =>{
+        if(generoIteracion==genero){
+          yaExiste=true;
+        }
+      })
+    }
+    if(!yaExiste)
+      this.generosAgregados.push(genero);
     console.log(this.generosAgregados);
   }
 
@@ -124,8 +133,10 @@ export class ElementoDetallesPage implements OnInit {
       };
       console.log("elemento");
       console.log(nuevoElemento);
-      this.elementoService.editarPelicula(nuevoElemento).subscribe(() => {
+      this.elementoService.editarPelicula(nuevoElemento).subscribe(pelicula => {
         this.router.navigate(['/elemento-listado']);
+        window.location.reload();
+        this.modalController.dismiss();
       });
     } else{
       nuevoElemento  = {
@@ -143,12 +154,40 @@ export class ElementoDetallesPage implements OnInit {
       };
       console.log("elemento");
       console.log(nuevoElemento);
-      this.elementoService.editarSerie(nuevoElemento).subscribe(() => {
+      this.elementoService.editarSerie(nuevoElemento).subscribe(serie => {
         this.router.navigate(['/elemento-listado']);
+        window.location.reload();
+        this.modalController.dismiss();
       });
     }
 
 
+  }
+
+  removerGeneroDeLista(genero:string){
+    let index = 0;
+    if(this.generosAgregados.length>0){
+      this.generosAgregados.forEach(generoIteracion =>{
+        if(generoIteracion==genero){
+          this.generosAgregados.splice(index,1);
+        }
+        index++;
+      })
+    }
+    console.log(this.generosAgregados);
+  }
+
+  removerActorDeLista(actor:string){
+    let index = 0;
+    if(this.actoresAgregados.length>0){
+      this.actoresAgregados.forEach(actorIteracion =>{
+        if(actorIteracion==actor){
+          this.actoresAgregados.splice(index,1);
+        }
+        index++;
+      })
+    }
+    console.log(this.actoresAgregados);
   }
 
   getRol() {

@@ -8,20 +8,44 @@
   <ion-item>
     <ion-label class="ion-text-wrap">
       <ion-grid class="ion-no-padding">
-        <ion-row>
-          <ion-col *ngIf="elemento.tipo == 0" class="ion-text-end"><ion-badge color="primary">SERIE</ion-badge></ion-col>
-          <ion-col *ngIf="elemento.tipo == 1" class="ion-text-end"><ion-badge color="primary">PELICULA</ion-badge></ion-col>
+        <ion-row class="ion-text-start">
+          <ion-col size="6">
+            {{elemento.titulo}}
+            <ion-badge color="primary" *ngIf="elemento.tipo == 0">SERIE</ion-badge>
+            <ion-badge color="primary" *ngIf="elemento.tipo == 1">PELICULA</ion-badge>
+          </ion-col>
         </ion-row>
         <ion-row>
-          <ion-col *ngIf="elemento.tipo == 0" class="ion-text-end"><ion-text>{{elemento.capitulos}}</ion-text></ion-col>
-          <ion-col *ngIf="elemento.tipo == 0" class="ion-text-end"><ion-text>{{elemento.estreno | date:'dd/MM/yyyy'}}</ion-text></ion-col>
-          <ion-col *ngIf="elemento.tipo == 1" class="ion-text-end"><ion-text>{{elemento.estrenoTaquilla | date:'dd/MM/yyyy'}}</ion-text></ion-col>
+          <ion-col size="6" class="ion-text-start">
+            <ion-text *ngIf="elemento.tipo == 0" ><ion-label>Capítulos: {{elemento.capitulos}}</ion-label></ion-text>
+            <ion-text *ngIf="elemento.tipo == 1 && elemento.estrenoTaquilla != undefined">Estreno en taquilla: {{elemento.estrenoTaquilla | date:'dd/MM/yyyy'}}</ion-text>
+          </ion-col>
+        </ion-row>
+        <ion-row  class="ion-text-start">
+          <ion-col size="6">
+            <ion-text *ngIf="elemento.tipo == 0 && elemento.estreno != undefined">Estreno: {{elemento.estreno | date:'dd/MM/yyyy'}}</ion-text>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="6" class="ion-text-start">
+            <ion-text><ion-label>Duración: {{elemento.duracion}} Minutos</ion-label></ion-text>
+          </ion-col>
+          <ion-col class="ion-text-end">
+            <ion-label><strong>Generos</strong></ion-label>
+          </ion-col>
         </ion-row>
         <ion-row *ngFor="let genero of elemento.genero">
-          <ion-col class="ion-text-end"><ion-text>{{genero}}</ion-text></ion-col>
+          <ion-col class="ion-text-end">
+            <ion-text>{{genero}}</ion-text>
+          </ion-col>
         </ion-row>
+        <ion-col class="ion-text-end">
+          <ion-label><strong>Actores</strong></ion-label>
+        </ion-col>
         <ion-row *ngFor="let actor of elemento.actores">
-          <ion-col class="ion-text-end"><ion-text>{{actor}}</ion-text></ion-col>
+          <ion-col class="ion-text-end">
+            <ion-text>{{actor}}</ion-text>
+          </ion-col>
         </ion-row>
       </ion-grid>
     </ion-label>
@@ -109,7 +133,8 @@
       <div>
         <ion-col size-md="3" size-xs="8"*ngIf="actoresAgregados.length>0">
           <ion-item fill="solid" mode="md"  *ngFor="let actor of actoresAgregados">
-            <p>{{actor}}   </p>
+            <ion-card>{{actor}}</ion-card>
+            <ion-icon name="close-circle-outline" (click)="removerActorDeLista(actor)"></ion-icon>
           </ion-item>
         </ion-col>
         <ion-col size-md="3" size-xs="12">
@@ -124,7 +149,8 @@
       <div>
         <ion-col size-md="3" size-xs="12"*ngIf="generosAgregados.length>0">
           <ion-item fill="solid" mode="md"  *ngFor="let genero of generosAgregados">
-            <p>{{genero}}   </p>
+            <ion-card>{{genero}}</ion-card>
+            <ion-icon name="close-circle-outline" (click)="removerGeneroDeLista(genero)"></ion-icon>
           </ion-item>
         </ion-col>
         <div *ngFor="let genero of generos" >

@@ -13,6 +13,7 @@ import {MenuController} from "@ionic/angular";
   styleUrls: ['./user-login.page.scss'],
 })
 export class UserLoginPage implements OnInit {
+  mensaje: string;
   user: Usuario;
   loginForm: FormGroup;
   usuarioYaExistente: boolean;
@@ -79,12 +80,27 @@ export class UserLoginPage implements OnInit {
       usuario: this.loginForm.value.username,
       clave: this.loginForm.value.clave
     };
-    this.autenticacionService.login(auth);
+    this.autenticacionService.login(auth).subscribe(data=>{
+      if(data!= null){
+        if(data.username != undefined){
+          this.autenticacionService.usuario.next("logged");
+          this.saveData(data);
+          window.location.reload();
+          this.router.navigate(['/pagina-principal']);
+        }else{
+          this.mensaje = "Usuario Y/O Contraseña Incorrectos";
+        }
+      }
+    });
   }
 
-  saveData(username:string,rol:number) {
-    sessionStorage.setItem('username', username);
-    sessionStorage.setItem('rol', rol.toString());
+  saveData(user:Usuario) {
+    sessionStorage.setItem('username', user.username);
+    sessionStorage.setItem('rol', user.rol.toString());
+    sessionStorage.setItem('perfilId', user.perfil);
+    sessionStorage.setItem('email', user.email);
+    sessionStorage.setItem('phone', user.phone);
+    sessionStorage.setItem('userId', user.userId);
   }
   getUsername() {
     return sessionStorage.getItem('username');

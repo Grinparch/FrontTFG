@@ -8,30 +8,54 @@
   <ion-item>
     <ion-label class="ion-text-wrap">
       <ion-grid class="ion-no-padding">
-        <ion-row>
-          <ion-col *ngIf="elementoEnlistado.tipo == 0" class="ion-text-end"><ion-badge color="primary">SERIE</ion-badge></ion-col>
-          <ion-col *ngIf="elementoEnlistado.tipo == 1" class="ion-text-end"><ion-badge color="primary">PELICULA</ion-badge></ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col *ngIf="elementoEnlistado.tipo == 0" class="ion-text-end"><ion-text>{{elementoEnlistado.capitulos}}</ion-text></ion-col>
-          <ion-col *ngIf="elementoEnlistado.tipo == 0" class="ion-text-end"><ion-text>{{elementoEnlistado.estreno | date:'dd/MM/yyyy'}}</ion-text></ion-col>
-          <ion-col *ngIf="elementoEnlistado.tipo == 1" class="ion-text-end"><ion-text>{{elementoEnlistado.estrenoTaquilla | date:'dd/MM/yyyy'}}</ion-text></ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col *ngIf="elementoEnlistado.opinion != undefined" class="ion-text-end">
-            Opinion: {{elementoEnlistado.opinion}}
+        <ion-row class="ion-text-start">
+          <ion-col size="6">
+            {{elementoEnlistado.titulo}}
+            <ion-badge color="primary" *ngIf="elementoEnlistado.tipo == 0">SERIE</ion-badge>
+            <ion-badge color="primary" *ngIf="elementoEnlistado.tipo == 1">PELICULA</ion-badge>
           </ion-col>
         </ion-row>
         <ion-row>
-          <ion-col *ngIf="elementoEnlistado.puntuacionPersonal == undefined" class="ion-text-end">
-            Puntuacion Personal: {{elementoEnlistado.puntuacionPersonal}}
+          <ion-col size="6" class="ion-text-start">
+            <ion-text *ngIf="elementoEnlistado.tipo == 0" ><ion-label>Capítulos: {{elementoEnlistado.capitulos}}</ion-label></ion-text>
+            <ion-text *ngIf="elementoEnlistado.tipo == 1 && elementoEnlistado.estrenoTaquilla != undefined">Estreno en taquilla: {{elementoEnlistado.estrenoTaquilla | date:'dd/MM/yyyy'}}</ion-text>
+          </ion-col>
+        </ion-row>
+        <ion-row  class="ion-text-start">
+          <ion-col size="6">
+            <ion-text *ngIf="elementoEnlistado.tipo == 0 && elementoEnlistado.estreno != undefined">Estreno: {{elementoEnlistado.estreno | date:'dd/MM/yyyy'}}</ion-text>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="6" class="ion-text-start">
+            <ion-text><ion-label>Duración: {{elementoEnlistado.duracion}} Minutos</ion-label></ion-text>
+          </ion-col>
+          <ion-col class="ion-text-end">
+            <ion-label><strong>Generos</strong></ion-label>
           </ion-col>
         </ion-row>
         <ion-row *ngFor="let genero of elementoEnlistado.genero">
-          <ion-col class="ion-text-end"><ion-text>{{genero}}</ion-text></ion-col>
+          <ion-col class="ion-text-end">
+            <ion-text>{{genero}}</ion-text>
+          </ion-col>
         </ion-row>
+        <ion-col class="ion-text-end">
+          <ion-label><strong>Actores</strong></ion-label>
+        </ion-col>
         <ion-row *ngFor="let actor of elementoEnlistado.actores">
-          <ion-col class="ion-text-end"><ion-text>{{actor}}</ion-text></ion-col>
+          <ion-col class="ion-text-end">
+            <ion-text>{{actor}}</ion-text>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="ion-text-center">
+            <ion-text><strong>Opinion: </strong>{{elementoEnlistado.opinion}}</ion-text>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="ion-text-center">
+            <ion-text><strong>Puntuacion Personal: </strong>{{elementoEnlistado.puntuacionPersonal}}</ion-text>
+          </ion-col>
         </ion-row>
       </ion-grid>
     </ion-label>

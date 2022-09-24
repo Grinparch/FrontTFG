@@ -4,6 +4,7 @@ import {Grupo} from "../models/Grupo";
 import {Observable} from "rxjs";
 import {Articulo, Comentario} from "../models/Articulo";
 import {Mensaje} from "../models/Mensaje";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,8 @@ export class ArticuloService {
   crearComentarioPath = "http://localhost:8081/articulo/addComentario/";
   eliminarArticuloPath = "http://localhost:8081/articulo/delete/";
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+              private router: Router) { }
 
   async crearArticulo(newA: Articulo) {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json'})
@@ -31,7 +33,9 @@ export class ArticuloService {
         "generosAsociados":newA.generosAsociados,
         "tituloAsociado": newA.tituloAsociado,
         "fechaCreacion": newA.fechaCreacion},
-      { headers }).pipe().subscribe();
+      { headers }).pipe().subscribe(()=>
+      this.router.navigate(['/articulo-listado']).then(()=>window.location.reload()
+      ));
   }
 
   async agregarComentario(newC: Comentario) {
@@ -43,7 +47,9 @@ export class ArticuloService {
         "autorId": newC.autorId,
         "contenido": newC.contenido,
         "fechaCreacion": newC.fechaCreacion},
-      { headers }).pipe().subscribe();
+      { headers }).pipe().subscribe(()=>{
+      window.location.reload();
+    });
   }
 
   getAllArticulos() {
@@ -67,6 +73,8 @@ export class ArticuloService {
   eliminarArticulo(articuloId: string){
     const headers = new HttpHeaders({ 'Content-Type': 'application/json'})
     return this.http.delete(this.eliminarArticuloPath+articuloId,
-      { headers }).pipe().subscribe();;
+      { headers }).pipe().subscribe(()=>{
+      this.router.navigate(['/articulo-listado']).then(()=>window.location.reload());
+    });
   }
 }

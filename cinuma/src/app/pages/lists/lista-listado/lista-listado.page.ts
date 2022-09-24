@@ -5,7 +5,6 @@ import {PerfilService} from "../../../core/services/perfil.service";
 import {ListaService} from "../../../core/services/lista.service";
 import {Lista} from "../../../core/models/Lista";
 import {Router} from "@angular/router";
-import {ListaPersonalAgregarPage} from "../lista-personal-agregar/lista-personal-agregar.page";
 import {ModalController} from "@ionic/angular";
 import {Elemento} from "../../../core/models/Elemento";
 import {ListaCrearPage} from "../lista-crear/lista-crear.page";

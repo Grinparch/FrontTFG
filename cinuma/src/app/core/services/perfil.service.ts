@@ -39,8 +39,6 @@ export class PerfilService {
         "puntuacionPromedio": perfil.puntuacionPromedio,
         "actoresPreferidos": perfil.actoresPreferidos,
         "vinculosAsociados": perfil.vinculosAsociados,
-        "disponibleChat": perfil.disponibleChat,
-        "avatar": perfil.avatar,
         "listaPersonalId": perfil.listaPersonalId,
         "listasCreadas": perfil.listasCreadas},
       { headers }) as Observable<Perfil>;
