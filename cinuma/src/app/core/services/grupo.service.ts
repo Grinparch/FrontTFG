@@ -31,8 +31,7 @@ export class GrupoService {
         "nombre": newG.nombre,
         "descripcion": newG.descripcion},
       { headers }).pipe().subscribe(()=>{
-      this.router.navigate(['/grupo-listado']);
-      window.location.reload();
+      this.router.navigate(['/grupo-listado']).then(()=>window.location.reload());
     });
   }
 
@@ -46,8 +45,7 @@ export class GrupoService {
         "nombre": newG.nombre,
         "descripcion": newG.descripcion},
       { headers }).pipe().subscribe(()=>{
-      this.router.navigate(['/grupo-listado']);
-      window.location.reload();
+      this.router.navigate(['/grupo-listado']).then(()=>window.location.reload());
     });
   }
 
@@ -73,8 +71,7 @@ export class GrupoService {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json'})
     return this.http.delete(this.eliminarGrupoPath+grupoId,
       { headers }).pipe().subscribe(()=>{
-      this.router.navigate(['/grupo-listado']);
-      window.location.reload();
+      this.router.navigate(['/grupo-listado']).then(()=>window.location.reload());
     });
   }
 
@@ -83,8 +80,7 @@ export class GrupoService {
     return this.http.put(this.unirseAGrupoPath+grupoId,
       {"idUsuarios": nuevoMiembroId},
       { headers }).pipe().subscribe(()=>{
-      this.router.navigate(['/grupo-listado']);
-      window.location.reload();
+      this.router.navigate(['/grupo-listado']).then(()=>window.location.reload());
     });
   }
 }

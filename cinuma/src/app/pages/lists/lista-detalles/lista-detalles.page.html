@@ -53,7 +53,7 @@
       Editar
     </ion-button>
   </ion-item>
-  <ion-item>
+  <ion-item *ngIf="edicion">
     <ion-label  class="ion-text-wrap">
       <ion-grid *ngIf="lista.elementos != undefined" class="ion-no-padding">
         <ion-list *ngFor="let elemento of elementosTodos">

@@ -57,7 +57,7 @@ export class UsuarioService {
         "autenticacion": newUser.autenticacion,
         "perfil": newUser.perfil},
       { headers }).pipe().subscribe((usuario) => {
-      this.router.navigate(['/user-admin-listado-usuarios']);
+      this.router.navigate(['/user-admin-listado-usuarios']).then(()=>window.location.reload());
     });
     return "Error";
   }

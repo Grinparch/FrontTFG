@@ -54,7 +54,7 @@ export class ElementoDetallesPage implements OnInit {
 
   async eliminarElemento(){
     this.elementoService.eliminarElemento(this.elemento.elementoId).subscribe(() => {
-      this.router.navigate(['/elemento-crear']);
+      this.router.navigate(['/elemento-listado']).then(()=>window.location.reload());
       this.modalController.dismiss();
     });
   }
@@ -130,7 +130,7 @@ export class ElementoDetallesPage implements OnInit {
         estrenoTaquilla: this.elemento.estrenoTaquilla
       };
       this.elementoService.editarPelicula(nuevoElemento).subscribe(pelicula => {
-        this.router.navigate(['/elemento-listado']);
+        this.router.navigate(['/elemento-listado']).then(()=>window.location.reload());
         window.location.reload();
         this.modalController.dismiss();
       });

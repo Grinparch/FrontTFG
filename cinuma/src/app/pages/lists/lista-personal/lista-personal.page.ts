@@ -87,16 +87,19 @@ export class ListaPersonalPage implements OnInit {
 
   agregarElementoEnlistadoModal() {
     this.elementoService.getAllElementos().subscribe(data => {
+      console.log(data)
       const elementos = data;
       let index = 0;
-      elementos.forEach(elemento=>{
-        this.listaPersonal.elementosVistos.forEach(elementoVisto=>{
-          if(elementoVisto.elementoId == elemento.elementoId){
-            elementos.splice(index,1);
-          }
+      if(this.listaPersonal.elementosVistos != null && this.listaPersonal.elementosVistos.length>0){
+        elementos.forEach(elemento=>{
+          this.listaPersonal.elementosVistos.forEach(elementoVisto=>{
+            if(elementoVisto.elementoId == elemento.elementoId){
+              elementos.splice(index,1);
+            }
+          })
+          index = index+1;
         })
-        index = index+1;
-      })
+      }
       this.crearModalElementoEnlistado(elementos).then(() => this.detailsModal.present());
     });
 
