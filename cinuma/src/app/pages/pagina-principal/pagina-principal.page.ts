@@ -22,8 +22,6 @@ export class PaginaPrincipalPage implements OnInit {
   ngOnInit() {
   }
   ionViewWillEnter() {
-    console.log(this.getUsername());
-    console.log(this.getRol());
     if(this.getUsername()!=null && this.getUsername()!=undefined){
       this.username = this.getUsername();
       this.rol = Number(this.getRol());

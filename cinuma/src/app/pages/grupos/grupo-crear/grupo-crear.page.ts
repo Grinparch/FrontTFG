@@ -65,7 +65,6 @@ export class GrupoCrearPage implements OnInit {
       (firstNgInvalid as HTMLIonInputElement).setFocus().then();
     }
     else {
-      console.log("perfil en update");
       let arrayMiembros: string[] = [];
       arrayMiembros.push(this.getUserId());
       let arrayElementos: string[] = [];
@@ -95,7 +94,6 @@ export class GrupoCrearPage implements OnInit {
         index++;
       })
     }
-    console.log(this.elementosAgregados);
   }
 
   async agregarElemento(elemento: Elemento) {
@@ -108,7 +106,6 @@ export class GrupoCrearPage implements OnInit {
     if(!enLista){
       this.elementosAgregados.push(elemento);
     }
-    console.log(this.elementosAgregados);
   }
 
   getUsername() {

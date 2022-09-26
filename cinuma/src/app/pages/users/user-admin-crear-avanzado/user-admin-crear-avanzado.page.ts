@@ -27,8 +27,6 @@ export class UserAdminCrearAvanzadoPage implements OnInit {
     this.usuarioYaExistente = false;
     this.route.queryParams
       .subscribe(params => {
-          console.log("params");
-          console.log(params);
           if(params.error!=undefined){
             this.usuarioYaExistente = true;
           }
@@ -58,7 +56,6 @@ export class UserAdminCrearAvanzadoPage implements OnInit {
 
   async createUser() {
     if (!this.createUserForm.valid){
-      console.log('Form has errors. Please provide all the required values!');
     }
     else {
       this.userValueAssignation();
@@ -76,7 +73,6 @@ export class UserAdminCrearAvanzadoPage implements OnInit {
   }
 
   private async userValueAssignation() {
-    console.log("antes de new user");
     const newAuth: Autenticacion = {
       autenticacionId: null,
       usuario: this.createUserForm.value.username,
@@ -91,10 +87,7 @@ export class UserAdminCrearAvanzadoPage implements OnInit {
       autenticacion: newAuth,
       perfil: null,
     };
-    console.log("antes de add user");
     this.userService.getVerificacionUsername(newUser.username).subscribe((existe)=>{
-      console.log("existe")
-      console.log(existe)
       if(existe)
         this.mensaje = "Usuario Ya existente";
       else{

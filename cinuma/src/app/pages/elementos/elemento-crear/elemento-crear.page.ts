@@ -65,7 +65,6 @@ export class ElementoCrearPage implements OnInit {
     }
     if(!yaExiste)
       this.generosAgregados.push(genero);
-    console.log(this.generosAgregados);
   }
 
   removerGeneroDeLista(genero:string){
@@ -78,7 +77,6 @@ export class ElementoCrearPage implements OnInit {
         index++;
       })
     }
-    console.log(this.generosAgregados);
   }
 
   removerActorDeLista(actor:string){
@@ -91,7 +89,6 @@ export class ElementoCrearPage implements OnInit {
         index++;
       })
     }
-    console.log(this.actoresAgregados);
   }
 
   agregarActorALista(){
@@ -104,7 +101,6 @@ export class ElementoCrearPage implements OnInit {
   async crearElemento() {
     if (!this.crearElementoForm.valid){
       this.crearElementoForm.markAllAsTouched();
-      console.log('Form has errors. Please provide all the required values!');
     }
     else {
       this.asignacionValorElemento();

@@ -31,8 +31,6 @@ export class UsuarioService {
               public autenticacionService: AutenticacionService) { }
 
   async addUser(newUser: Usuario){
-    console.log("en add User");
-    console.log(JSON.stringify(newUser));
     const headers = new HttpHeaders({ 'Content-Type': 'application/json'})
     this.http.post<Usuario>(this.addUserPath,
       {"userId": newUser.userId,
@@ -42,8 +40,6 @@ export class UsuarioService {
         "autenticacion": newUser.autenticacion,
         "perfil": newUser.perfil},
       { headers }).pipe().subscribe((usuario) => {
-        console.log("usuario");
-        console.log(usuario);
         this.usuario=usuario;
         this.router.navigate(['/user-login']);
        });
@@ -51,8 +47,6 @@ export class UsuarioService {
   }
 
   async addUsuarioAvanzado(newUser: Usuario){
-    console.log("en add User");
-    console.log(JSON.stringify(newUser));
     const headers = new HttpHeaders({ 'Content-Type': 'application/json'})
     this.http.post<Usuario>(this.addUsuarioAvanzadoPath,
       {"userId": newUser.userId,
@@ -63,8 +57,6 @@ export class UsuarioService {
         "autenticacion": newUser.autenticacion,
         "perfil": newUser.perfil},
       { headers }).pipe().subscribe((usuario) => {
-      console.log("usuario");
-      console.log(usuario);
       this.router.navigate(['/user-admin-listado-usuarios']);
     });
     return "Error";
@@ -96,8 +88,6 @@ export class UsuarioService {
 
   //Se utiliza post por que la llamada de Get no permite pasar un body
   getAllUsuariosGrupo(usuarios: String[]) {
-    console.log("usuarios");
-    console.log({"idUsuarios": usuarios});
     const headers = new HttpHeaders({'Content-Type': 'application/json'})
     return this.http.post<Usuario[]>(this.getAllUsersGrupoPath,
       {"idUsuarios": usuarios},

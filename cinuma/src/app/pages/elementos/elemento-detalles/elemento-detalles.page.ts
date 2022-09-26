@@ -74,7 +74,6 @@ export class ElementoDetallesPage implements OnInit {
     }
     if(!yaExiste)
       this.generosAgregados.push(genero);
-    console.log(this.generosAgregados);
   }
 
   agregarActorALista(){
@@ -85,7 +84,6 @@ export class ElementoDetallesPage implements OnInit {
 
   async editarElemento() {
     if (!this.editarElementoForm.valid){
-      console.log('Form has errors. Please provide all the required values!');
     }
     else {
       this.asignacionValorElemento();
@@ -131,8 +129,6 @@ export class ElementoDetallesPage implements OnInit {
         tipo: this.elemento.tipo,
         estrenoTaquilla: this.elemento.estrenoTaquilla
       };
-      console.log("elemento");
-      console.log(nuevoElemento);
       this.elementoService.editarPelicula(nuevoElemento).subscribe(pelicula => {
         this.router.navigate(['/elemento-listado']);
         window.location.reload();
@@ -152,8 +148,6 @@ export class ElementoDetallesPage implements OnInit {
         capitulos: this.editarElementoForm.value.capitulos,
         estreno: this.elemento.estreno,
       };
-      console.log("elemento");
-      console.log(nuevoElemento);
       this.elementoService.editarSerie(nuevoElemento).subscribe(serie => {
         this.router.navigate(['/elemento-listado']);
         window.location.reload();
@@ -174,7 +168,6 @@ export class ElementoDetallesPage implements OnInit {
         index++;
       })
     }
-    console.log(this.generosAgregados);
   }
 
   removerActorDeLista(actor:string){
@@ -187,7 +180,6 @@ export class ElementoDetallesPage implements OnInit {
         index++;
       })
     }
-    console.log(this.actoresAgregados);
   }
 
   getRol() {

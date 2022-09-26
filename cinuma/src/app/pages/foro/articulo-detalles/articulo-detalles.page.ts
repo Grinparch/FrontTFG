@@ -40,8 +40,6 @@ export class ArticuloDetallesPage implements OnInit {
     if(this.getUsername() != undefined){
       this.route.queryParams
         .subscribe(params => {
-            console.log("params");
-            console.log(params);
             if (params.articuloId != undefined) {
               this.articuloId = params.articuloId;
               this.articuloService.getArticuloEspecifico(params.articuloId ).subscribe((articulo) => {
@@ -73,7 +71,6 @@ export class ArticuloDetallesPage implements OnInit {
       };
       this.articuloService.agregarComentario(comentario);
     }else{
-      console.log("toast de que esta vacio")
     }
 
   }

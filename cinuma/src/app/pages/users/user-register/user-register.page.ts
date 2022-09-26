@@ -50,7 +50,6 @@ export class UserRegisterPage implements OnInit {
 
   async createUser() {
     if (!this.createUserForm.valid){
-      console.log('Form has errors. Please provide all the required values!');
     }
     else {
       this.userValueAssignation();
@@ -67,8 +66,6 @@ export class UserRegisterPage implements OnInit {
   }
 
   private async userValueAssignation() {
-    console.log("message")
-    console.log(this.mensaje);
 
     const newAuth: Autenticacion = {
       autenticacionId: null,
@@ -84,10 +81,7 @@ export class UserRegisterPage implements OnInit {
       autenticacion: newAuth,
       perfil: null,
     };
-    console.log("antes de add user");
     this.userService.getVerificacionUsername(newUser.username).subscribe((existe)=>{
-      console.log("existe")
-      console.log(existe)
       if(existe)
         this.mensaje = "Usuario Ya existente";
       else{

@@ -52,8 +52,6 @@ export class GrupoDetallesPage implements OnInit {
       this.rol=Number(this.getRol());
       this.route.queryParams
         .subscribe(params => {
-            console.log("params");
-            console.log(params);
             if (params.grupoId != undefined) {
               this.grupoId = params.grupoId;
               this.grupoService.getGrupoEspecifico(params.grupoId).subscribe((grupo) => {
@@ -64,8 +62,6 @@ export class GrupoDetallesPage implements OnInit {
                 }
                 this.userService.getAllUsuariosGrupo(grupo.miembros).subscribe( (usuarios) =>{
                   this.miembros = usuarios;
-                  console.log("miembros");
-                  console.log(usuarios);
                 })
                 this.elementoService.getAllElementosGrupo(grupo.elementosPreferidos).subscribe( (elementosAgregados) =>{
                   this.elementosAgregados = elementosAgregados;
@@ -93,17 +89,9 @@ export class GrupoDetallesPage implements OnInit {
     }
     else {
       let arrayElementos: string[] = this.grupo.elementosPreferidos;
-      console.log("this.grupo.elementosPreferidos");
-      console.log(this.grupo.elementosPreferidos);
-      console.log("arrayElementos");
-      console.log(arrayElementos);
       this.elementosAAgregar.forEach((elemento)=>{
-        console.log("elementosAgregados en bucle");
-        console.log(elemento.elementoId);
         arrayElementos.push(elemento.elementoId);
       })
-      console.log("arrayElementos post add");
-      console.log(arrayElementos);
       const grupo: Grupo = {
         grupoId: this.grupo.grupoId,
         lider: this.grupo.lider,
@@ -153,7 +141,6 @@ export class GrupoDetallesPage implements OnInit {
     if(!enLista){
       this.elementosAAgregar.push(elemento);
     }
-    console.log(this.elementosAAgregar);
   }
 
   getUsername() {
@@ -173,7 +160,6 @@ export class GrupoDetallesPage implements OnInit {
   }
 
   unirseAGrupo(){
-    console.log(this.getUserId());
     const listaDeUnId: string[] = [this.getUserId()];
     this.grupoService.unirseAGrupo(listaDeUnId, this.grupoId);
   }
@@ -188,7 +174,6 @@ export class GrupoDetallesPage implements OnInit {
         index++;
       })
     }
-    console.log(this.elementosAAgregar);
   }
 
   esMiembro():boolean{

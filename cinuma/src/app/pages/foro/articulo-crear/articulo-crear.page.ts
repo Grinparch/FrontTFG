@@ -101,7 +101,6 @@ export class ArticuloCrearPage implements OnInit {
     }
     if(!yaExiste)
       this.generosAgregados.push(genero);
-    console.log(this.generosAgregados);
   }
   removerGeneroDeLista(genero:string){
     let index = 0;
@@ -113,6 +112,5 @@ export class ArticuloCrearPage implements OnInit {
         index++;
       })
     }
-    console.log(this.generosAgregados);
   }
 }

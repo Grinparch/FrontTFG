@@ -44,8 +44,6 @@ export class ListaDetallesPage implements OnInit {
   ionViewWillEnter() {
     this.route.queryParams
       .subscribe(params => {
-          console.log("params");
-          console.log(params);
           if (params.listaId != undefined) {
             this.listaId = params.listaId;
             this.listaService.getListaEspecifica(params.listaId).subscribe((lista) => {
@@ -69,7 +67,6 @@ export class ListaDetallesPage implements OnInit {
   }
 
   async eliminarLista() {
-    console.log("eliminar lista")
     this.listaService.eliminarLista(this.lista.listaId);
   }
 
@@ -87,7 +84,6 @@ export class ListaDetallesPage implements OnInit {
     if(esNuevo){
       this.elementosModificados.push(elementoNuevo);
     }
-    console.log("agregado a lista");
 
   }
 
@@ -95,7 +91,6 @@ export class ListaDetallesPage implements OnInit {
     this.elementosModificados = this.lista.elementos.filter((elemento) => {
       return elemento.elementoId != elementoAQuitar.elementoId;
     });
-    console.log("quitado")
   }
 
   async editarElemento() {
@@ -111,8 +106,6 @@ export class ListaDetallesPage implements OnInit {
         creador: this.lista.creador,
         votos: this.lista.votos
       };
-      console.log("nuevaLista");
-      console.log(nuevaLista);
       this.listaService.editarLista(nuevaLista);
   }
 

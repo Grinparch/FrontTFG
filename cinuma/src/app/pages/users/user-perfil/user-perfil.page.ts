@@ -53,14 +53,9 @@ export class UserPerfilPage implements OnInit {
   ionViewWillEnter(){
 
     if(this.getUsername() != undefined){
-      console.log("before user data");
       this.loadUserData();
       this.usuario.perfil = sessionStorage.getItem('perfilId');
-      console.log("perfil session storage");
-      console.log(sessionStorage.getItem('perfilId'));
-      console.log("before perfil data");
       this.loadPerfilData(this.usuario.perfil);
-      console.log("FINISH");
     }else{
       this.router.navigate(['/user-login']);
     }
@@ -76,14 +71,12 @@ export class UserPerfilPage implements OnInit {
   }
 
   async updateUser() {
-    console.log("before checking validity");
     if (!this.editarPerfilForm.valid){
       const firstNgInvalid: HTMLElement = this.elementRef.nativeElement.querySelector('form .ng-invalid');
       this.editarPerfilForm.markAllAsTouched();
       (firstNgInvalid as HTMLIonInputElement).setFocus().then();
     }
     else {
-      console.log("perfil en update");
       const array: string[] = [];
       if(this.perfil.actoresPreferidos == undefined)
         this.perfil.actoresPreferidos = array;
@@ -99,12 +92,7 @@ export class UserPerfilPage implements OnInit {
         this.editarPerfilForm.get('vinculosAsociados').value != '')
         this.perfil.vinculosAsociados.push(this.editarPerfilForm.get('vinculosAsociados').value);
 
-
-
-      console.log(this.perfil);
       this.perfilService.updatePerfil(this.perfil).subscribe((perfil) => {
-        console.log("perfil");
-        console.log(perfil);
         this.perfil=perfil;
         //this.router.navigate(['/user-login']);
         this.editMode = false;
@@ -113,24 +101,10 @@ export class UserPerfilPage implements OnInit {
   }
 
   private loadUserData() {
-    /*
-    this.userService.getUsuarioEspecifico(username).subscribe( data => {
-      this.usuario = data;
-      this.loadPerfilData(data.perfil);
-    });
-    */
     this.usuario.username = sessionStorage.getItem('username');
-    console.log("this.usuario.username");
-    console.log(this.usuario.username);
     this.usuario.userId = sessionStorage.getItem('userId');
-    console.log("this.usuario.userId");
-    console.log(this.usuario.userId);
     this.usuario.email = sessionStorage.getItem('email');
-    console.log("this.usuario.email");
-    console.log(this.usuario.email);
     this.usuario.rol = Number(sessionStorage.getItem('rol'));
-    console.log("this.usuario.rol");
-    console.log(this.usuario.rol);
     this.usuario.phone = sessionStorage.getItem('phone');
 
   }
@@ -139,10 +113,7 @@ export class UserPerfilPage implements OnInit {
     if(this.generoSeleccionado != undefined || this.generoSeleccionado != null){
       this.perfil.generoPreferido = this.generoSeleccionado;
     }
-    console.log(this.perfil);
     this.perfilService.updatePerfil(this.perfil).subscribe((perfil) => {
-      console.log("perfil");
-      console.log(perfil);
       this.perfil=perfil;
       //this.router.navigate(['/user-login']);
       this.editMode = false;
@@ -151,8 +122,6 @@ export class UserPerfilPage implements OnInit {
 
   private loadPerfilData(perfilId: string){
     this.perfilService.getPerfilEspecifico(perfilId).subscribe(data => {
-      console.log("data");
-      console.log(data);
       this.perfil = data;
     });
   }
@@ -170,8 +139,6 @@ export class UserPerfilPage implements OnInit {
   }
 
   guardarGenero(genero:string){
-    console.log("genero seleccionado");
-    console.log(genero);
     this.generoSeleccionado = genero;
   }
 
@@ -185,7 +152,6 @@ export class UserPerfilPage implements OnInit {
         index++;
       })
     }
-    console.log(this.perfil.actoresPreferidos);
   }
 
 }

@@ -35,8 +35,6 @@ export class ElementoListadoPage implements OnInit {
 
   private loadElementos(){
     this.elementoService.getAllElementos().subscribe(data => {
-      console.log("elementos TODOS");
-      console.log(data);
       this.colleccionElementos = data;
     });
   }

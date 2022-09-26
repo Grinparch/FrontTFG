@@ -45,8 +45,6 @@ export class ArticuloListadoPage implements OnInit {
   private loadArticulos(){
     this.articuloService.getAllArticulos().subscribe(articulos => {
       this.articulos = articulos;
-      console.log("articulos todos");
-      console.log(this.articulos);
     });
   }
 

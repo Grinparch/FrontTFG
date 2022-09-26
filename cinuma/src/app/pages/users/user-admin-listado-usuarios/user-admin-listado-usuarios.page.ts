@@ -46,8 +46,6 @@ export class UserAdminListadoUsuariosPage implements OnInit {
   private loadUsuarios(){
     this.usuarioService.getAllUsers().subscribe(usuarios => {
       this.usuarios = usuarios;
-      console.log("usuarios todos");
-      console.log(this.usuarios);
     });
   }
 

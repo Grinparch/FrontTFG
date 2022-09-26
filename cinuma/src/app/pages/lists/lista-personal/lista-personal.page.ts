@@ -87,14 +87,11 @@ export class ListaPersonalPage implements OnInit {
 
   agregarElementoEnlistadoModal() {
     this.elementoService.getAllElementos().subscribe(data => {
-      console.log("elementos TODOS");
-      console.log(data);
       const elementos = data;
       let index = 0;
       elementos.forEach(elemento=>{
         this.listaPersonal.elementosVistos.forEach(elementoVisto=>{
           if(elementoVisto.elementoId == elemento.elementoId){
-            console.log("se hizo splice");
             elementos.splice(index,1);
           }
         })

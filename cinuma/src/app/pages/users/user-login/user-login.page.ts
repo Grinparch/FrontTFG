@@ -36,15 +36,10 @@ export class UserLoginPage implements OnInit {
   }
 
   ionViewDidEnter(){
-
-    console.log("session storage before login");
-    console.log(this.getUsername());
     if(this.getUsername() == undefined){
       this.usuarioYaExistente = false;
       this.route.queryParams
         .subscribe(params => {
-            console.log("params");
-            console.log(params);
             if(params.error!=undefined){
               this.usuarioYaExistente = true;
             }
@@ -60,7 +55,6 @@ export class UserLoginPage implements OnInit {
 
   async login() {
     if (!this.loginForm.valid){
-      console.log('Form has errors. Please provide all the required values!');
     }
     else {
       this.userValueAssignation();

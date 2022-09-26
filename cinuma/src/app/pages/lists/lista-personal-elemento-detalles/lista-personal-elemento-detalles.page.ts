@@ -38,8 +38,6 @@ export class ListaPersonalElementoDetallesPage implements OnInit {
   ionViewWillEnter(){
 
     if(this.getUsername() != undefined){
-      console.log("elemento");
-      console.log(this.elementoEnlistado);
       this.buildForm();
       this.actoresAgregados = this.elementoEnlistado.actores;
       this.generosAgregados = this.elementoEnlistado.genero;
@@ -56,10 +54,6 @@ export class ListaPersonalElementoDetallesPage implements OnInit {
   }
 
   async eliminarElemento(){
-    console.log("elementEnlistId");
-    console.log(this.elementoEnlistado);
-    console.log("delete elementEnlistId");
-    console.log(this.elementoEnlistado.elementoEnlistadoId);
     this.elementoEnlistadoService.eliminarElemento(this.elementoEnlistado.elementoEnlistadoId).subscribe(() => {
       this.router.navigate(['/lista-personal']);
       window.location.reload();
@@ -73,7 +67,6 @@ export class ListaPersonalElementoDetallesPage implements OnInit {
 
   async editarElemento() {
     if (!this.editarElementoForm.valid){
-      console.log('Form has errors. Please provide all the required values!');
     }
     else {
       this.asignacionValorElemento();
@@ -122,8 +115,6 @@ export class ListaPersonalElementoDetallesPage implements OnInit {
         opinion: this.editarElementoForm.value.opinion,
         puntuacionPersonal: this.editarElementoForm.value.puntuacionPersonal
       };
-      console.log("elemento");
-      console.log(nuevoElementoEnlistado);
       this.elementoEnlistadoService.editarPelicula(nuevoElementoEnlistado).subscribe(() => {
         this.router.navigate(['/lista-personal']);
         window.location.reload();
@@ -147,8 +138,6 @@ export class ListaPersonalElementoDetallesPage implements OnInit {
         opinion: this.editarElementoForm.value.opinion,
         puntuacionPersonal: this.editarElementoForm.value.puntuacionPersonal
       };
-      console.log("elemento");
-      console.log(nuevoElementoEnlistado);
       this.elementoEnlistadoService.editarSerie(nuevoElementoEnlistado).subscribe(() => {
         this.router.navigate(['/lista-personal']);
         window.location.reload();

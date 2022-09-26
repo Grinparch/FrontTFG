@@ -41,8 +41,6 @@ export class ListaListadoPage implements OnInit {
   private loadListas(){
     this.listaService.getAllListas().subscribe(listas => {
       this.listas = listas;
-      console.log("listas todas");
-      console.log(this.listas);
     });
   }
 

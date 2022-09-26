@@ -21,8 +21,6 @@ export class AutenticacionService {
               private router: Router) { }
 
   async addAutenticacion(newAuth: Autenticacion) {
-    console.log("en add Auth");
-    console.log(JSON.stringify(newAuth));
     const headers = new HttpHeaders({ 'Content-Type': 'application/json'})
     return this.http.post<Autenticacion>(this.addAuthPath,
       {"autenticacionId": newAuth.autenticacionId,
@@ -37,34 +35,16 @@ export class AutenticacionService {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json'})
     this.http.get<any>("http://localhost:8081/autenticacion/",
       { headers }).subscribe(data => {
-      console.log(data);
     });
   }
 
   login(auth: Autenticacion){
     const headers = new HttpHeaders({ 'Content-Type': 'application/json'})
-    console.log("login data");
-    console.log(auth.autenticacionId);
     return this.http.post<any>(this.loginPath,
       {"autenticacionId": auth.autenticacionId,
         "usuario": auth.usuario,
         "clave": auth.clave},
       { headers }) as Observable<any>;
-
-
-
-      /*
-      .subscribe(data => {
-        console.log("login data");
-        console.log(data);
-        if(data!=null && data!=undefined){
-          this.saveData(data);
-          this.usuario.next("logged");
-          this.router.navigate(['/pagina-principal']);
-        }
-
-    });
-    */
   }
 
   async logOut(){

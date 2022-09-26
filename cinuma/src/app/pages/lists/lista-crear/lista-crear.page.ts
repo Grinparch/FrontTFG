@@ -55,7 +55,6 @@ export class ListaCrearPage implements OnInit {
   }
 
   async agregarElemento(elemento: Elemento) {
-    console.log("agregado a lista");
     this.elementosAgregados.push(elemento);
   }
 
@@ -69,7 +68,6 @@ export class ListaCrearPage implements OnInit {
         index++;
       })
     }
-    console.log(this.elementosAgregados);
   }
 
 

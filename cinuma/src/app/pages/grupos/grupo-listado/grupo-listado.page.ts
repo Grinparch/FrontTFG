@@ -38,8 +38,6 @@ export class GrupoListadoPage implements OnInit {
     if(this.getUsername() != undefined){
       this.grupoService.getGrupoRecomendado(this.getPerfilId()).subscribe(grupo=>{
         this.recomendado = grupo;
-        console.log("recomendado")
-        console.log(grupo)
         this.loadGrupos(grupo);
       })
     }else{
@@ -51,8 +49,6 @@ export class GrupoListadoPage implements OnInit {
   private loadGrupos(grupoR:Grupo){
     this.grupoService.getAllGrupos().subscribe(grupos => {
       let indice = 0
-      console.log("grupos")
-      console.log(grupos)
       if (null!=grupoR){
         grupos.forEach(grupo=>{
           if(grupo.grupoId==grupoR.grupoId){
@@ -62,8 +58,6 @@ export class GrupoListadoPage implements OnInit {
         })
       }
       this.grupos = grupos;
-      console.log("grupos todos");
-      console.log(this.grupos);
     });
   }
 

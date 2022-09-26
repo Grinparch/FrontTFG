@@ -17,8 +17,6 @@ export class ListaPersonalService {
   constructor(private http: HttpClient) { }
 
   async addListaPersonal(newLP: ListaPersonal) {
-    console.log("en add ListaPersonal");
-    console.log(JSON.stringify(newLP));
     const headers = new HttpHeaders({ 'Content-Type': 'application/json'})
     return this.http.post<ListaPersonal>(this.addListaPersonalPath,
       {"listaPersonalId": newLP.listaPersonalId,

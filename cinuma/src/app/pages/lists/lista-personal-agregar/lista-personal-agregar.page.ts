@@ -39,8 +39,6 @@ export class ListaPersonalAgregarPage implements OnInit {
   ionViewWillEnter(){
 
     if(this.getUsername() != undefined){
-      console.log("todos los elementos agregar lista");
-      console.log(this.todosElementos);
       this.buildForm();
     }else{
       this.router.navigate(['/user-login']);
@@ -56,7 +54,6 @@ export class ListaPersonalAgregarPage implements OnInit {
 
   async agregarElemento() {
     if (!this.agregarElementoForm.valid){
-      console.log('Form has errors. Please provide all the required values!');
     }
     else {
       this.asignacionValorElemento();
@@ -122,7 +119,6 @@ export class ListaPersonalAgregarPage implements OnInit {
   }
 
   guardarElemento(elemento: Elemento){
-    console.log("elemento guardado")
     this.elemento=elemento;
   }
 

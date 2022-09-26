@@ -19,8 +19,6 @@ export class ElementoEnlistadoService {
   constructor(private http: HttpClient) { }
 
   eliminarElemento(elementoEnlistadoId: string){
-    console.log("delete elementEnlistId");
-    console.log(elementoEnlistadoId);
     const headers = new HttpHeaders({ 'Content-Type': 'application/json'})
     return this.http.delete<ElementoEnlistado>(this.eliminarElementoEnlistadoPath+elementoEnlistadoId,
       { headers }) as Observable<ElementoEnlistado>;

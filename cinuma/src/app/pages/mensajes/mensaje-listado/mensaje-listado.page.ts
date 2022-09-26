@@ -54,8 +54,6 @@ export class MensajeListadoPage implements OnInit {
   private loadMensajes(){
     this.mensajeService.getAllMensajesDeUsuario(this.getUserId()).subscribe(mensajes => {
       this.mensajes = mensajes;
-      console.log("mensajes todos");
-      console.log(this.mensajes);
     });
   }
 

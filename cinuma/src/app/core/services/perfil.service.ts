@@ -24,8 +24,6 @@ export class PerfilService {
 
   getPerfilEspecifico(perfilId: string) {
     const headers = new HttpHeaders({'Content-Type': 'application/json'})
-    console.log("perfilId");
-    console.log(perfilId);
     return this.http.get<Perfil>(this.getPerfilPath+perfilId,
       { headers }) as Observable<Perfil>;
   }
