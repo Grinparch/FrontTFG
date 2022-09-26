@@ -13,7 +13,7 @@ import {AutenticacionService} from "./autenticacion.service";
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class UsuarioService {
   usuario: Usuario;
   // paths
   addUserPath = "http://localhost:8081/usuarios/addUsuarioComun";

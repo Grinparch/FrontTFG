@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Usuario} from "../../../core/models/Usuario";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {UserService} from "../../../core/services/user.service";
+import {UsuarioService} from "../../../core/services/usuario.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Autenticacion} from "../../../core/models/Autenticacion";
 
@@ -18,7 +18,7 @@ export class UserAdminCrearAvanzadoPage implements OnInit {
 
 
   constructor(
-    private userService: UserService,
+    private userService: UsuarioService,
     private route: ActivatedRoute,
     private router: Router
   ) {}

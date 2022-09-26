@@ -4,7 +4,7 @@ import {Generos} from "../../../core/models/Generos";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {NavController, PopoverController} from '@ionic/angular';
 import {ActivatedRoute, Router} from "@angular/router";
-import {UserService} from "../../../core/services/user.service";
+import {UsuarioService} from "../../../core/services/usuario.service";
 import {Perfil} from "../../../core/models/Perfil";
 import { PerfilService } from 'src/app/core/services/perfil.service';
 import { AutenticacionService } from 'src/app/core/services/autenticacion.service';
@@ -35,7 +35,7 @@ export class UserPerfilPage implements OnInit {
     private popoverController: PopoverController,
     private route: ActivatedRoute,
     private navCtrl: NavController,
-    public userService: UserService,
+    public userService: UsuarioService,
     public autenticacionService: AutenticacionService,
     public perfilService: PerfilService,
     private router: Router,

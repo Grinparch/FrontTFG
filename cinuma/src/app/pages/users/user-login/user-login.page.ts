@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Usuario} from "../../../core/models/Usuario";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {UserService} from "../../../core/services/user.service";
+import {UsuarioService} from "../../../core/services/usuario.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Autenticacion} from "../../../core/models/Autenticacion";
 import {AutenticacionService} from "../../../core/services/autenticacion.service";
@@ -20,7 +20,7 @@ export class UserLoginPage implements OnInit {
 
 
   constructor(
-    private userService: UserService,
+    private userService: UsuarioService,
     private autenticacionService: AutenticacionService,
     private route: ActivatedRoute,
     private router: Router,

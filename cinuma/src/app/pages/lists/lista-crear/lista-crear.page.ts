@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Elemento} from "../../../core/models/Elemento";
 import {Usuario} from "../../../core/models/Usuario";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {UserService} from "../../../core/services/user.service";
+import {UsuarioService} from "../../../core/services/usuario.service";
 import {ElementoService} from "../../../core/services/elemento.service";
 import {ElementoEnlistadoService} from "../../../core/services/elemento-enlistado.service";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -25,7 +25,7 @@ export class ListaCrearPage implements OnInit {
 
 
   constructor(
-    private userService: UserService,
+    private userService: UsuarioService,
     private elementoService: ElementoService,
     private listaService: ListaService,
     private route: ActivatedRoute,
@@ -84,10 +84,7 @@ export class ListaCrearPage implements OnInit {
         votos: 0,
         creador: this.getUsername()
       };
-      this.listaService.addLista(nuevaLista).then(()=>{
-        this.router.navigate(['/lista-personal']);
-        window.location.reload();
-      });
+      this.listaService.addLista(nuevaLista);
   }
 
   getUsername() {

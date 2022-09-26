@@ -29,7 +29,9 @@ export class ListaService {
         "elementos": newL.elementos,
         "votos": newL.votos,
         "creador": newL.creador},
-      { headers }).pipe().subscribe();
+      { headers }).pipe().subscribe(()=>{
+      this.router.navigate(['/lista-listado']).then(()=>{window.location.reload()});
+    });
   }
 
   editarLista(newL: Lista){
@@ -41,8 +43,7 @@ export class ListaService {
         "votos": newL.votos,
         "creador": newL.creador},
       { headers }).pipe().subscribe(()=>{
-      this.router.navigate(['/lista-personal']);
-      window.location.reload();
+      this.router.navigate(['/lista-listado']).then(()=>{window.location.reload()});
     });
   }
 
@@ -62,8 +63,7 @@ export class ListaService {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json'})
     return this.http.delete(this.eliminarListaPath+listaId,
       { headers }).pipe().subscribe(()=>{
-      this.router.navigate(['/lista-personal']);
-      window.location.reload();
-    });;
+      this.router.navigate(['/lista-listado']).then(()=>{window.location.reload()});
+    });
   }
 }

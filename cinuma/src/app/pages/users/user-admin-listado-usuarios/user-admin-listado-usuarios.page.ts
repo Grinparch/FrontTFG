@@ -10,7 +10,7 @@ import {Router} from "@angular/router";
 import {Elemento} from "../../../core/models/Elemento";
 import {ListaCrearPage} from "../../lists/lista-crear/lista-crear.page";
 import {Usuario} from "../../../core/models/Usuario";
-import {UserService} from "../../../core/services/user.service";
+import {UsuarioService} from "../../../core/services/usuario.service";
 
 @Component({
   selector: 'app-user-admin-listado-usuarios',
@@ -23,7 +23,7 @@ export class UserAdminListadoUsuariosPage implements OnInit {
 
   constructor(public  elementoService: ElementoService,
               public  perfilService: PerfilService,
-              public  usuarioService: UserService,
+              public  usuarioService: UsuarioService,
               private modalController: ModalController,
               private autenticacionService: AutenticacionService,
               private router: Router) { }

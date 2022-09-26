@@ -11,12 +11,8 @@ import {Router} from "@angular/router";
 })
 export class MensajeService {
 // paths
-  getAllArticulosPath = "http://localhost:8081/articulo/";
   getAllMensajesDeUsuarioPath = "http://localhost:8081/mensaje/allMensajes/";
-  getArticuloEspecificoPath = "http://localhost:8081/articulo/";
   enviarMensajePath = "http://localhost:8081/mensaje/add/";
-  editarGrupoPath = "http://localhost:8081/grupo/editarGrupo/";
-  unirseAGrupoPath = "http://localhost:8081/grupo/unirseAGrupo/";
   eliminarMensajePath = "http://localhost:8081/mensaje/delete/";
 
   constructor(private http: HttpClient,

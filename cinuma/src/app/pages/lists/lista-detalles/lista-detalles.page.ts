@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {UserService} from "../../../core/services/user.service";
+import {UsuarioService} from "../../../core/services/usuario.service";
 import {ElementoService} from "../../../core/services/elemento.service";
 import {ElementoEnlistadoService} from "../../../core/services/elemento-enlistado.service";
 import {ActivatedRoute, Router} from "@angular/router";

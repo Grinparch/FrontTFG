@@ -2,7 +2,7 @@ import {Component, ElementRef, Input, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {NavController, PopoverController} from "@ionic/angular";
 import {ActivatedRoute, Router} from "@angular/router";
-import {UserService} from "../../../core/services/user.service";
+import {UsuarioService} from "../../../core/services/usuario.service";
 import {Articulo} from "../../../core/models/Articulo";
 import { ArticuloService } from 'src/app/core/services/articulo.service';
 import {Generos} from "../../../core/models/Generos";
@@ -22,7 +22,7 @@ export class ArticuloCrearPage implements OnInit {
     private popoverController: PopoverController,
     private route: ActivatedRoute,
     private navCtrl: NavController,
-    public userService: UserService,
+    public userService: UsuarioService,
     public articuloService: ArticuloService,
     private router: Router,
     private elementRef: ElementRef

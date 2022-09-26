@@ -1,6 +1,6 @@
 import {Component, ElementRef, Input, OnInit} from '@angular/core';
 import {Elemento} from "../../../core/models/Elemento";
-import {UserService} from "../../../core/services/user.service";
+import {UsuarioService} from "../../../core/services/usuario.service";
 import {ElementoService} from "../../../core/services/elemento.service";
 import {ListaService} from "../../../core/services/lista.service";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -33,7 +33,7 @@ export class GrupoCrearPage implements OnInit {
     private popoverController: PopoverController,
     private route: ActivatedRoute,
     private navCtrl: NavController,
-    public userService: UserService,
+    public userService: UsuarioService,
     public grupoService: GrupoService,
     private router: Router,
     private elementRef: ElementRef

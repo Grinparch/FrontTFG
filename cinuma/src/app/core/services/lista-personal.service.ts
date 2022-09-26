@@ -11,7 +11,7 @@ import {Observable} from "rxjs";
 export class ListaPersonalService {
   listaPersonal: ListaPersonal;
 // paths
-  addAuthPath = "http://localhost:8081/listaPersonal/add";
+  addListaPersonalPath = "http://localhost:8081/listaPersonal/add";
   listaPersonalGetPath = "http://localhost:8081/listaPersonal/";
 
   constructor(private http: HttpClient) { }
@@ -20,7 +20,7 @@ export class ListaPersonalService {
     console.log("en add ListaPersonal");
     console.log(JSON.stringify(newLP));
     const headers = new HttpHeaders({ 'Content-Type': 'application/json'})
-    return this.http.post<ListaPersonal>(this.addAuthPath,
+    return this.http.post<ListaPersonal>(this.addListaPersonalPath,
       {"listaPersonalId": newLP.listaPersonalId,
         "elementosVistos": newLP.elementosVistos},
       { headers }).pipe().subscribe(listaPer => {

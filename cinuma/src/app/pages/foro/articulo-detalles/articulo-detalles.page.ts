@@ -4,7 +4,7 @@ import {Usuario} from "../../../core/models/Usuario";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {ModalController, NavController, PopoverController} from "@ionic/angular";
 import {ActivatedRoute, Router} from "@angular/router";
-import {UserService} from "../../../core/services/user.service";
+import {UsuarioService} from "../../../core/services/usuario.service";
 import {ElementoService} from "../../../core/services/elemento.service";
 import {ElementoDetallesPage} from "../../elementos/elemento-detalles/elemento-detalles.page";
 import {ArticuloService} from "../../../core/services/articulo.service";
@@ -26,7 +26,7 @@ export class ArticuloDetallesPage implements OnInit {
     private popoverController: PopoverController,
     private route: ActivatedRoute,
     private navCtrl: NavController,
-    public userService: UserService,
+    public userService: UsuarioService,
     public articuloService: ArticuloService,
     private elementRef: ElementRef,
     private router: Router

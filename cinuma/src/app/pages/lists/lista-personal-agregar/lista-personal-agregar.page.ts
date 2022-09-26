@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Usuario} from "../../../core/models/Usuario";
 import {Elemento} from "../../../core/models/Elemento";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {UserService} from "../../../core/services/user.service";
+import {UsuarioService} from "../../../core/services/usuario.service";
 import {ElementoService} from "../../../core/services/elemento.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import { ElementoEnlistado } from 'src/app/core/models/ElementoEnlistado';
@@ -25,7 +25,7 @@ export class ListaPersonalAgregarPage implements OnInit {
 
 
   constructor(
-    private userService: UserService,
+    private userService: UsuarioService,
     private elementoService: ElementoService,
     private elementoEnlistadoService: ElementoEnlistadoService,
     private route: ActivatedRoute,

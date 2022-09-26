@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Elemento} from "../../../core/models/Elemento";
-import {UserService} from "../../../core/services/user.service";
+import {UsuarioService} from "../../../core/services/usuario.service";
 import {ElementoService} from "../../../core/services/elemento.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
@@ -26,7 +26,7 @@ export class ElementoDetallesPage implements OnInit {
 
 
   constructor(
-    private userService: UserService,
+    private userService: UsuarioService,
     private elementoService: ElementoService,
     private route: ActivatedRoute,
     private router: Router,

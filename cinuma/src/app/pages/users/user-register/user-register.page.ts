@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Usuario} from "../../../core/models/Usuario";
-import {UserService} from "../../../core/services/user.service";
+import {UsuarioService} from "../../../core/services/usuario.service";
 import {Autenticacion} from "../../../core/models/Autenticacion";
 import {Perfil} from "../../../core/models/Perfil";
 import {ListaPersonal} from "../../../core/models/ListaPersonal";
@@ -24,7 +24,7 @@ export class UserRegisterPage implements OnInit {
 
 
   constructor(
-    private userService: UserService,
+    private userService: UsuarioService,
     private autenticacionService: AutenticacionService,
     private toastController: ToastController,
     private route: ActivatedRoute,

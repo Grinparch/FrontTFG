@@ -11,7 +11,7 @@ import {Mensaje} from "../../../core/models/Mensaje";
 import {MensajeService} from "../../../core/services/mensaje.service";
 import {Grupo} from "../../../core/models/Grupo";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {UserService} from "../../../core/services/user.service";
+import {UsuarioService} from "../../../core/services/usuario.service";
 
 @Component({
   selector: 'app-mensaje-listado',
@@ -29,7 +29,7 @@ export class MensajeListadoPage implements OnInit {
 
   constructor(public  elementoService: ElementoService,
               public  mensajeService: MensajeService,
-              public  userService: UserService,
+              public  userService: UsuarioService,
               public  articuloService: ArticuloService,
               private modalController: ModalController,
               private elementRef: ElementRef,
