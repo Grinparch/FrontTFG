@@ -58,15 +58,9 @@ export class AppComponent implements OnInit{
     this.autenticacionService.logOut();
     this.autenticacionService.usuario.subscribe((valor)=>{
       if(valor==null){
-        console.log("logOut");
         this.usuario= null;
         this.rol= null;
       }
     });
-  }
-
-  consoleLog(mensaje:string){
-    console.log("mensaje de app component")
-    console.log(mensaje)
   }
 }
